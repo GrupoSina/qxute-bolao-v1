@@ -304,10 +304,10 @@ export default function CreateMatchesModal({ onClose }: CloseButtonProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <ModalHeader className="flex space-x-2 items-center">
         <Image src="/sportsicon.png" alt="stadium icon" />
-        <h1>4. Partidas </h1>
+        <h1 className='text-white'>4. Partidas </h1>
       </ModalHeader>
       <ModalBody className="space-y-2">
-        <p>
+        <p className='text-white'>
           Lorem ipsum dolor sit amet consectetur. Nulla ac nisl pellentesque
           netus diam. Vel urna mattis.
         </p>
@@ -320,7 +320,7 @@ export default function CreateMatchesModal({ onClose }: CloseButtonProps) {
             ]
             return (
               <div className="space-y-4" key={field.id}>
-                <h1>{`Partida ${index + 1}`}</h1>
+                <h1 className='text-white'>{`Partida ${index + 1}`}</h1>
                 <Select
                   {...register(`matches.${index}.round`)}
                   classNames={{

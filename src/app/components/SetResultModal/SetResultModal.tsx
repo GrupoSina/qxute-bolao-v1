@@ -21,6 +21,7 @@ import { Open_Sans as OpenSans } from 'next/font/google'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { MdHistory } from 'react-icons/md'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
@@ -132,14 +133,14 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
       scrollBehavior="outside"
       isOpen={isOpen}
       onOpenChange={handleOnClose}
-      size="4xl"
+      size="xl"
       closeButton={<img src="/closeicon.png" alt="close" />}
     >
       <ModalContent className={`${fontOpenSans.className} bg-[#1F67CE]`}>
         {(onClose) => (
           <>
-            <ModalHeader className="flex space-x-2 items-center">
-              <Image src="/historyicon.svg" alt="mail icon" />
+            <ModalHeader className="flex space-x-2 items-center text-white">
+              <MdHistory />
               <h1>Definir resultado</h1>
             </ModalHeader>
 
@@ -183,7 +184,7 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
             ) : (
               <form onSubmit={handleSubmit(handleSave)}>
                 <ModalBody className="space-y-2">
-                  <p>Defina abaixo o resultado da partida:</p>
+                  <p className='text-white'>Defina abaixo o resultado da partida:</p>
                   <div className="flex flex-col p-4 bg-[#00409F] rounded-lg w-[90%] mx-auto">
                     <div className="flex w-full justify-between">
                       <div className="flex space-x-2">
@@ -203,10 +204,10 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
                     </div>
                     <div className="flex justify-evenly items-center mt-4">
                       <div className="flex flex-col space-y-4">
-                        <h1 className="text-center">
+                        <h1 className="text-center text-white">
                           {selectedMatchSetResult?.match.teamHome.name}
                         </h1>
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center text-white">
                           <input
                             defaultValue="0"
                             type="number"
@@ -216,12 +217,12 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
                           />
                         </div>
                       </div>
-                      <h1 className="mx-4">X</h1>
+                      <h1 className="mx-4 text-white">X</h1>
                       <div className="flex flex-col space-y-4">
-                        <h1 className="text-center">
+                        <h1 className="text-center text-white">
                           {selectedMatchSetResult?.match.teamAway.name}
                         </h1>
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center text-white">
                           <input
                             defaultValue="0"
                             type="number"
@@ -297,7 +298,7 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
                                       className="bg-[#00409F] flex justify-between items-center p-2 space-x-2 rounded-sm"
                                       key={player.id}
                                     >
-                                      <div className="flex justify-center items-center space-x-2">
+                                      <div className="flex justify-center items-center space-x-2 text-white">
                                         <div
                                           className={`rounded-full w-[28px] h-[28px] ${getLogo(selectedMatchSetResult?.match.lastPlayerTeam?.name) === '/defaultlogo.svg' && 'bg-[#fff]'}`}
                                         >

@@ -8,11 +8,11 @@ export default function CarrosselBetVip() {
   return (
     <div className="flex flex-col bg-[#1F67CE] p-10">
       <h1
-        className={`text-center ${fontOpenSans.className} text-[18px] font-extrabold mb-6`}
+        className={`text-center ${fontOpenSans.className} text-[18px] font-extrabold mb-6 text-white`}
       >
         BOLÃO LOREM IPSUM
       </h1>
-      <p>
+      <p className='text-white'>
         Lorem ipsum dolor sit amet consectetur. Tortor arcu quisque vestibulum
         aenean sed morbi laoreet diam. Urna tellus nunc fusce hendrerit eget
         dolor neque sit.
