@@ -111,7 +111,7 @@ export default function RoundMatchsCardAdmin({
                       </div>
                     ) : (
                       <>
-                        {match?.players?.map((player, index) => (
+                        {match?.players?.map((player) => (
                           <div
                             key={player.id}
                             className="flex space-x-2 items-center bg-[#1F67CE] p-2"
