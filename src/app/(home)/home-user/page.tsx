@@ -10,13 +10,14 @@ import {
   Spinner,
   useDisclosure,
 } from '@nextui-org/react'
-import { fetchChampionshipsWithRounds, submitPredictions } from './actions'
+import { fetchChampionshipsWithRounds } from './actions'
 import { parseCookies } from 'nookies'
 import toast from 'react-hot-toast'
+import ConfirmPredictionModal from '@/app/components/ConfirmPredictionModal/ConfirmPredictionModal'
+import { useHomeUserContext } from '@/context/HomeUserContext'
 
 export default function HomeUser() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [loading, setLoading] = useState<boolean>(false)
   const [buttonIsLoading, setButtonIsLoading] = useState<boolean>(false)
   const [championships, setChampionships] = useState<IChampionshipWithRounds[]>(
     [],
@@ -27,9 +28,27 @@ export default function HomeUser() {
   const [fetchCompleted, setFetchCompleted] = useState<boolean>(false)
   const [existMatches, setExistMatches] = useState<boolean>(false)
 
-  const [disabledMatches, setDisabledMatches] = useState<{
-    [key: string]: boolean
-  }>({})
+  const [isConfirmPredictionOpen, setIsConfirmPredictionOpen] =
+    useState<boolean>(false)
+
+  const { disabledMatches, loading, setLoading } = useHomeUserContext()
+
+  const [matchPredictionsToConfirm, setMatchPredictionsToConfirm] = useState<
+    {
+      matchDate: Date
+      matchId: string
+      roundName: string
+      teamHome: string
+      teamAway: string
+      predictionHome: number
+      predictionAway: number
+      lastPlayerToScore?: {
+        name?: string
+        id?: string
+        team?: string
+      }
+    }[]
+  >([])
 
   const windowWidth = useWindowWidth()
   const isMobile = windowWidth && windowWidth < 640
@@ -38,14 +57,6 @@ export default function HomeUser() {
 
   const getChampionships = async (token: string) => {
     const result = await fetchChampionshipsWithRounds(token)
-    return result
-  }
-
-  const sendPredictions = async (data: IPrediction, token: string) => {
-    const result = await submitPredictions(data, token)
-    if (result.isError === true && result.error !== undefined) {
-      toast.error(result.error)
-    }
     return result
   }
 
@@ -129,53 +140,6 @@ export default function HomeUser() {
     )
   }
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    setButtonIsLoading(true)
-    event.preventDefault()
-
-    let hasError = false
-    let resultError = null
-
-    const enabledPredictions = matchPredictionScores.filter(
-      (score) => !score.disabled,
-    )
-
-    try {
-      for (const matchPrediction of enabledPredictions) {
-        const result = await sendPredictions(
-          {
-            matchId: matchPrediction.matchId,
-            predictionAway: matchPrediction.predictionAway,
-            predictionHome: matchPrediction.predictionHome,
-            playerId: matchPrediction.playerId,
-          },
-          token,
-        )
-
-        if (result.isError === true) {
-          hasError = true
-          resultError = result.error
-        } else {
-          setDisabledMatches((prevState) => ({
-            ...prevState,
-            [matchPrediction.matchId]: true,
-          }))
-        }
-      }
-
-      setButtonIsLoading(false)
-
-      if (enabledPredictions.length === 0) {
-        toast.error(`Não há partidas para enviar palpites.`)
-      } else if (!hasError && resultError === null) {
-        toast.success('Palpite enviado com sucesso!')
-      }
-    } catch (error) {
-      setLoading(false)
-      toast.error(`Erro ao enviar palpite: ${error}`)
-    }
-  }
-
   const handlePlayerSelection = (matchId: string, playerId: string) => {
     setMatchPredictionScores((prevScores) =>
       prevScores.map((score) =>
@@ -184,10 +148,69 @@ export default function HomeUser() {
     )
   }
 
+  const handleOpenConfirmPredictionModal = () => {
+    setButtonIsLoading(true)
+
+    const enabledMatches = championships.flatMap((championship) =>
+      championship.rounds.flatMap((round) =>
+        round.matchs
+          .filter(
+            (match) =>
+              !(match?.predictions?.length !== 0 || disabledMatches[match.id]),
+          )
+          .map((match) => ({ match, round })),
+      ),
+    )
+
+    const predictions = enabledMatches.map(({ match, round }) => {
+      const prediction = matchPredictionScores.find(
+        (pred) => pred.matchId === match.id,
+      )
+      return {
+        matchDate: match.date,
+        matchId: match.id,
+        roundName: round.name,
+        teamHome: match.teamHome.name,
+        teamAway: match.teamAway.name,
+        predictionHome: prediction?.predictionHome || 0,
+        predictionAway: prediction?.predictionAway || 0,
+        lastPlayerToScore: match.lastPlayerTeam
+          ? {
+              name: prediction?.playerId
+                ? match.players.find(
+                    (player) => player.id === prediction.playerId,
+                  )?.name
+                : undefined,
+              id: prediction?.playerId,
+              team: match.lastPlayerTeam.name,
+            }
+          : undefined,
+      }
+    })
+
+    if (predictions.length === 0) {
+      return toast.error(`Não há partidas para enviar palpites.`)
+    }
+
+    setMatchPredictionsToConfirm(
+      predictions.map((prediction) => ({
+        ...prediction,
+        lastPlayerToScore: prediction.lastPlayerToScore
+          ? {
+              ...prediction.lastPlayerToScore,
+              id: prediction.lastPlayerToScore.id || undefined,
+            }
+          : undefined,
+      })),
+    )
+    setIsConfirmPredictionOpen(true)
+    setButtonIsLoading(false)
+  }
+
   return (
     <form
       className={`flex flex-col mx-auto w-[100%] h-full bg-white-texture `}
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
     >
       <h1 className={`text-center text-[#00409F] text-[18px] font-bold  mt-10`}>
         Resultado correto
@@ -408,10 +431,11 @@ export default function HomeUser() {
       )}
 
       <Button
-        type="submit"
+        type="button"
+        onClick={() => handleOpenConfirmPredictionModal()}
         className={` rounded-full bg-[#00764B] text-white text-[14px] font-bold flex justify-center items-center px-4 py-3 my-2 mt-8 w-[90%] mx-auto`}
       >
-        {buttonIsLoading ? <Spinner /> : 'Aposte Já!'}
+        {buttonIsLoading ? <Spinner /> : 'Confirmar palpites'}
       </Button>
       <Button
         variant="bordered"
@@ -427,6 +451,12 @@ export default function HomeUser() {
         </div>
       </div>
       <MyHistoryModal isOpen={isOpen} onClose={onOpenChange} />
+      <ConfirmPredictionModal
+        isOpen={isConfirmPredictionOpen}
+        onClose={() => setIsConfirmPredictionOpen(false)}
+        matchPredictions={matchPredictionsToConfirm}
+        token={token}
+      />
     </form>
   )
 }
