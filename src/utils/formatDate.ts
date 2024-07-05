@@ -27,3 +27,21 @@ export function formatDateToCustomFullString(date: string) {
 
   return dateInTimeZone
 }
+
+export function formatDateToDayAndHour(date: Date): string {
+  const dateInTimeZone = formatInTimeZone(
+    date,
+    'America/Sao_Paulo',
+    "yyyy-MM-dd'T'HH:mm:ssXXX",
+  )
+
+  const formattedDate = format(
+    new Date(dateInTimeZone),
+    "dd/MM/yyyy, HH'h'mm",
+    {
+      locale: ptBR,
+    },
+  )
+
+  return formattedDate
+}
