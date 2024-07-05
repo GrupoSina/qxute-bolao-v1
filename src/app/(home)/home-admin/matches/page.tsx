@@ -87,8 +87,15 @@ export default function HomeAdmin() {
             <Spinner />
           </div>
         ) : (
-          <Tabs radius="full" variant="solid" color="secondary">
-            <Tab key="waiting" title="Aguardando" className="w-full">
+          <Tabs
+            radius="full"
+            variant="solid"
+            color="secondary"
+            classNames={{
+              cursor: 'bg-[#01409f] text-white',
+            }}
+          >
+            <Tab key="waiting" title="Aguardando" className="w-full text-white">
               <>
                 {roundsWaiting.findIndex((round) =>
                   round.matchs.find((match) => match.id),
@@ -105,7 +112,7 @@ export default function HomeAdmin() {
                 )}
               </>
             </Tab>
-            <Tab key="done" title="Finalizadas" className="w-full">
+            <Tab key="done" title="Finalizadas" className="w-full text-white">
               {roundsDone.findIndex((round) =>
                 round.matchs.find((match) => match.id),
               ) !== -1 ? (

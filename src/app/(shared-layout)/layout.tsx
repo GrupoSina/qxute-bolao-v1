@@ -21,7 +21,7 @@ export default function LoginLayout({
     <div className={`${openSans.className} flex flex-col items-center `}>
       <Header />
       <div
-        className="w-full overflow-auto"
+        className="w-full overflow-x-hidden"
         style={{
           height: 'calc(100vh - 200px)',
         }}

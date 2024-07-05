@@ -106,7 +106,14 @@ export default function MyHistoryModal({ isOpen, onClose }: CustomModalProps) {
                 Filtrar por
               </Button> */}
               <div className="w-full flex flex-col gap-3 justify-center items-center">
-                <Tabs radius="full" variant="solid" color="secondary">
+                <Tabs
+                  radius="full"
+                  variant="solid"
+                  color="secondary"
+                  classNames={{
+                    cursor: 'bg-[#01409f] text-white',
+                  }}
+                >
                   <Tab key="waiting" title="Aguardando" className="w-full">
                     <div className="flex flex-col gap-4">
                       {userPredictions.findIndex(
