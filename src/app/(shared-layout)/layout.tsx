@@ -20,7 +20,9 @@ export default function LoginLayout({
   return (
     <div className={`${openSans.className} flex flex-col min-h-screen justify-start`}>
       <Header />
+
       <div className="bg-white-texture h-full w-full bg-white flex justify-center items-center mb-32">
+
         {children}
       </div>
       <div className="flex w-full">

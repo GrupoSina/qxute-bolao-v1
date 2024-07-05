@@ -267,6 +267,7 @@ export default function CreateMatchesModal({ onClose }: CloseButtonProps) {
       onClose()
       setCurrentModalIndex(0)
       setRefreshRounds(true)
+      window.location.href = '/home-admin/matches'
     }
   }
 
