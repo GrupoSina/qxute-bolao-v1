@@ -85,7 +85,9 @@ export default function MyHistoryModal({ isOpen, onClose }: CustomModalProps) {
       size="xl"
       closeButton={<img src="/closeicon.png" alt="close" />}
     >
-      <ModalContent className={`${fontOpenSans.className} bg-[#1F67CE] text-white`}>
+      <ModalContent
+        className={`${fontOpenSans.className} bg-[#1F67CE] text-white`}
+      >
         {(onClose) => (
           <>
             <ModalHeader className="flex space-x-2 items-center">

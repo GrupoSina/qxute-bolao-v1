@@ -3,7 +3,7 @@ import type { Config } from 'tailwindcss'
 
 const {
   default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
+} = require('tailwindcss/lib/util/flattenColorPalette')
 
 const config: Config = {
   content: [
@@ -27,18 +27,18 @@ const config: Config = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui(),  addVariablesForColors],
+  plugins: [nextui(), addVariablesForColors],
 }
 
 function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
- 
+  const allColors = flattenColorPalette(theme('colors'))
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+  )
+
   addBase({
-    ":root": newVars,
-  });
+    ':root': newVars,
+  })
 }
 
 export default config

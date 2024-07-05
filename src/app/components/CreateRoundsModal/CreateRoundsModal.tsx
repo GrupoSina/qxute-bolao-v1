@@ -66,11 +66,11 @@ export default function CreateRoundsModal({ onClose }: CloseButtonprops) {
     <>
       <ModalHeader className="flex space-x-2 items-center">
         <Image src="/stadiumicon.svg" alt="stadium icon" />
-        <h1 className='text-white'>2. Rodadas </h1>
+        <h1 className="text-white">2. Rodadas </h1>
       </ModalHeader>
       <form onSubmit={handleSubmit(handleCreateRound)}>
         <ModalBody className="space-y-2">
-          <p className='text-white'>
+          <p className="text-white">
             Lorem ipsum dolor sit amet consectetur. Nulla ac nisl pellentesque
             netus diam. Vel urna mattis.
           </p>

@@ -1,18 +1,20 @@
-"use client";
-import React from "react";
-import { Button, useDisclosure, Image } from "@nextui-org/react";
-import { Open_Sans as OpenSans } from "next/font/google";
-import CreateEventModal from "@/app/components/CreateEventModal/CreateEventModal";
-import { useEventsContext } from "@/context/EventsContext";
+'use client'
+import React from 'react'
+import { Button, useDisclosure, Image } from '@nextui-org/react'
+import { Open_Sans as OpenSans } from 'next/font/google'
+import CreateEventModal from '@/app/components/CreateEventModal/CreateEventModal'
+import { useEventsContext } from '@/context/EventsContext'
 
-const fontOpenSans = OpenSans({ subsets: ["latin"] });
+const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
 export default function HomeAdmin() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { setCurrentModalIndex } = useEventsContext();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { setCurrentModalIndex } = useEventsContext()
 
   return (
-    <div className={`w-full h-full flex flex-col items-center ${fontOpenSans.className}`}>
+    <div
+      className={`w-full h-full flex flex-col items-center ${fontOpenSans.className}`}
+    >
       <div className="max-w-[1140px] w-full flex flex-col items-center">
         <h1
           className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
@@ -39,5 +41,5 @@ export default function HomeAdmin() {
         <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
       </div>
     </div>
-  );
+  )
 }

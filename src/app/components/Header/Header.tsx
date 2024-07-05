@@ -81,7 +81,6 @@ export default function App() {
       isBordered
       maxWidth="full"
       className="bg-[#184076] text-white"
-      
     >
       <NavbarContent className="">
         <NavbarMenuToggle />

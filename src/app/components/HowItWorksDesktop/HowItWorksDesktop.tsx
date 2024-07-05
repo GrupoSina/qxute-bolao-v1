@@ -1,12 +1,12 @@
-import React, { forwardRef } from "react";
-import { ButtonMovingBorder } from "../MovingBorder/MovingBorder";
-import useWindowWidth from "@/utils/window-width-hook";
-import { useRouter } from "next/navigation";
+import React, { forwardRef } from 'react'
+import { ButtonMovingBorder } from '../MovingBorder/MovingBorder'
+import useWindowWidth from '@/utils/window-width-hook'
+import { useRouter } from 'next/navigation'
 
 const HowItWorksDesktop = forwardRef<HTMLDivElement>((_, ref) => {
-  const { push } = useRouter();
-  const windowWidth = useWindowWidth();
-  const isDesktop = windowWidth && windowWidth >= 1024;
+  const { push } = useRouter()
+  const windowWidth = useWindowWidth()
+  const isDesktop = windowWidth && windowWidth >= 1024
   return (
     <div
       ref={ref}
@@ -41,7 +41,7 @@ const HowItWorksDesktop = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
       {isDesktop && (
         <ButtonMovingBorder
-          onClick={() => push("/login")}
+          onClick={() => push('/login')}
           borderRadius="50rem"
           className="bg-[#00409F] rounded-full  text-white  border-[#00764B] border-[1px]"
         >
@@ -49,7 +49,7 @@ const HowItWorksDesktop = forwardRef<HTMLDivElement>((_, ref) => {
         </ButtonMovingBorder>
       )}
     </div>
-  );
-});
+  )
+})
 
-export default HowItWorksDesktop;
+export default HowItWorksDesktop

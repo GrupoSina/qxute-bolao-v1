@@ -184,7 +184,9 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
             ) : (
               <form onSubmit={handleSubmit(handleSave)}>
                 <ModalBody className="space-y-2">
-                  <p className='text-white'>Defina abaixo o resultado da partida:</p>
+                  <p className="text-white">
+                    Defina abaixo o resultado da partida:
+                  </p>
                   <div className="flex flex-col p-4 bg-[#00409F] rounded-lg w-[90%] mx-auto">
                     <div className="flex w-full justify-between">
                       <div className="flex space-x-2">

@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client'
+import React, { useState, useEffect } from 'react'
 import {
   Button,
   useDisclosure,
@@ -7,28 +7,28 @@ import {
   Tabs,
   Tab,
   Spinner,
-} from "@nextui-org/react";
-import { Open_Sans as OpenSans } from "next/font/google";
-import CreateEventModal from "@/app/components/CreateEventModal/CreateEventModal";
-import { useEventsContext } from "@/context/EventsContext";
-import toast from "react-hot-toast";
-import { handleAxiosError } from "@/services/api/error";
-import RoundService from "@/services/api/models/round";
-import RoundMatchsCardAdmin from "@/app/components/RoundMatchsCardAdmin/RoundMatchsCardAdmin";
+} from '@nextui-org/react'
+import { Open_Sans as OpenSans } from 'next/font/google'
+import CreateEventModal from '@/app/components/CreateEventModal/CreateEventModal'
+import { useEventsContext } from '@/context/EventsContext'
+import toast from 'react-hot-toast'
+import { handleAxiosError } from '@/services/api/error'
+import RoundService from '@/services/api/models/round'
+import RoundMatchsCardAdmin from '@/app/components/RoundMatchsCardAdmin/RoundMatchsCardAdmin'
 
-const fontOpenSans = OpenSans({ subsets: ["latin"] });
+const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
 export default function HomeAdmin() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [loading, setLoading] = useState(true);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [loading, setLoading] = useState(true)
   const [roundsWaiting, setRoundsWaiting] = useState<
     IRoundWithMatchsAndChampionship[]
-  >([]);
+  >([])
   const [roundsDone, setRoundsDone] = useState<
     IRoundWithMatchsAndChampionship[]
-  >([]);
+  >([])
   const { setCurrentModalIndex, refreshRounds, setRefreshRounds } =
-    useEventsContext();
+    useEventsContext()
 
   // useEffect(() => {
   //   fetchRounds('WAITING')
@@ -37,39 +37,39 @@ export default function HomeAdmin() {
 
   useEffect(() => {
     if (refreshRounds) {
-      refreshData();
+      refreshData()
     }
-  }, [refreshRounds]);
+  }, [refreshRounds])
 
   async function refreshData() {
-    setLoading(true);
-    await fetchRounds("WAITING");
-    await fetchRounds("DONE");
-    setRefreshRounds(false);
-    setLoading(false);
+    setLoading(true)
+    await fetchRounds('WAITING')
+    await fetchRounds('DONE')
+    setRefreshRounds(false)
+    setLoading(false)
   }
 
-  const fetchRounds = async (status: "WAITING" | "DONE") => {
+  const fetchRounds = async (status: 'WAITING' | 'DONE') => {
     try {
-      const { fetchRoundsByStatus } = await RoundService();
-      const response = await fetchRoundsByStatus(status);
+      const { fetchRoundsByStatus } = await RoundService()
+      const response = await fetchRoundsByStatus(status)
 
       switch (status) {
-        case "DONE":
-          setRoundsDone([]);
-          setRoundsDone(response);
-          return response;
+        case 'DONE':
+          setRoundsDone([])
+          setRoundsDone(response)
+          return response
 
         default:
-          setRoundsWaiting([]);
-          setRoundsWaiting(response);
-          return response;
+          setRoundsWaiting([])
+          setRoundsWaiting(response)
+          return response
       }
     } catch (error) {
-      const customError = handleAxiosError(error);
-      toast.error(customError.message);
+      const customError = handleAxiosError(error)
+      toast.error(customError.message)
     }
-  };
+  }
 
   return (
     <div
@@ -98,7 +98,7 @@ export default function HomeAdmin() {
               >
                 <div className="max-w-[450px] w-full">
                   {roundsWaiting.findIndex((round) =>
-                    round.matchs.find((match) => match.id)
+                    round.matchs.find((match) => match.id),
                   ) !== -1 ? (
                     <>
                       {roundsWaiting.map((round) => (
@@ -112,7 +112,6 @@ export default function HomeAdmin() {
                       </p>
                     </div>
                   )}
-
                 </div>
               </Tab>
               <Tab
@@ -122,7 +121,7 @@ export default function HomeAdmin() {
               >
                 <div className="max-w-[450px] w-full">
                   {roundsDone.findIndex((round) =>
-                    round.matchs.find((match) => match.id)
+                    round.matchs.find((match) => match.id),
                   ) !== -1 ? (
                     <>
                       {roundsDone.map((round) => (
@@ -165,5 +164,5 @@ export default function HomeAdmin() {
       /> */}
       </div>
     </div>
-  );
+  )
 }
