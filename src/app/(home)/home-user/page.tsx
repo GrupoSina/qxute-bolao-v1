@@ -1,7 +1,7 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import MyHistoryModal from "@/app/components/MyHistoryModal/MyHistoryModal";
-import useWindowWidth from "@/utils/window-width-hook";
+'use client'
+import React, { useEffect, useState } from 'react'
+import MyHistoryModal from '@/app/components/MyHistoryModal/MyHistoryModal'
+import useWindowWidth from '@/utils/window-width-hook'
 import {
   Button,
   Image,
@@ -9,71 +9,71 @@ import {
   RadioGroup,
   Spinner,
   useDisclosure,
-} from "@nextui-org/react";
-import { fetchChampionshipsWithRounds } from "./actions";
-import { parseCookies } from "nookies";
-import toast from "react-hot-toast";
-import ConfirmPredictionModal from "@/app/components/ConfirmPredictionModal/ConfirmPredictionModal";
-import { useHomeUserContext } from "@/context/HomeUserContext";
+} from '@nextui-org/react'
+import { fetchChampionshipsWithRounds } from './actions'
+import { parseCookies } from 'nookies'
+import toast from 'react-hot-toast'
+import ConfirmPredictionModal from '@/app/components/ConfirmPredictionModal/ConfirmPredictionModal'
+import { useHomeUserContext } from '@/context/HomeUserContext'
 
 export default function HomeUser() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [championships, setChampionships] = useState<IChampionshipWithRounds[]>(
-    []
-  );
+    [],
+  )
   const [matchPredictionScores, setMatchPredictionScores] = useState<
     IPrediction[]
-  >([]);
-  const [fetchCompleted, setFetchCompleted] = useState<boolean>(false);
-  const [existMatches, setExistMatches] = useState<boolean>(false);
+  >([])
+  const [fetchCompleted, setFetchCompleted] = useState<boolean>(false)
+  const [existMatches, setExistMatches] = useState<boolean>(false)
 
   const [isConfirmPredictionOpen, setIsConfirmPredictionOpen] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
-  const { disabledMatches, loading, setLoading } = useHomeUserContext();
+  const { disabledMatches, loading, setLoading } = useHomeUserContext()
 
   const [matchPredictionsToConfirm, setMatchPredictionsToConfirm] = useState<
     {
-      matchDate: Date;
-      matchId: string;
-      roundName: string;
-      teamHome: string;
-      teamAway: string;
-      predictionHome: number;
-      predictionAway: number;
+      matchDate: Date
+      matchId: string
+      roundName: string
+      teamHome: string
+      teamAway: string
+      predictionHome: number
+      predictionAway: number
       lastPlayerToScore?: {
-        name?: string;
-        id?: string;
-        team?: string;
-      };
+        name?: string
+        id?: string
+        team?: string
+      }
     }[]
-  >([]);
+  >([])
 
-  const windowWidth = useWindowWidth();
-  const isMobile = windowWidth && windowWidth < 640;
+  const windowWidth = useWindowWidth()
+  const isMobile = windowWidth && windowWidth < 640
 
-  const { "qxute-bolao:x-token": token } = parseCookies();
+  const { 'qxute-bolao:x-token': token } = parseCookies()
 
   const getChampionships = async (token: string) => {
-    const result = await fetchChampionshipsWithRounds(token);
-    return result;
-  };
+    const result = await fetchChampionshipsWithRounds(token)
+    return result
+  }
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     getChampionships(token)
       .then((data) => {
         if (data.championships) {
-          const championships = data.championships;
-          setChampionships(championships);
+          const championships = data.championships
+          setChampionships(championships)
         }
       })
       .catch((e) => toast.error(e))
       .finally(() => {
-        setLoading(false);
-        setFetchCompleted(true);
-      });
-  }, [token]);
+        setLoading(false)
+        setFetchCompleted(true)
+      })
+  }, [token])
 
   useEffect(() => {
     const initialScores = championships.flatMap((championship) =>
@@ -84,68 +84,68 @@ export default function HomeUser() {
           playerId: null,
           matchId: match.id,
           disabled: match?.predictions?.length !== 0,
-        }))
-      )
-    );
+        })),
+      ),
+    )
 
-    setMatchPredictionScores(initialScores);
+    setMatchPredictionScores(initialScores)
 
     const matchs = championships.flatMap((championship) =>
-      championship.rounds.flatMap((round) => round.matchs)
-    );
+      championship.rounds.flatMap((round) => round.matchs),
+    )
 
     if (matchs.length > 0) {
-      setExistMatches(true);
+      setExistMatches(true)
     }
-  }, [championships]);
+  }, [championships])
 
-  const increaseScore = (matchId: string, type: "home" | "away") => {
+  const increaseScore = (matchId: string, type: 'home' | 'away') => {
     setMatchPredictionScores((prevScores) =>
       prevScores.map((score) =>
         score.matchId === matchId
           ? {
               ...score,
               predictionHome:
-                type === "home"
+                type === 'home'
                   ? score.predictionHome + 1
                   : score.predictionHome,
               predictionAway:
-                type === "away"
+                type === 'away'
                   ? score.predictionAway + 1
                   : score.predictionAway,
             }
-          : score
-      )
-    );
-  };
+          : score,
+      ),
+    )
+  }
 
-  const decreaseScore = (matchId: string, type: "home" | "away") => {
+  const decreaseScore = (matchId: string, type: 'home' | 'away') => {
     setMatchPredictionScores((prevScores) =>
       prevScores.map((score) =>
         score.matchId === matchId
           ? {
               ...score,
               predictionHome:
-                type === "home" && score.predictionHome > 0
+                type === 'home' && score.predictionHome > 0
                   ? score.predictionHome - 1
                   : score.predictionHome,
               predictionAway:
-                type === "away" && score.predictionAway > 0
+                type === 'away' && score.predictionAway > 0
                   ? score.predictionAway - 1
                   : score.predictionAway,
             }
-          : score
-      )
-    );
-  };
+          : score,
+      ),
+    )
+  }
 
   const handlePlayerSelection = (matchId: string, playerId: string) => {
     setMatchPredictionScores((prevScores) =>
       prevScores.map((score) =>
-        score.matchId === matchId ? { ...score, playerId } : score
-      )
-    );
-  };
+        score.matchId === matchId ? { ...score, playerId } : score,
+      ),
+    )
+  }
 
   const handleOpenConfirmPredictionModal = () => {
     const enabledMatches = championships.flatMap((championship) =>
@@ -153,16 +153,16 @@ export default function HomeUser() {
         round.matchs
           .filter(
             (match) =>
-              !(match?.predictions?.length !== 0 || disabledMatches[match.id])
+              !(match?.predictions?.length !== 0 || disabledMatches[match.id]),
           )
-          .map((match) => ({ match, round }))
-      )
-    );
+          .map((match) => ({ match, round })),
+      ),
+    )
 
     const predictions = enabledMatches.map(({ match, round }) => {
       const prediction = matchPredictionScores.find(
-        (pred) => pred.matchId === match.id
-      );
+        (pred) => pred.matchId === match.id,
+      )
       return {
         matchDate: match.date,
         matchId: match.id,
@@ -175,18 +175,18 @@ export default function HomeUser() {
           ? {
               name: prediction?.playerId
                 ? match.players.find(
-                    (player) => player.id === prediction.playerId
+                    (player) => player.id === prediction.playerId,
                   )?.name
                 : undefined,
               id: prediction?.playerId,
               team: match.lastPlayerTeam.name,
             }
           : undefined,
-      };
-    });
+      }
+    })
 
     if (predictions.length === 0) {
-      return toast.error(`Não há partidas para enviar palpites.`);
+      return toast.error(`Não há partidas para enviar palpites.`)
     }
 
     setMatchPredictionsToConfirm(
@@ -198,11 +198,11 @@ export default function HomeUser() {
               id: prediction.lastPlayerToScore.id || undefined,
             }
           : undefined,
-      }))
-    );
+      })),
+    )
 
-    setIsConfirmPredictionOpen(true);
-  };
+    setIsConfirmPredictionOpen(true)
+  }
 
   return (
     <form
@@ -239,7 +239,7 @@ export default function HomeUser() {
                         className="flex flex-col w-[90%] mx-auto border-1px border-[#00409F]"
                       >
                         <div
-                          className={`flex flex-col bg-[#1F67CE] p-4 rounded-lg ${match?.predictions?.length !== 0 || disabledMatches[match.id] ? "opacity-50 pointer-events-none" : ""}`}
+                          className={`flex flex-col bg-[#1F67CE] p-4 rounded-lg ${match?.predictions?.length !== 0 || disabledMatches[match.id] ? 'opacity-50 pointer-events-none' : ''}`}
                         >
                           <div className="flex w-full justify-between">
                             <div className="flex space-x-2">
@@ -249,7 +249,7 @@ export default function HomeUser() {
                               </h1>
                             </div>
                             <h1 className="text-white text-[12px] font-normal">
-                              {new Date(match.date).toLocaleDateString("pt-BR")}
+                              {new Date(match.date).toLocaleDateString('pt-BR')}
                             </h1>
                           </div>
                           <div className="flex justify-center items-center mt-4">
@@ -260,11 +260,11 @@ export default function HomeUser() {
                               <div className="flex justify-center items-center">
                                 <div className="flex justify-center items-center">
                                   <Button
-                                    size={isMobile ? "sm" : "md"}
+                                    size={isMobile ? 'sm' : 'md'}
                                     variant="bordered"
                                     className="min-w-1 text-white border-solid border-[1px] border-white bg-[#00409F]"
                                     onClick={() =>
-                                      decreaseScore(match.id, "home")
+                                      decreaseScore(match.id, 'home')
                                     }
                                   >
                                     -
@@ -279,19 +279,20 @@ export default function HomeUser() {
                                             >
                                               {predict.predictionHome}
                                             </h1>
-                                          )
+                                          ),
                                         )
                                       : matchPredictionScores.find(
                                           (scorePrediction) =>
-                                            scorePrediction.matchId === match.id
+                                            scorePrediction.matchId ===
+                                            match.id,
                                         )?.predictionHome}
                                   </div>
                                   <Button
-                                    size={isMobile ? "sm" : "md"}
+                                    size={isMobile ? 'sm' : 'md'}
                                     variant="bordered"
                                     className="text-white border-solid border-[1px] min-w-1 border-white bg-[#00409F]"
                                     onClick={() =>
-                                      increaseScore(match.id, "home")
+                                      increaseScore(match.id, 'home')
                                     }
                                   >
                                     +
@@ -306,11 +307,11 @@ export default function HomeUser() {
                               </h1>
                               <div className="flex justify-center items-center">
                                 <Button
-                                  size={isMobile ? "sm" : "md"}
+                                  size={isMobile ? 'sm' : 'md'}
                                   variant="bordered"
                                   className="text-white border-solid border-[1px] min-w-1 border-white bg-[#00409F]"
                                   onClick={() =>
-                                    decreaseScore(match.id, "away")
+                                    decreaseScore(match.id, 'away')
                                   }
                                 >
                                   -
@@ -325,18 +326,18 @@ export default function HomeUser() {
                                           >
                                             {predict.predictionAway}
                                           </h1>
-                                        )
+                                        ),
                                       )
                                     : matchPredictionScores.find(
-                                        (score) => score.matchId === match.id
+                                        (score) => score.matchId === match.id,
                                       )?.predictionAway}
                                 </div>
                                 <Button
-                                  size={isMobile ? "sm" : "md"}
+                                  size={isMobile ? 'sm' : 'md'}
                                   variant="bordered"
                                   className="text-white border-solid border-[1px] min-w-1 border-white bg-[#00409F]"
                                   onClick={() =>
-                                    increaseScore(match.id, "away")
+                                    increaseScore(match.id, 'away')
                                   }
                                 >
                                   +
@@ -351,14 +352,14 @@ export default function HomeUser() {
                           <h1
                             className={`text-center text-[#00409F] text-[18px] font-bold  mt-10`}
                           >
-                            Quem fará o último gol do{" "}
+                            Quem fará o último gol do{' '}
                             {match.lastPlayerTeam.name}?
                           </h1>
                           <p className="text-[#00409F] mt-2 mb-4 text-center">
                             Lorem ipsum dolor sit amet consectetur. Laoreet.
                           </p>
                           <div
-                            className={`flex flex-col p-4 bg-[#1F67CE] rounded-lg w-[90%] mx-auto ${match?.predictions?.length !== 0 || disabledMatches[match.id] ? "opacity-50 pointer-events-none" : ""}`}
+                            className={`flex flex-col p-4 bg-[#1F67CE] rounded-lg w-[90%] mx-auto ${match?.predictions?.length !== 0 || disabledMatches[match.id] ? 'opacity-50 pointer-events-none' : ''}`}
                           >
                             <div className="flex w-full justify-between">
                               <div className="flex space-x-2">
@@ -367,13 +368,13 @@ export default function HomeUser() {
                                   alt="sports icon"
                                 />
                                 <h1 className="text-white text-[12px] font-normal">
-                                  {round.name} - {match.teamHome.name} X{" "}
+                                  {round.name} - {match.teamHome.name} X{' '}
                                   {match.teamAway.name}
                                 </h1>
                               </div>
                               <h1 className="text-white text-[12px] font-normal">
                                 {new Date(match.date).toLocaleDateString(
-                                  "pt-BR"
+                                  'pt-BR',
                                 )}
                               </h1>
                             </div>
@@ -392,10 +393,10 @@ export default function HomeUser() {
                               defaultValue={
                                 match?.predictions?.find(
                                   (prediction) =>
-                                    prediction.predictionType === "PLAYER"
+                                    prediction.predictionType === 'PLAYER',
                                 )?.lastPlayerToScoreId ||
                                 matchPredictionScores.find(
-                                  (score) => score.matchId === match.id
+                                  (score) => score.matchId === match.id,
                                 )?.playerId ||
                                 undefined
                               }
@@ -403,7 +404,7 @@ export default function HomeUser() {
                               onChange={(event) =>
                                 handlePlayerSelection(
                                   match.id,
-                                  event.target.value
+                                  event.target.value,
                                 )
                               }
                             >
@@ -424,7 +425,7 @@ export default function HomeUser() {
                                     className="custom-radio-order justify-between"
                                     value={`${player.id}`}
                                     classNames={{
-                                      label: "hidden",
+                                      label: 'hidden',
                                     }}
                                   >
                                     {player.name}
@@ -436,8 +437,8 @@ export default function HomeUser() {
                         </div>
                       )}
                     </div>
-                  ))
-                )
+                  )),
+                ),
               )
             )}
           </div>
@@ -474,5 +475,5 @@ export default function HomeUser() {
         />
       </div>
     </form>
-  );
+  )
 }

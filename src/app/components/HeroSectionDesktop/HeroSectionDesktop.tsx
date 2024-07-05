@@ -1,12 +1,12 @@
-import { Button, Image } from "@nextui-org/react";
-import { TypewriterEffectSmooth } from "../TypewitterEffect/TypeWritterEffect";
-import { Open_Sans } from "next/font/google";
-import useWindowWidth from "@/utils/window-width-hook";
+import React from 'react'
+import { Button, Image } from '@nextui-org/react'
+import { TypewriterEffectSmooth } from '../TypewitterEffect/TypeWritterEffect'
+import { Open_Sans } from 'next/font/google'
 
-const fontOpenSans = Open_Sans({ subsets: ["latin"] });
+const fontOpenSans = Open_Sans({ subsets: ['latin'] })
 
 interface HeroSectionDesktopProps {
-  howItWorksRef: React.RefObject<HTMLDivElement>;
+  howItWorksRef: React.RefObject<HTMLDivElement>
 }
 
 export default function HeroSectionDesktop({
@@ -14,20 +14,20 @@ export default function HeroSectionDesktop({
 }: HeroSectionDesktopProps) {
   const words = [
     {
-      text: "BOLÃO",
+      text: 'BOLÃO',
     },
 
     {
-      text: "QXUTE",
+      text: 'QXUTE',
     },
-  ];
+  ]
 
   const handleScroll = () => {
-    console.log("s");
+    console.log('s')
     if (howItWorksRef && howItWorksRef.current) {
-      howItWorksRef.current.scrollIntoView({ behavior: "smooth" });
+      howItWorksRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  };
+  }
   return (
     <div className="lg:flex hidden items-center max-w-[1140px] h-[400px] mt-12">
       <div className="flex flex-col bg-[#1F67CE] p-10 items-start max-w-[550px]">
@@ -65,5 +65,5 @@ export default function HeroSectionDesktop({
         />
       </div>
     </div>
-  );
+  )
 }

@@ -12,7 +12,7 @@ export default function CarrosselBetVip() {
       >
         BOLÃO LOREM IPSUM
       </h1>
-      <p className='text-white'>
+      <p className="text-white">
         Lorem ipsum dolor sit amet consectetur. Tortor arcu quisque vestibulum
         aenean sed morbi laoreet diam. Urna tellus nunc fusce hendrerit eget
         dolor neque sit.

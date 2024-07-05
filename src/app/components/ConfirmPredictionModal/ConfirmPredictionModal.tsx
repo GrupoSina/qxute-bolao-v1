@@ -105,7 +105,9 @@ const ConfirmPredictionModal: React.FC<ConfirmPredictionModalProps> = ({
       <ModalContent className="bg-[#1F67CE]">
         {(onClose) => (
           <>
-            <ModalHeader className='text-white'>Confirme seus palpites</ModalHeader>
+            <ModalHeader className="text-white">
+              Confirme seus palpites
+            </ModalHeader>
             <ModalBody>
               {matchPredictions.map((matchPrediction, index) => (
                 <div key={index} className="">
