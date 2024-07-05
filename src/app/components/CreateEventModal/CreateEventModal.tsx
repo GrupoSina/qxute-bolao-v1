@@ -23,7 +23,7 @@ export default function CreateEventModal({
       scrollBehavior="outside"
       isOpen={isOpen}
       onOpenChange={onClose}
-      size="4xl"
+      size="2xl"
       closeButton={<img src="/closeicon.png" alt="close" />}
     >
       <ModalContent className={`bg-[#1F67CE]`}>

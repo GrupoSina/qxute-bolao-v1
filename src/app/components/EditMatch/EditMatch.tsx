@@ -276,13 +276,13 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
       scrollBehavior="outside"
       isOpen={isOpen}
       onOpenChange={handleOnClose}
-      size="4xl"
+      size="xl"
       closeButton={<img src="/closeicon.png" alt="close" />}
     >
       <ModalContent className={`bg-[#1F67CE]`}>
         {() => (
           <form onSubmit={handleSubmit(handleEdit)}>
-            <ModalHeader className="flex space-x-2 items-center">
+            <ModalHeader className="flex space-x-2 items-center text-white">
               <MdEdit />
               <h1>Editar </h1>
             </ModalHeader>

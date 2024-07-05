@@ -66,13 +66,13 @@ export default function RoundMatchsCardAdmin({
               </div>
               <div className="flex items-center justify-evenly">
                 <div className="flex flex-col items-center">
-                  <p>{match.teamHome.name}</p>
-                  <p>{match.scoreHome}</p>
+                  <p className='text-white'>{match.teamHome.name}</p>
+                  <p className='text-white'>{match.scoreHome}</p>
                 </div>
-                <p>X</p>
+                <p className='text-white'>X</p>
                 <div className="flex flex-col items-center">
-                  <p>{match.teamAway.name}</p>
-                  <p>{match.scoreAway}</p>
+                  <p className='text-white'>{match.teamAway.name}</p>
+                  <p className='text-white'>{match.scoreAway}</p>
                 </div>
               </div>
               {match.lastPlayerTeam && (
@@ -137,7 +137,7 @@ export default function RoundMatchsCardAdmin({
                 </div>
               )}
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 text-white">
                 <MdPerson />
                 <p className="text-white text-[12px] font-normal">
                   {match.creator?.fullName}

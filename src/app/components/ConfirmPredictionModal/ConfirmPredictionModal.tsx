@@ -99,13 +99,13 @@ const ConfirmPredictionModal: React.FC<ConfirmPredictionModalProps> = ({
       scrollBehavior="outside"
       isOpen={isOpen}
       onClose={onClose}
-      size="4xl"
+      size="xl"
       closeButton={<img src="/closeicon.png" alt="close" />}
     >
       <ModalContent className="bg-[#1F67CE]">
         {(onClose) => (
           <>
-            <ModalHeader>Confirme seus palpites</ModalHeader>
+            <ModalHeader className='text-white'>Confirme seus palpites</ModalHeader>
             <ModalBody>
               {matchPredictions.map((matchPrediction, index) => (
                 <div key={index} className="">
@@ -132,7 +132,7 @@ const ConfirmPredictionModal: React.FC<ConfirmPredictionModalProps> = ({
                           {matchPrediction.predictionHome}
                         </h1>
                       </div>
-                      <h1 className="mx-4 text-[12px]">X</h1>
+                      <h1 className="mx-4 text-[12px] text-white">X</h1>
                       <div className="flex flex-col justify-center items-center">
                         <h1 className="mx-3 text-[12px]  text-white font-semibold">
                           {matchPrediction.teamAway}
