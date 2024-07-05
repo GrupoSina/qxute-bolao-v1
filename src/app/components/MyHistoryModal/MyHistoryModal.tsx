@@ -29,6 +29,7 @@ export default function MyHistoryModal({ isOpen, onClose }: CustomModalProps) {
     useState<number>(0)
   const [totalIncorrectPredictions, setTotalIncorrectPredictions] =
     useState<number>(0)
+
   const { 'qxute-bolao:x-token': token } = parseCookies()
 
   const getUserPredictions = async (token: string) => {
