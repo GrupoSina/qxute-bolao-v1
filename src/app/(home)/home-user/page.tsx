@@ -18,7 +18,6 @@ import { useHomeUserContext } from '@/context/HomeUserContext'
 
 export default function HomeUser() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [buttonIsLoading, setButtonIsLoading] = useState<boolean>(false)
   const [championships, setChampionships] = useState<IChampionshipWithRounds[]>(
     [],
   )
@@ -149,8 +148,6 @@ export default function HomeUser() {
   }
 
   const handleOpenConfirmPredictionModal = () => {
-    setButtonIsLoading(true)
-
     const enabledMatches = championships.flatMap((championship) =>
       championship.rounds.flatMap((round) =>
         round.matchs
@@ -203,8 +200,8 @@ export default function HomeUser() {
           : undefined,
       })),
     )
+
     setIsConfirmPredictionOpen(true)
-    setButtonIsLoading(false)
   }
 
   return (
@@ -435,7 +432,7 @@ export default function HomeUser() {
         onClick={() => handleOpenConfirmPredictionModal()}
         className={` rounded-full bg-[#00764B] text-white text-[14px] font-bold flex justify-center items-center px-4 py-3 my-2 mt-8 w-[90%] mx-auto`}
       >
-        {buttonIsLoading ? <Spinner /> : 'Confirmar palpites'}
+        Confirmar palpites
       </Button>
       <Button
         variant="bordered"
