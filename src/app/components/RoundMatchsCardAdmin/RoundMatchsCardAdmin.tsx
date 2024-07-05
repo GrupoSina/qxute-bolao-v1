@@ -1,38 +1,37 @@
-import React from "react";
-import { formatDateToCustomString } from "@/utils/formatDate";
-import { Button, Image, useDisclosure } from "@nextui-org/react";
-import { MdEdit, MdPerson } from "react-icons/md";
-import SetResultModal from "../SetResultModal/SetResultModal";
-import { useEventsContext } from "@/context/EventsContext";
-import { getLogo } from "@/utils/getLogo";
-import EditMatchModal from "../EditMatch/EditMatch";
+import React from 'react'
+import { formatDateToCustomString } from '@/utils/formatDate'
+import { Button, Image, useDisclosure } from '@nextui-org/react'
+import { MdEdit, MdPerson } from 'react-icons/md'
+import SetResultModal from '../SetResultModal/SetResultModal'
+import { useEventsContext } from '@/context/EventsContext'
+import { getLogo } from '@/utils/getLogo'
+import EditMatchModal from '../EditMatch/EditMatch'
 
 type RoundMatchsCardAdmin = {
-  round: IRoundWithMatchsAndChampionship;
-  isDone?: boolean;
-};
+  round: IRoundWithMatchsAndChampionship
+  isDone?: boolean
+}
 
 export default function RoundMatchsCardAdmin({
   round,
   isDone,
 }: RoundMatchsCardAdmin) {
-  const { setSelectedMatchSetResult, setEditSelectedMatch } =
-    useEventsContext();
+  const { setSelectedMatchSetResult, setEditSelectedMatch } = useEventsContext()
   const {
     isOpen: isOpenSetResultModal,
     onOpen: onOpenSetResultModal,
     onOpenChange: onOpenChangeSetResultModal,
-  } = useDisclosure();
+  } = useDisclosure()
 
   const {
     isOpen: isOpenEditMatchModal,
     onOpen: onOpenEditMatchModal,
     onOpenChange: onOpenChangeEditMatchModal,
-  } = useDisclosure();
+  } = useDisclosure()
 
   function handleSetResult(
     round: IRoundWithMatchsAndChampionship,
-    match: IMatchRound
+    match: IMatchRound,
   ) {
     setSelectedMatchSetResult({
       id: round.id,
@@ -41,8 +40,8 @@ export default function RoundMatchsCardAdmin({
       championship: round.championship,
       createdAt: round.createdAt,
       match,
-    });
-    onOpenSetResultModal();
+    })
+    onOpenSetResultModal()
   }
 
   return (
@@ -58,7 +57,7 @@ export default function RoundMatchsCardAdmin({
                 <div className="flex space-x-2">
                   <Image src="/sportsicon.png" alt="sports icon" />
                   <h1 className="text-white text-[12px] font-normal">
-                    {round.championship.name} - {round.name}{" "}
+                    {round.championship.name} - {round.name}{' '}
                   </h1>
                 </div>
                 <h1 className="text-white text-[12px] font-normal">
@@ -80,7 +79,7 @@ export default function RoundMatchsCardAdmin({
                 <div className="flex flex-col">
                   <div className="flex space-x-2 items-center">
                     <div
-                      className={`rounded-full w-[28px] h-[28px] ${getLogo(match.lastPlayerTeam?.name) === "/defaultlogo.svg" && "bg-[#fff]"} `}
+                      className={`rounded-full w-[28px] h-[28px] ${getLogo(match.lastPlayerTeam?.name) === '/defaultlogo.svg' && 'bg-[#fff]'} `}
                     >
                       <Image
                         src={getLogo(match.lastPlayerTeam?.name)}
@@ -94,10 +93,10 @@ export default function RoundMatchsCardAdmin({
                   </div>
                   <hr className="w-full h-[1px] bg-white my-4" />
                   <div className="flex flex-col gap-2">
-                    {match.status === "DONE" ? (
+                    {match.status === 'DONE' ? (
                       <div className="flex space-x-2 items-center bg-[#1F67CE] p-2">
                         <div
-                          className={`w-[28px] h-[28px] rounded-2xl ${getLogo(match.lastPlayerTeam?.name) === "/defaultlogo.svg" && "bg-[#fff]"} `}
+                          className={`w-[28px] h-[28px] rounded-2xl ${getLogo(match.lastPlayerTeam?.name) === '/defaultlogo.svg' && 'bg-[#fff]'} `}
                         >
                           <Image
                             src={getLogo(match.lastPlayerTeam?.name)}
@@ -118,7 +117,7 @@ export default function RoundMatchsCardAdmin({
                             className="flex space-x-2 items-center bg-[#1F67CE] p-2"
                           >
                             <div
-                              className={`w-[28px] h-[28px] rounded-2xl ${getLogo(player.name) === "/defaultlogo.svg" && "bg-[#fff]"} `}
+                              className={`w-[28px] h-[28px] rounded-2xl ${getLogo(player.name) === '/defaultlogo.svg' && 'bg-[#fff]'} `}
                             >
                               <Image
                                 src={getLogo(player.name)}
@@ -150,8 +149,8 @@ export default function RoundMatchsCardAdmin({
                     variant="bordered"
                     className={`text-[14px] text-white font-bold border-white rounded-full`}
                     onPress={() => {
-                      onOpenEditMatchModal();
-                      setEditSelectedMatch(match);
+                      onOpenEditMatchModal()
+                      setEditSelectedMatch(match)
                     }}
                   >
                     <p className="flex gap-3 items-center">
@@ -165,7 +164,7 @@ export default function RoundMatchsCardAdmin({
                   type="submit"
                   className={`text-[14px] text-white font-bold bg-[#00764B] rounded-full`}
                 >
-                  {isDone ? "Editar Resultado" : "Definir resultado"}
+                  {isDone ? 'Editar Resultado' : 'Definir resultado'}
                 </Button>
               </div>
             </div>
@@ -182,5 +181,5 @@ export default function RoundMatchsCardAdmin({
         onClose={onOpenChangeEditMatchModal}
       />
     </>
-  );
+  )
 }
