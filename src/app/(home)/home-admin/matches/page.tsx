@@ -30,10 +30,11 @@ export default function HomeAdmin() {
   const { setCurrentModalIndex, refreshRounds, setRefreshRounds } =
     useEventsContext()
 
-  // useEffect(() => {
-  //   fetchRounds('WAITING')
-  //   fetchRounds('DONE')
-  // }, [])
+  useEffect(() => {
+    if(!refreshRounds){
+      refreshData()
+    }
+  }, [])
 
   useEffect(() => {
     if (refreshRounds) {
