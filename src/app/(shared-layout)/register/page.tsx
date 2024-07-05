@@ -51,7 +51,7 @@ export default function Register() {
   const toggleVisibility = () => setIsVisible(!isVisible)
 
   return (
-    <div className="h-auto -mb-[148px] w-screen bg-[#1F67CE] flex flex-col items-center pb-20">
+    <div className="h-[calc(100vh+75px)] -mb-[148px] w-screen bg-[#1F67CE] flex flex-col items-center pb-20">
       <div className="flex flex-col max-w-[540px] w-full">
         <h1
           className={`${fontOpenSans.className} mt-10 text-center text-[18px] font-bold text-white`}
