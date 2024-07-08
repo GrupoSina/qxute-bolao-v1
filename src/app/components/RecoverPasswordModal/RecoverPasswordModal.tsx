@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { resetPassword } from '@/app/(shared-layout)/recover-password/actions'
 import { useAuthContext } from '@/context/AuthContext'
 import { resetPasswordSchema } from '@/schemas/recover-password'
@@ -45,6 +45,8 @@ export default function RecoverPasswordModal({
   const [currentModalIndex, setCurrentModalIndex] = useState<number>(0)
   const [loading, setLoading] = useState(false)
   useAuthContext()
+  const [timeLeft, setTimeLeft] = useState<number>(60)
+  const [timerLoading, setTimerLoading] = useState<boolean>(true)
 
   const {
     register,
@@ -57,6 +59,37 @@ export default function RecoverPasswordModal({
   })
 
   const modalStepsResetPassword = ['code', 'newPassword']
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          setTimerLoading(false)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [isOpen])
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`
+  }
+
+  const formatPhoneNumber = (phone: string): string => {
+    const match = phone.match(/^55(\d{2})(\d{5})(\d{4})$/)
+    if (match) {
+      return `(${match[1]}) ${match[2]}-${match[3]}`
+    }
+    return phone
+  }
 
   async function handleSendCode(data: IResetPassword) {
     setLoading(true)
@@ -118,14 +151,19 @@ export default function RecoverPasswordModal({
                 <p
                   className={`${fontOpenSans.className} text-[12px] text-white font-normal`}
                 >
-                  Insira o código SMS enviado para o telefone {phone} informado
-                  no cadastro. Não recebeu o código?{' '}
-                  <Link
-                    href="/recover-password"
-                    className="text-white text-[12px] underline"
-                  >
-                    Solicite novamente.
-                  </Link>
+                  Insira o código SMS enviado para o telefone{' '}
+                  {formatPhoneNumber(phone)} informado no cadastro. Não recebeu
+                  o código?{' '}
+                  {timerLoading ? (
+                    formatTime(timeLeft)
+                  ) : (
+                    <Link
+                      href="/recover-password"
+                      className="text-white text-[12px] underline"
+                    >
+                      Solicite novamente.
+                    </Link>
+                  )}
                 </p>
 
                 {currentModalIndex === 1 && (
