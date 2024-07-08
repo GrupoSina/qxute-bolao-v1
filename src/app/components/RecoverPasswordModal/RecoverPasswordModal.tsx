@@ -93,13 +93,14 @@ export default function RecoverPasswordModal({
       onOpenChange={onClose}
       size="4xl"
       closeButton={<img src="/closeicon.png" alt="close" />}
+      isDismissable={false}
     >
       <ModalContent className={`${fontOpenSans.className} bg-[#1F67CE]`}>
         {(onClose) => (
           <>
             <ModalHeader className="flex space-x-2 items-center">
               <Image src="/mailicon.png" alt="mail icon" />
-              <h1>Confirmação do código</h1>
+              <h1 className="text-white">Confirmação do código</h1>
             </ModalHeader>
             <form onSubmit={handleSubmit(handleSendCode)}>
               <ModalBody>
@@ -129,7 +130,7 @@ export default function RecoverPasswordModal({
 
                 {currentModalIndex === 1 && (
                   <>
-                    <p>Insira sua nova senha</p>
+                    <p className="text-white">Insira sua nova senha</p>
                     <Input
                       size="md"
                       type={!isVisible ? 'password' : 'text'}

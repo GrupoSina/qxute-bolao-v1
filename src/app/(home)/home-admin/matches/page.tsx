@@ -31,7 +31,7 @@ export default function HomeAdmin() {
     useEventsContext()
 
   useEffect(() => {
-    if(!refreshRounds){
+    if (!refreshRounds) {
       refreshData()
     }
   }, [])
