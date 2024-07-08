@@ -47,11 +47,14 @@ export default function RecoverPasswordModal({
   useAuthContext()
   const [timeLeft, setTimeLeft] = useState<number>(60)
   const [timerLoading, setTimerLoading] = useState<boolean>(true)
+  const [isDisabledButton, setIsDisabledButton] = useState<boolean>(true)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm<IResetPassword>({
     resolver: yupResolver(resetPasswordSchema),
     mode: 'onSubmit',
@@ -91,7 +94,7 @@ export default function RecoverPasswordModal({
     return phone
   }
 
-  async function handleSendCode(data: IResetPassword) {
+  const handleSendCode = async (data: IResetPassword) => {
     setLoading(true)
     const { 'qxute-bolao:x-token': token } = parseCookies()
     const decode = decodeToken(token)
@@ -120,6 +123,21 @@ export default function RecoverPasswordModal({
     }
   }
 
+  const watchedCodeValue = watch('code')
+
+  useEffect(() => {
+    setIsDisabledButton((watchedCodeValue || '').length < 4)
+  }, [watchedCodeValue])
+
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === 'code' && value.code !== undefined) {
+        setValue('code', value.code)
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [watch, setValue])
+
   return (
     <Modal
       isOpen={isOpen}
@@ -145,6 +163,7 @@ export default function RecoverPasswordModal({
                   placeholder="0000"
                   className="mt-4"
                   {...register('code')}
+                  onChange={(e) => setValue('code', e.target.value)}
                   errorMessage={errors.code?.message}
                   isInvalid={!!errors.code?.message}
                 />
@@ -201,6 +220,7 @@ export default function RecoverPasswordModal({
 
               <ModalFooter className="flex flex-col space-y-4">
                 <Button
+                  isDisabled={isDisabledButton}
                   isLoading={loading}
                   onClick={handleNextModal}
                   className={`${fontOpenSans.className} text-[14px] text-white font-bold bg-[#00764B] rounded-full`}
