@@ -21,6 +21,7 @@ export default function RecoverPassword() {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm<IRecoverPassword>({
     resolver: yupResolver(recoverPasswordSchema),
     mode: 'onSubmit',
@@ -76,8 +77,16 @@ export default function RecoverPassword() {
             control={control}
             name={'phone'}
             defaultValue=""
-            render={({ field }) => (
-              <InputMask mask={'(99)99999-9999'} {...field} type="text">
+            render={({ field: { onChange, ...field } }) => (
+              <InputMask
+                onChange={(e) => {
+                  onChange(e)
+                  setValue('phone', e.target.value)
+                }}
+                mask={'(99)99999-9999'}
+                {...field}
+                type="text"
+              >
                 <Input
                   placeholder={'(99)99999-9999'}
                   size="md"
