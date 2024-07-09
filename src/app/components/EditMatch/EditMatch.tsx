@@ -54,19 +54,21 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
   const [accrualDateTime, setAccrualDateTime] = useState<DateValue | null>(null)
   const [loading, setLoading] = useState(false)
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([])
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<IFormInput>({
     mode: 'onSubmit',
     resolver: yupResolver(editMatchesSchema) as any,
 
     defaultValues: {
-      homeTeam: editSelectedMatch?.teamHome.name,
-      awayTeam: editSelectedMatch?.teamAway.name,
+      // homeTeam: teams.length > 0 ? teams[0]?.name : '',
+      // awayTeam: teams.length > 0 ? teams[1]?.name : '',
       //   dateTime: undefined as unknown as DateValue,
       dateTime: editSelectedMatch?.date,
       lastPlayerTeam: editSelectedMatch?.lastPlayerTeam?.id || '',
@@ -76,6 +78,9 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
 
   useEffect(() => {
     if (editSelectedMatch) {
+      reset()
+      setValue('homeTeam', editSelectedMatch.teamHome.name)
+      setValue('awayTeam', editSelectedMatch.teamAway.name)
       const list = [editSelectedMatch.teamHome, editSelectedMatch.teamAway]
       setTeams(list)
       if (editSelectedMatch.lastPlayerTeam) {
@@ -96,8 +101,6 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
         setSelectedPlayers(list)
         setPlayers(editSelectedMatch?.players)
       }
-      setValue('homeTeam', editSelectedMatch.teamHome.name)
-      setValue('awayTeam', editSelectedMatch.teamAway.name)
 
       const dateValue = getDefaultValueDate()
       if (dateValue) {
@@ -122,14 +125,6 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
       }
     }
   }
-
-  // useEffect(() => {
-  //   if (editSelectedMatch) {
-  //     if (editSelectedMatch?.players) {
-  //       setPlayers(editSelectedMatch?.players);
-  //     }
-  //   }
-  // }, [editSelectedMatch, teams]);
 
   const getDefaultValueDate = (): CalendarDateTime | null => {
     if (editSelectedMatch?.date) {
@@ -302,14 +297,14 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
                 color="default"
                 label="Time casa"
                 isDisabled
-                defaultValue={editSelectedMatch?.teamHome.name}
+                // defaultValue={teams.length > 0 ? teams[0]?.name : ''}
               />
               <Input
                 {...register('awayTeam')}
                 color="default"
                 label="Time fora"
                 isDisabled
-                defaultValue={editSelectedMatch?.teamAway.name}
+                // defaultValue={teams.length > 0 ? teams[1]?.name : ''}
               />
               {!shouldSelectTeamLastPlayer && (
                 <Checkbox
