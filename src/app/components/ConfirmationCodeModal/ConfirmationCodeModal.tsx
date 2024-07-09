@@ -106,7 +106,7 @@ export default function ConfirmationCodeModal({
                 <p
                   className={`${fontOpenSans.className} text-[12px] text-white font-normal`}
                 >
-                  Insira o código SMS enviado para o telefone (XX) XXXXXX-
+                  Insira o código SMS enviado para o telefone (XX) XXXXX-
                   {sendCodeProps?.phone.substring(9, 13)} informado no cadastro.
                   Não recebeu o código?{' '}
                   {resendCodeAvailable ? (
