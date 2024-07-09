@@ -145,7 +145,7 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
             </ModalHeader>
 
             {shouldShowConfirmationCard ? (
-              <div className="bg-[#00409F] flex flex-col gap-2 rounded-lg w-[90%] mx-auto my-10 p-4">
+              <div className="bg-[#00409F] text-white flex flex-col gap-2 rounded-lg w-[90%] mx-auto my-10 p-4">
                 <p>Confirme antes de salvar</p>
                 <p>
                   {selectedMatchSetResult?.match.teamHome.name}:{' '}

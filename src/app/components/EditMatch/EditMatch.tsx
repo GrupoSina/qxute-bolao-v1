@@ -47,9 +47,10 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
   const [players, setPlayers] = useState<IPlayer[]>([])
   const [shouldSelectTeamLastPlayer, setShouldSelectTeamLastPlayer] =
     useState(false)
-  const [selectedTeam, setSelectedTeam] = useState(
-    editSelectedMatch?.lastPlayerTeam?.id || '',
-  )
+  // const [selectedTeam, setSelectedTeam] = useState(
+  //   editSelectedMatch?.lastPlayerTeam?.id || ""
+  // );
+  const [teamChange, setTeamChange] = useState(false)
   const [accrualDateTime, setAccrualDateTime] = useState<DateValue | null>(null)
   const [loading, setLoading] = useState(false)
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([])
@@ -59,7 +60,6 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
     handleSubmit,
     formState: { errors },
     setValue,
-    reset,
   } = useForm<IFormInput>({
     mode: 'onSubmit',
     resolver: yupResolver(editMatchesSchema) as any,
@@ -79,14 +79,30 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
       const list = [editSelectedMatch.teamHome, editSelectedMatch.teamAway]
       setTeams(list)
       if (editSelectedMatch.lastPlayerTeam) {
+        setShouldSelectTeamLastPlayer(true)
+        // setSelectedTeam(editSelectedMatch.lastPlayerTeam.id);
+        setValue('lastPlayerTeam', editSelectedMatch.lastPlayerTeam?.id)
         fetchPlayers(editSelectedMatch.lastPlayerTeam?.id)
+      } else {
+        setShouldSelectTeamLastPlayer(false)
       }
+
       if (editSelectedMatch.players) {
         const list: string[] = []
         for (const player of editSelectedMatch.players) {
           list.push(player.name)
         }
+        // console.log(list)
         setSelectedPlayers(list)
+        setPlayers(editSelectedMatch?.players)
+      }
+      setValue('homeTeam', editSelectedMatch.teamHome.name)
+      setValue('awayTeam', editSelectedMatch.teamAway.name)
+
+      const dateValue = getDefaultValueDate()
+      if (dateValue) {
+        setAccrualDateTime(dateValue)
+        setValue('dateTime', dateValue)
       }
     }
   }, [editSelectedMatch])
@@ -107,36 +123,14 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
     }
   }
 
-  useEffect(() => {
-    if (editSelectedMatch) {
-      const list = [editSelectedMatch.teamAway, editSelectedMatch.teamHome]
-      setTeams(list)
-      if (editSelectedMatch.lastPlayerTeam) {
-        fetchPlayers(editSelectedMatch.lastPlayerTeam?.id)
-      }
+  // useEffect(() => {
+  //   if (editSelectedMatch) {
+  //     if (editSelectedMatch?.players) {
+  //       setPlayers(editSelectedMatch?.players);
+  //     }
+  //   }
+  // }, [editSelectedMatch, teams]);
 
-      setValue('homeTeam', editSelectedMatch.teamHome.name)
-      setValue('awayTeam', editSelectedMatch.teamAway.name)
-      const dateValue = getDefaultValueDate()
-      if (dateValue) {
-        setAccrualDateTime(dateValue)
-        setValue('dateTime', dateValue)
-      }
-      if (editSelectedMatch.lastPlayerTeam) {
-        setShouldSelectTeamLastPlayer(true)
-        setSelectedTeam(editSelectedMatch.lastPlayerTeam.id)
-      } else {
-        setShouldSelectTeamLastPlayer(false)
-      }
-
-      if (editSelectedMatch.lastPlayerTeam) {
-        setValue('lastPlayerTeam', editSelectedMatch.lastPlayerTeam?.id)
-      }
-      if (editSelectedMatch?.players) {
-        setPlayers(editSelectedMatch?.players)
-      }
-    }
-  }, [editSelectedMatch, setValue])
   const getDefaultValueDate = (): CalendarDateTime | null => {
     if (editSelectedMatch?.date) {
       const dateTime = DateTime.fromISO(editSelectedMatch.date, {
@@ -152,6 +146,7 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
   }
 
   async function handleEdit(data: IFormInput) {
+    // console.log(selectedPlayers)
     /**
      * Verifica se campo dateTime foi alterado, se foi, realiza chamada a API pra atualização
      */
@@ -244,6 +239,7 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
   }
 
   const onChange = (values: string[]) => {
+    console.log(values)
     setSelectedPlayers(values)
 
     // handleSelectPlayers(values);
@@ -252,22 +248,19 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
   const handleSelectCheckbox = (value: boolean) => {
     setShouldSelectTeamLastPlayer(value)
     if (value) {
-      setSelectedTeam(teams[0].id)
+      // setSelectedTeam(teams[0].id);
       fetchPlayers(teams[0].id)
       setValue('lastPlayerTeam', teams[0].id)
     } else {
-      setSelectedTeam('')
+      // setSelectedTeam("");
       setValue('lastPlayerTeam', '')
     }
   }
 
   function handleOnClose() {
     setEditSelectedMatch(undefined)
-    setShouldSelectTeamLastPlayer(false)
     setSelectedPlayers([])
-    setPlayers([])
-    reset()
-    setTeams([])
+    setTeamChange(false)
     onClose()
   }
 
@@ -339,14 +332,17 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
                     color="default"
                     label="Selecione o time do último marcador"
                     className="w-full"
-                    defaultSelectedKeys={[selectedTeam]}
+                    defaultSelectedKeys={[
+                      editSelectedMatch?.lastPlayerTeam?.id || '',
+                    ]}
                     {...register('lastPlayerTeam')}
                     onChange={(selectedItems) => {
                       if (!selectedItems.target.value) {
                         setShouldSelectTeamLastPlayer(false)
                       }
-                      setSelectedTeam(selectedItems.target.value)
+                      // setSelectedTeam(selectedItems.target.value);
                       setPlayers([])
+                      setTeamChange(true)
                       fetchPlayers(selectedItems.target.value)
                       setValue('lastPlayerTeam', selectedItems.target.value)
                       setSelectedPlayers([])
@@ -370,11 +366,9 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
                       label="Selecione os jogadores"
                       className="w-full"
                       selectionMode="multiple"
-                      defaultSelectedKeys={(
-                        (editSelectedMatch?.lastPlayerTeam?.id ===
-                          selectedTeam &&
-                          editSelectedMatch.players) ||
-                        []
+                      defaultSelectedKeys={(teamChange
+                        ? []
+                        : editSelectedMatch?.players || []
                       ).map((item) => item.name)}
                       onSelectionChange={(keys) =>
                         onChange(Array.from(keys) as string[])
