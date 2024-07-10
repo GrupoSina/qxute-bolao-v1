@@ -88,7 +88,7 @@ export default function ConfirmationCodeModal({
           <>
             <ModalHeader className="flex space-x-2 items-center">
               <Image src="/mailicon.png" alt="mail icon" />
-              <h1 className='text-white'>Confirmação do código</h1>
+              <h1 className="text-white">Confirmação do código</h1>
             </ModalHeader>
             <form onSubmit={handleSubmit(handleSendCode)}>
               <ModalBody>
