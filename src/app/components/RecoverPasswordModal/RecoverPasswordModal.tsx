@@ -166,6 +166,7 @@ export default function RecoverPasswordModal({
                   onChange={(e) => setValue('code', e.target.value)}
                   errorMessage={errors.code?.message}
                   isInvalid={!!errors.code?.message}
+                  value={watchedCodeValue}
                 />
                 <p
                   className={`${fontOpenSans.className} text-[12px] text-white font-normal`}
