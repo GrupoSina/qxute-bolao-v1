@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react'
 import { ButtonMovingBorder } from '../MovingBorder/MovingBorder'
 import useWindowWidth from '@/utils/window-width-hook'
 import { useRouter } from 'next/navigation'
+import { Link } from '@nextui-org/react'
 
 const HowItWorksDesktop = forwardRef<HTMLDivElement>((_, ref) => {
   const { push } = useRouter()
@@ -20,14 +21,16 @@ const HowItWorksDesktop = forwardRef<HTMLDivElement>((_, ref) => {
           <p className="bg-[#1F67CE] text-white py-2 px-8 rounded-full text-[16px]">
             PASSO 1
           </p>
-          <p className="text-[#1F67CE] text-[14px] text-center">Faça o login</p>
+          <p className="text-[#1F67CE] text-[14px] text-center">
+            Crie sua conta ou faça o login de um acesso já existente.{' '}
+          </p>
         </div>
         <div className="flex flex-col items-center gap-4 w-[220px]">
           <p className="bg-[#1F67CE] text-white py-2 px-8 rounded-full text-[16px]">
             PASSO 2
           </p>
           <p className="text-[#1F67CE] text-[14px] text-center">
-            Lorem ipsum dolor sit amet consectetur.
+            Avalie os jogos disponíveis e faça o seu palpite.
           </p>
         </div>
         <div className="flex flex-col items-center gap-4 w-[220px]">
@@ -35,7 +38,11 @@ const HowItWorksDesktop = forwardRef<HTMLDivElement>((_, ref) => {
             PASSO 3
           </p>
           <p className="text-[#1F67CE] text-[14px] text-center">
-            Lorem ipsum dolor sit amet consectetur.
+            Agora é só acompanhar no Instagram do{' '}
+            <Link href="https://www.instagram.com/_qxute?igsh=MTVxY29yeTcxMGcxaQ==">
+              @qxute
+            </Link>{' '}
+            o resultado e receber seu prêmio!
           </p>
         </div>
       </div>
