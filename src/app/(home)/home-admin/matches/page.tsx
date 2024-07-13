@@ -46,11 +46,12 @@ export default function HomeAdmin() {
     setLoading(true)
     await fetchRounds('WAITING')
     await fetchRounds('DONE')
+    await fetchRounds('IN_PROGRESS')
     setRefreshRounds(false)
     setLoading(false)
   }
 
-  const fetchRounds = async (status: 'WAITING' | 'DONE') => {
+  const fetchRounds = async (status: 'WAITING' | 'DONE' | 'IN_PROGRESS') => {
     try {
       const { fetchRoundsByStatus } = await RoundService()
       const response = await fetchRoundsByStatus(status)
