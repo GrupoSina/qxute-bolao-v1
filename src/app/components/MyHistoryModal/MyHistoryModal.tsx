@@ -124,7 +124,8 @@ export default function MyHistoryModal({ isOpen, onClose }: CustomModalProps) {
                         <>
                           {userPredictions.map((prediciton, index) => (
                             <div className="flex flex-col gap-4" key={index}>
-                              {prediciton.match.status === 'WAITING' && (
+                              {(prediciton.match.status === 'WAITING' ||
+                                prediciton.match.status === 'IN_PROGRESS') && (
                                 <MyHistoryPredictionCard
                                   prediction={prediciton}
                                   key={index}
