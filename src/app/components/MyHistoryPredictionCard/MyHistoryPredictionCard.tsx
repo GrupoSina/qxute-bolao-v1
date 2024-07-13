@@ -46,7 +46,7 @@ export default function MyHistoryPredictionCard({
           </div>
         </div>
 
-        {prediction.match.status === 'WAITING' ? (
+        {prediction.match.status !== 'DONE' ? (
           <h1 className="flex justify-center items-center gap-2 mt-4">
             <MdAccessTime />
             Aguardando resultado
