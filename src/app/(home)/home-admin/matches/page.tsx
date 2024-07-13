@@ -62,9 +62,10 @@ export default function HomeAdmin() {
           setRoundsDone(response)
           return response
 
+        case 'IN_PROGRESS':
+        case 'WAITING':
         default:
-          setRoundsWaiting([])
-          setRoundsWaiting(response)
+          setRoundsWaiting((prevRounds) => [...prevRounds, ...response])
           return response
       }
     } catch (error) {
