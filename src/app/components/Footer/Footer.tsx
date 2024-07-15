@@ -21,7 +21,7 @@ export default function Footer() {
           <Image src={twittericon} alt="twittericon" />
         </Link>
         <Link
-          href="https://youtube.com/@qxutv"
+          href="https://YouTube.com/@qxutv"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -38,9 +38,8 @@ export default function Footer() {
           href="https://tiktok.com/@qxute"
           target="_blank"
           rel="noopener noreferrer"
-          size="sm"
         >
-          <Image src={tiktokicon} alt="instagramicon" height={24} width={25} />
+          <Image src={tiktokicon} alt="tiktokicon" />
         </Link>
       </div>
     </div>

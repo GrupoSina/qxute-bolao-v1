@@ -14,7 +14,7 @@ export default function HeroSectionDesktop({
 }: HeroSectionDesktopProps) {
   const words = [
     {
-      text: 'BOLÃO',
+      text: 'BOLÃO DO',
     },
 
     {

@@ -39,7 +39,11 @@ const HowItWorksDesktop = forwardRef<HTMLDivElement>((_, ref) => {
           </p>
           <p className="text-[#1F67CE] text-[14px] text-center">
             Agora é só acompanhar no Instagram do{' '}
-            <Link href="https://www.instagram.com/_qxute?igsh=MTVxY29yeTcxMGcxaQ==">
+            <Link
+              href="https://instagram.com/_qxute"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               @qxute
             </Link>{' '}
             o resultado e receber seu prêmio!

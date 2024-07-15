@@ -15,6 +15,7 @@ import { parseCookies } from 'nookies'
 import toast from 'react-hot-toast'
 import ConfirmPredictionModal from '@/app/components/ConfirmPredictionModal/ConfirmPredictionModal'
 import { useHomeUserContext } from '@/context/HomeUserContext'
+import { formatDateToDayAndHour } from '@/utils/formatDate'
 
 export default function HomeUser() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
@@ -216,7 +217,7 @@ export default function HomeUser() {
           Resultado correto
         </h1>
         <p className="text-[#00409F] mt-2 mb-4 text-center">
-          Lorem ipsum dolor sit amet consectetur. Laoreet.
+          Acompanhe os resultados das partidas aqui.
         </p>
         {loading ? (
           <Spinner />
@@ -249,7 +250,7 @@ export default function HomeUser() {
                               </h1>
                             </div>
                             <h1 className="text-white text-[12px] font-normal">
-                              {new Date(match.date).toLocaleDateString('pt-BR')}
+                              {formatDateToDayAndHour(new Date(match.date))}
                             </h1>
                           </div>
                           <div className="flex justify-center items-center mt-4">
@@ -356,7 +357,8 @@ export default function HomeUser() {
                             {match.lastPlayerTeam.name}?
                           </h1>
                           <p className="text-[#00409F] mt-2 mb-4 text-center">
-                            Lorem ipsum dolor sit amet consectetur. Laoreet.
+                            Palpite o jogador que irá marcar o último gol na
+                            partida.
                           </p>
                           <div
                             className={`flex flex-col p-4 bg-[#1F67CE] rounded-lg w-[90%] mx-auto ${match?.predictions?.length !== 0 || disabledMatches[match.id] ? 'opacity-50 pointer-events-none' : ''}`}
@@ -373,9 +375,7 @@ export default function HomeUser() {
                                 </h1>
                               </div>
                               <h1 className="text-white text-[12px] font-normal">
-                                {new Date(match.date).toLocaleDateString(
-                                  'pt-BR',
-                                )}
+                                {formatDateToDayAndHour(new Date(match.date))}
                               </h1>
                             </div>
                             <div className="flex space-x-2 items-center mt-4">
@@ -450,7 +450,7 @@ export default function HomeUser() {
             onClick={() => handleOpenConfirmPredictionModal()}
             className={` rounded-full bg-[#00764B] text-white text-[14px] font-bold flex justify-center items-center px-4 py-3 my-2 mt-8 w-[90%] mx-auto`}
           >
-            Confirmar palpites
+            Aposte já!
           </Button>
           <Button
             variant="bordered"
