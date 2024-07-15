@@ -27,6 +27,9 @@ export default function HomeAdmin() {
   const [roundsDone, setRoundsDone] = useState<
     IRoundWithMatchsAndChampionship[]
   >([])
+  const [roundsInProgress, setRoundsInProgress] = useState<
+    IRoundWithMatchsAndChampionship[]
+  >([])
   const { setCurrentModalIndex, refreshRounds, setRefreshRounds } =
     useEventsContext()
 
@@ -61,11 +64,13 @@ export default function HomeAdmin() {
           setRoundsDone([])
           setRoundsDone(response)
           return response
-
         case 'IN_PROGRESS':
+          setRoundsInProgress([])
+          setRoundsInProgress(response)
+          return response
         case 'WAITING':
-        default:
-          setRoundsWaiting((prevRounds) => [...prevRounds, ...response])
+          setRoundsWaiting([])
+          setRoundsWaiting(response)
           return response
       }
     } catch (error) {
@@ -100,21 +105,47 @@ export default function HomeAdmin() {
                 className="w-full flex flex-col items-center"
               >
                 <div className="max-w-[450px] w-full">
-                  {roundsWaiting.findIndex((round) =>
-                    round.matchs.find((match) => match.id),
-                  ) !== -1 ? (
-                    <>
-                      {roundsWaiting.map((round) => (
-                        <RoundMatchsCardAdmin round={round} key={round.id} />
-                      ))}
-                    </>
-                  ) : (
-                    <div className="w-full flex justify-center my-10">
-                      <p className="text-[16px] text-[#00409F]">
-                        Sem partidas.
-                      </p>
-                    </div>
-                  )}
+                  <>
+                    {roundsWaiting.findIndex((round) =>
+                      round.matchs.find((match) => match.id),
+                    ) !== -1 && (
+                      <>
+                        {roundsWaiting.map((round) => (
+                          <RoundMatchsCardAdmin
+                            round={round}
+                            key={round.id}
+                            status="WAITING"
+                          />
+                        ))}
+                      </>
+                    )}
+                    {roundsInProgress.findIndex((round) =>
+                      round.matchs.find((match) => match.id),
+                    ) !== -1 && (
+                      <>
+                        {roundsInProgress.map((round) => (
+                          <RoundMatchsCardAdmin
+                            round={round}
+                            key={round.id}
+                            status="IN_PROGRESS"
+                          />
+                        ))}
+                      </>
+                    )}
+
+                    {roundsInProgress.findIndex((round) =>
+                      round.matchs.find((match) => match.id),
+                    ) === -1 &&
+                      roundsWaiting.findIndex((round) =>
+                        round.matchs.find((match) => match.id),
+                      ) === -1 && (
+                        <div className="w-full flex justify-center my-10">
+                          <p className="text-[16px] text-[#00409F]">
+                            Sem partidas.
+                          </p>
+                        </div>
+                      )}
+                  </>
                 </div>
               </Tab>
               <Tab
@@ -131,7 +162,7 @@ export default function HomeAdmin() {
                         <RoundMatchsCardAdmin
                           round={round}
                           key={round.id}
-                          isDone={true}
+                          status="DONE"
                         />
                       ))}
                     </>

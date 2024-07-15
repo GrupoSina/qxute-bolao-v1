@@ -37,12 +37,14 @@ export default function MyHistoryModal({ isOpen, onClose }: CustomModalProps) {
 
   const getUserPredictions = async (token: string) => {
     const { predictions } = await getPredictions(token)
+    console.log(predictions)
     return predictions
   }
 
   useEffect(() => {
     if (isOpen) {
       getUserPredictions(token).then((listOfPredictions) => {
+        console.log(listOfPredictions)
         let correctPredictions = 0
         let incorrectPredictions = 0
 
@@ -119,7 +121,9 @@ export default function MyHistoryModal({ isOpen, onClose }: CustomModalProps) {
                   <Tab key="waiting" title="Aguardando" className="w-full">
                     <div className="flex flex-col gap-4">
                       {userPredictions.findIndex(
-                        (prediction) => prediction.match.status === 'WAITING',
+                        (prediction) =>
+                          prediction.match.status === 'WAITING' ||
+                          prediction.match.status === 'IN_PROGRESS',
                       ) !== -1 ? (
                         <>
                           {userPredictions.map((prediciton, index) => (
