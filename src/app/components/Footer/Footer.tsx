@@ -4,6 +4,7 @@ import qxutelogo from '../../../../public/qxutelogo.png'
 import twittericon from '../../../../public/twittericon.png'
 import youtubeicon from '../../../../public/youtubeicon.png'
 import instagramicon from '../../../../public/instagramicon.png'
+import tiktokicon from '../../../../public/tiktokicon.png'
 import { Link } from '@nextui-org/react'
 
 export default function Footer() {
@@ -13,25 +14,32 @@ export default function Footer() {
       <p className="font-robotoRegular text-white">@2024 Copyright - QXUTE</p>
       <div className="flex space-x-3 cursor-pointer">
         <Link
-          href="https://twitter.com/EsportesDaSorte"
+          href="https://twitter.com/qxute"
           target="_blank"
           rel="noopener noreferrer"
         >
           <Image src={twittericon} alt="twittericon" />
         </Link>
         <Link
-          href="https://www.youtube.com/@esportesdasorteoficial"
+          href="https://YouTube.com/@qxutv"
           target="_blank"
           rel="noopener noreferrer"
         >
           <Image src={youtubeicon} alt="youtubeicon" />
         </Link>
         <Link
-          href="https://www.instagram.com/esportesdasorte/"
+          href="https://instagram.com/_qxute"
           target="_blank"
           rel="noopener noreferrer"
         >
           <Image src={instagramicon} alt="instagramicon" />
+        </Link>
+        <Link
+          href="https://tiktok.com/@qxute"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image src={tiktokicon} alt="tiktokicon" />
         </Link>
       </div>
     </div>

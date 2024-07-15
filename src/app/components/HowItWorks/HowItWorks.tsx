@@ -1,7 +1,6 @@
 import React from 'react'
-import { Button } from '@nextui-org/react'
+import { Button, Link } from '@nextui-org/react'
 import { Open_Sans as OpenSans } from 'next/font/google'
-import Link from 'next/link'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
@@ -19,20 +18,28 @@ export default function HowItWorks() {
         >
           PASSO 1
         </Button>
-        <h1 className="text-[#1F67CE]">Faca o login</h1>
+        <h1 className="text-[#1F67CE]">
+          Crie sua conta ou faça o login de um acesso já existente.{' '}
+        </h1>
         <Button className="bg-[#1F67CE] text-[12px] font-bold text-white py-3 px-6">
           PASSO 2
         </Button>
         <h1 className="text-[#1F67CE]">
-          Lorem ipsum dolor sit amet consectetur. Porttitor condimentum commodo
-          ut proin.
+          Avalie os jogos disponíveis e faça o seu palpite.
         </h1>
         <Button className="bg-[#1F67CE] text-[12px] font-bold text-white py-3 px-6">
           PASSO 3
         </Button>
         <h1 className="text-[#1F67CE]">
-          Lorem ipsum dolor sit amet consectetur. Porttitor condimentum commodo
-          ut proin.
+          Agora é só acompanhar no Instagram do{' '}
+          <Link
+            href="https://instagram.com/_qxute"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @qxute
+          </Link>{' '}
+          o resultado e receber seu prêmio!
         </h1>
       </div>
 

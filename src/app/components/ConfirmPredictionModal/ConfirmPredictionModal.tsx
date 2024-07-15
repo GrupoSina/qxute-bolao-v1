@@ -12,6 +12,7 @@ import {
 import { submitPredictions } from '@/app/(home)/home-user/actions'
 import toast from 'react-hot-toast'
 import { useHomeUserContext } from '@/context/HomeUserContext'
+import { formatDateToDayAndHour } from '@/utils/formatDate'
 
 interface ConfirmPredictionModalProps {
   isOpen: boolean
@@ -105,25 +106,33 @@ const ConfirmPredictionModal: React.FC<ConfirmPredictionModalProps> = ({
       <ModalContent className="bg-[#1F67CE]">
         {(onClose) => (
           <>
-            <ModalHeader className="text-white">
-              Confirme seus palpites
+            <ModalHeader className="text-white flex-col flex">
+              <h1>Confirme seus palpites</h1>
+              <p className="text-[12px] font-normal mt-4">
+                Antes de enviar, revise e confirme seus palpites!
+              </p>
             </ModalHeader>
             <ModalBody>
               {matchPredictions.map((matchPrediction, index) => (
                 <div key={index} className="">
                   <div className="bg-[#00409F] rounded-lg p-4">
-                    <div className="flex space-x-2 justify-start items-center mb-4">
-                      <Image
-                        src="/sportsicon.png"
-                        alt="sports icon"
-                        className=""
-                      />
+                    <div className="flex space-x-2 justify-between items-center mb-4">
+                      <div className="flex">
+                        <Image
+                          src="/sportsicon.png"
+                          alt="sports icon"
+                          className=""
+                        />
+                        <h1 className="mx-3 text-[12px] text-white">
+                          {matchPrediction.roundName}
+                        </h1>
+                      </div>
+
                       <h1 className="mx-3 text-[12px] text-white">
-                        {matchPrediction.roundName}
+                        {formatDateToDayAndHour(
+                          new Date(matchPrediction.matchDate),
+                        )}
                       </h1>
-                      {/* <h1 className="mx-3 text-[12px] text-white">
-                        {matchPrediction.matchDate.toLocaleDateString("pt-BR")}
-                      </h1> */}
                     </div>
                     <div className="flex  justify-center items-center mb-4">
                       <div className="flex flex-col justify-center items-center">

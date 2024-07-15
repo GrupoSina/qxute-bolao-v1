@@ -80,10 +80,10 @@ export default function HomeAdmin() {
         <h1
           className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
         >
-          Lorem Ipsum
+          Partidas
         </h1>
         <p className="text-[#00409F] mt-2 mb-4 text-center">
-          Lorem ipsum dolor sit amet consectetur. Laoreet.
+          Defina o resultado das partidas abaixo.
         </p>
         <div className="flex flex-col items-center w-[90%]">
           {loading ? (

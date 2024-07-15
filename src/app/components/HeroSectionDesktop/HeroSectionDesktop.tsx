@@ -14,7 +14,7 @@ export default function HeroSectionDesktop({
 }: HeroSectionDesktopProps) {
   const words = [
     {
-      text: 'BOLÃO',
+      text: 'BOLÃO DO',
     },
 
     {
@@ -44,9 +44,9 @@ export default function HeroSectionDesktop({
           data-aos-duration="1000"
         >
           <p className="text-white">
-            Lorem ipsum dolor sit amet consectetur. Tortor arcu quisque
-            vestibulum aenean sed morbi laoreet diam. Urna tellus nunc fusce
-            hendrerit eget dolor neque sit.
+            Tá se achando bom nos palpites e tá afim de ganhar uma óia do Qxute
+            sem gastar nada? Então aqui é teu lugar. Dale no teu palpite e
+            garante teus prêmios!
           </p>
           <Button
             onClick={handleScroll}
