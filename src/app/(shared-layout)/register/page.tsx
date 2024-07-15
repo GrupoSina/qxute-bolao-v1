@@ -176,7 +176,7 @@ export default function Register() {
           >
             <div>
               Eu aceito os{' '}
-              <span className="font-bold text-white">Termos de Use</span> e{' '}
+              <span className="font-bold text-white">Termos de Uso</span> e{' '}
               <span className="font-bold text-white">
                 Políticas de Privacidade
               </span>

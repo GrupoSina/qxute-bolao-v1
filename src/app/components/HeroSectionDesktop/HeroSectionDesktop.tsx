@@ -18,7 +18,7 @@ export default function HeroSectionDesktop({
     },
 
     {
-      text: 'QXUTE',
+      text: 'DO QXUTE',
     },
   ]
 

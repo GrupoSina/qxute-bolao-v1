@@ -9,12 +9,12 @@ import EditMatchModal from '../EditMatch/EditMatch'
 
 type RoundMatchsCardAdmin = {
   round: IRoundWithMatchsAndChampionship
-  isDone?: boolean
+  status: 'WAITING' | 'IN_PROGRESS' | 'DONE'
 }
 
 export default function RoundMatchsCardAdmin({
   round,
-  isDone,
+  status,
 }: RoundMatchsCardAdmin) {
   const { setSelectedMatchSetResult, setEditSelectedMatch } = useEventsContext()
   const {
@@ -144,7 +144,7 @@ export default function RoundMatchsCardAdmin({
                 </p>
               </div>
               <div className="flex flex-col gap-4">
-                {!isDone && (
+                {status === 'WAITING' && (
                   <Button
                     variant="bordered"
                     className={`text-[14px] text-white font-bold border-white rounded-full`}
@@ -164,7 +164,7 @@ export default function RoundMatchsCardAdmin({
                   type="submit"
                   className={`text-[14px] text-white font-bold bg-[#00764B] rounded-full`}
                 >
-                  {isDone ? 'Editar Resultado' : 'Definir resultado'}
+                  {status === 'DONE' ? 'Editar Resultado' : 'Definir resultado'}
                 </Button>
               </div>
             </div>

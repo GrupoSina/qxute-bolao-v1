@@ -21,7 +21,7 @@ export default function CarrosselBetVip() {
         variant="bordered"
         className={`mt-6 border-solid border-white text-white text-[14px] font-bold rounded-full ${fontOpenSans.className}`}
       >
-        Como Funciona
+        COMO FUNCIONA
       </Button>
       <div className="w-[100%] bg-black mx-auto h-[160px] rounded-xl flex justify-center items-center mt-8">
         <h1>betvip banner</h1>
