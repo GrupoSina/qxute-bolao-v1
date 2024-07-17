@@ -74,6 +74,15 @@ export default function Header() {
       route: '/home-admin/matches',
     },
     {
+      menuItem: 'Aposte',
+      function: () => {
+        push('/home-user')
+        setIsMenuOpen(false)
+      },
+      onlyAdmin: true,
+      route: '/home-user',
+    },
+    {
       menuItem: 'Redefinir senha',
       function: () => {
         push('/recover-password')
@@ -88,7 +97,7 @@ export default function Header() {
         handleSignOut()
         setIsMenuOpen(false)
       },
-      route: '/',
+      route: null,
     },
   ]
 
@@ -177,7 +186,10 @@ export default function Header() {
         </div>
       </NavbarMenu>
 
-      <NavbarContent className="hidden sm:flex gap-4 max-w-[190px]">
+      <NavbarContent
+        justify="center"
+        className="hidden sm:flex gap-4 max-w-[190px] sm:justify-center sm:items-center"
+      >
         <NavbarItem>
           <Link
             className={`${roboto.className} text-white font-bold text-[18px]`}
@@ -186,14 +198,16 @@ export default function Header() {
             Início
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <button
-            className={`${roboto.className} text-white font-normal text-[18px]`}
-            onClick={handleScrollToSection}
-          >
-            Como funciona
-          </button>
-        </NavbarItem>
+        {pathname === '/' && (
+          <NavbarItem>
+            <button
+              className={`${roboto.className} text-white font-normal text-[18px]`}
+              onClick={handleScrollToSection}
+            >
+              Como funciona
+            </button>
+          </NavbarItem>
+        )}
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex max-w-[80px]">

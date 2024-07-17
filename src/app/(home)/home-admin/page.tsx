@@ -4,6 +4,7 @@ import { Button, useDisclosure, Image } from '@nextui-org/react'
 import { Open_Sans as OpenSans } from 'next/font/google'
 import CreateEventModal from '@/app/components/CreateEventModal/CreateEventModal'
 import { useEventsContext } from '@/context/EventsContext'
+import useWindowWidth from '@/utils/window-width-hook'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
@@ -11,20 +12,32 @@ export default function HomeAdmin() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const { setCurrentModalIndex } = useEventsContext()
 
+  const windowWidth = useWindowWidth()
+
   return (
     <div
       className={`w-full h-full flex flex-col items-center ${fontOpenSans.className}`}
     >
       <div className="max-w-[1140px] w-full flex flex-col items-center">
-        <h1
+        {/* <h1
           className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
         >
           Lorem Ipsum
         </h1>
         <p className="text-[#00409F] mt-2 mb-4 text-center">
           Lorem ipsum dolor sit amet consectetur. Laoreet.
-        </p>
-        <div className="w-[90%] h-[201px] bg-white border-solid border-[1px] border-[#00764B] rounded-xl mx-auto"></div>
+        </p> */}
+        <div className="mt-6 w-[90%] h-[201px] bg-white border-solid border-[1px] border-[#00764B] rounded-xl mx-auto">
+          <img
+            src={
+              windowWidth && windowWidth > 640
+                ? '/betvipbanner.png'
+                : '/betvipbannermobile.png'
+            }
+            alt="bet vip banner"
+            className="w-full h-full object-fill rounded-lg"
+          />
+        </div>
         <Button
           onClick={() => setCurrentModalIndex(0)}
           onPress={onOpen}
@@ -35,7 +48,15 @@ export default function HomeAdmin() {
         </Button>
         <div className="bg-[#00409F] w-screen h-[250px] flex justify-center items-center">
           <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-            <h1>betvip banner</h1>
+            <img
+              src={
+                windowWidth && windowWidth > 640
+                  ? '/qxutebanner.png'
+                  : '/qxutebannermobile.png'
+              }
+              alt="bet vip banner"
+              className="w-full h-full object-fill rounded-lg"
+            />
           </div>
         </div>
         <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
