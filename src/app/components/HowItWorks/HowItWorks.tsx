@@ -4,11 +4,15 @@ import { Open_Sans as OpenSans } from 'next/font/google'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
-export default function HowItWorks() {
+interface HowItWorksProps {
+  id: string
+}
+
+export default function HowItWorks({ id }: HowItWorksProps) {
   const howItWorksRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className="bg-white-texture flex flex-col" ref={howItWorksRef}>
+    <div className="bg-white-texture flex flex-col" ref={howItWorksRef} id={id}>
       <h1
         className={`${fontOpenSans.className} my-6 text-center text-[#00409F] text-[18px] font-extrabold`}
       >

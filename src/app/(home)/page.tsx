@@ -29,14 +29,14 @@ export default function Home() {
             />
           </div>
         </div>
-        <HowItWorksDesktop ref={howItWorksRef} />
+        <HowItWorksDesktop ref={howItWorksRef} id="how-it-works-desktop" />
       </div>
 
       {/* Mobile */}
       <div className="lg:hidden block">
         <Swiper />
         <CarrosselBetVip />
-        <HowItWorks />
+        <HowItWorks id="how-it-works-mobile" />
         <BetVipBanner />
       </div>
     </main>
