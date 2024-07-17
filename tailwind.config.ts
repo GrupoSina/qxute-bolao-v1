@@ -24,6 +24,15 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        headingExtraLight: ['Heading Pro Trial Extra Light', 'sans-serif'],
+        headingLight: ['Heading Pro Trial Light', 'sans-serif'],
+        heading: ['Heading Pro Trial', 'sans-serif'],
+        headingThin: ['Heading Pro Trial Thin', 'sans-serif'],
+        headingBold: ['Heading Pro Trial Bold', 'sans-serif'],
+        headingExtraBold: ['Heading Pro Trial Extra Bold', 'sans-serif'],
+        headingHeavy: ['Heading Pro Trial Heavy', 'sans-serif'],
+      },
     },
   },
   darkMode: 'class',
