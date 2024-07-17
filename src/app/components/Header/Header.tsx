@@ -27,7 +27,7 @@ const roboto = Roboto({
   weight: ['400', '700'],
 })
 
-export default function App() {
+export default function Header() {
   const { handleSignOut } = useAuthContext()
   const { 'qxute-bolao:x-token': sessionKey } = parseCookies()
   const decoded = decodeToken(sessionKey)
@@ -95,6 +95,16 @@ export default function App() {
   useEffect(() => {
     AOS.init()
   }, [])
+
+  const handleScrollToSection = () => {
+    const section =
+      document.querySelector('#how-it-works-desktop') ||
+      document.querySelector('#how-it-works-mobile')
+    if (section) {
+      AOS.refresh()
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   return (
     <Navbar
@@ -177,11 +187,12 @@ export default function App() {
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
-          <Link
+          <button
             className={`${roboto.className} text-white font-normal text-[18px]`}
+            onClick={handleScrollToSection}
           >
             Como funciona
-          </Link>
+          </button>
         </NavbarItem>
       </NavbarContent>
 
