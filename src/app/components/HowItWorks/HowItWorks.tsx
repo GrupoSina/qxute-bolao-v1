@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Button, Link } from '@nextui-org/react'
 import { Open_Sans as OpenSans } from 'next/font/google'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
 export default function HowItWorks() {
+  const howItWorksRef = useRef<HTMLDivElement>(null)
+
   return (
-    <div className="bg-white-texture flex flex-col">
+    <div className="bg-white-texture flex flex-col" ref={howItWorksRef}>
       <h1
         className={`${fontOpenSans.className} my-6 text-center text-[#00409F] text-[18px] font-extrabold`}
       >

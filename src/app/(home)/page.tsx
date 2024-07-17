@@ -23,7 +23,7 @@ export default function Home() {
         <div className="w-full flex justify-center bg-transparent -mb-[150px] ">
           <div className="max-w-[1140px] w-full h-[180px]">
             <Image
-              src="/placeholder-image-large.png"
+              src="/qxutebanner.png"
               alt="placeholder"
               className="max-w-[1140px] w-full h-[180px]"
             />

@@ -45,3 +45,38 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+@font-face {
+  font-family: "Heading Pro Trial Extra Light";
+  src: url("./fonts/Heading-Pro-ExtraLight-trial.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Heading Pro Trial Light";
+  src: url("./fonts/Heading-Pro-Light-trial.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Heading Pro Trial";
+  src: url("./fonts/Heading-Pro-Book-trial.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Heading Pro Trial Thin";
+  src: url("./fonts/Heading-Pro-Thin-trial.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Heading Pro Trial Bold";
+  src: url("./fonts/Heading-Pro-Bold-trial.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Heading Pro Trial Extra Bold";
+  src: url("./fonts/Heading-Pro-ExtraBold-trial.ttf");
+}
+
+@font-face {
+  font-family: "Heading Pro Trial Heavy";
+  src: url("./fonts/Heading-Pro-Heavy-trial.ttf");
+}

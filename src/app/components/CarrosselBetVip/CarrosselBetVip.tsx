@@ -24,7 +24,11 @@ export default function CarrosselBetVip() {
         COMO FUNCIONA
       </Button>
       <div className="w-[100%] bg-black mx-auto h-[160px] rounded-xl flex justify-center items-center mt-8">
-        <h1>betvip banner</h1>
+        <img
+          src="/qxutebannermobile1.png"
+          alt="qxute banner mobile"
+          className="object-fill w-full h-full rounded-lg"
+        />
       </div>
     </div>
   )

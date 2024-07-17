@@ -14,7 +14,7 @@ export default function HeroSectionDesktop({
 }: HeroSectionDesktopProps) {
   const words = [
     {
-      text: 'BOLÃO DO',
+      text: 'BOLÃO',
     },
 
     {
@@ -60,7 +60,7 @@ export default function HeroSectionDesktop({
       <div className="w-[558px] h-[350px]">
         <Image
           className="w-[558px] h-[350px]"
-          src="/placeholder-image.png"
+          src="/betvipbanner.png"
           alt="placeholder"
         />
       </div>
