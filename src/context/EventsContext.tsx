@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react'
 
+export type VisibleModalMatchesProps =
+  | 'edit'
+  | 'set-result'
+  | 'winner'
+  | undefined
+
 interface EventsContextType {
   selectedChampionship: string | null
   setSelectedChampionship: React.Dispatch<React.SetStateAction<string | null>>
@@ -18,6 +24,10 @@ interface EventsContextType {
   selectedRound?: string
   handleSetSelectedRound: (id: string) => void
   setSelectedTeams: React.Dispatch<React.SetStateAction<ITeam[]>>
+  selectedMatchWinner?: IRoundWithMatch
+  setSelectedMatchWinner: React.Dispatch<
+    React.SetStateAction<IRoundWithMatch | undefined>
+  >
   selectedMatchSetResult?: IRoundWithMatchAndChampionship
   setSelectedMatchSetResult: React.Dispatch<
     React.SetStateAction<IRoundWithMatchAndChampionship | undefined>
@@ -27,6 +37,11 @@ interface EventsContextType {
   editSelectedMatch?: IMatchRound
   setEditSelectedMatch: React.Dispatch<
     React.SetStateAction<IMatchRound | undefined>
+  >
+
+  visibleModalMatches?: VisibleModalMatchesProps
+  setVisibleModalMatches: React.Dispatch<
+    React.SetStateAction<VisibleModalMatchesProps>
   >
 }
 
@@ -40,6 +55,8 @@ export const EventsProvider = ({ children }: ProviderProps) => {
   const [selectedChampionship, setSelectedChampionship] = useState<
     string | null
   >(null)
+  const [visibleModalMatches, setVisibleModalMatches] =
+    useState<VisibleModalMatchesProps>()
   const [newChampionshipName, setNewChampionshipName] = useState<string>('')
   const [isDisabledInput, setIsDisabledInput] = useState<boolean>(true)
   const [isDisabledCheckbox, setIsDisabledCheckbox] = useState<boolean>(false)
@@ -48,6 +65,10 @@ export const EventsProvider = ({ children }: ProviderProps) => {
   const [refreshRounds, setRefreshRounds] = useState(true)
   const [editSelectedMatch, setEditSelectedMatch] = useState<
     IMatchRound | undefined
+  >()
+
+  const [selectedMatchWinner, setSelectedMatchWinner] = useState<
+    IRoundWithMatch | undefined
   >()
 
   const [selectedMatchSetResult, setSelectedMatchSetResult] =
@@ -103,6 +124,10 @@ export const EventsProvider = ({ children }: ProviderProps) => {
         setRefreshRounds,
         editSelectedMatch,
         setEditSelectedMatch,
+        visibleModalMatches,
+        setVisibleModalMatches,
+        setSelectedMatchWinner,
+        selectedMatchWinner,
       }}
     >
       {children}

@@ -1,11 +1,12 @@
 import React from 'react'
 import { formatDateToCustomString } from '@/utils/formatDate'
-import { Button, Image, useDisclosure } from '@nextui-org/react'
+import { Button, Image } from '@nextui-org/react'
 import { MdEdit, MdPerson } from 'react-icons/md'
 import SetResultModal from '../SetResultModal/SetResultModal'
 import { useEventsContext } from '@/context/EventsContext'
 import { getLogo } from '@/utils/getLogo'
 import EditMatchModal from '../EditMatch/EditMatch'
+import WinnerModal from '../WinnerModal/WinnerModal'
 
 type RoundMatchsCardAdmin = {
   round: IRoundWithMatchsAndChampionship
@@ -16,18 +17,12 @@ export default function RoundMatchsCardAdmin({
   round,
   status,
 }: RoundMatchsCardAdmin) {
-  const { setSelectedMatchSetResult, setEditSelectedMatch } = useEventsContext()
   const {
-    isOpen: isOpenSetResultModal,
-    onOpen: onOpenSetResultModal,
-    onOpenChange: onOpenChangeSetResultModal,
-  } = useDisclosure()
-
-  const {
-    isOpen: isOpenEditMatchModal,
-    onOpen: onOpenEditMatchModal,
-    onOpenChange: onOpenChangeEditMatchModal,
-  } = useDisclosure()
+    setSelectedMatchSetResult,
+    setEditSelectedMatch,
+    setVisibleModalMatches,
+    setSelectedMatchWinner,
+  } = useEventsContext()
 
   function handleSetResult(
     round: IRoundWithMatchsAndChampionship,
@@ -41,7 +36,7 @@ export default function RoundMatchsCardAdmin({
       createdAt: round.createdAt,
       match,
     })
-    onOpenSetResultModal()
+    setVisibleModalMatches('set-result')
   }
 
   return (
@@ -149,7 +144,7 @@ export default function RoundMatchsCardAdmin({
                     variant="bordered"
                     className={`text-[14px] text-white font-bold border-white rounded-full`}
                     onPress={() => {
-                      onOpenEditMatchModal()
+                      setVisibleModalMatches('edit')
                       setEditSelectedMatch(match)
                     }}
                   >
@@ -166,20 +161,30 @@ export default function RoundMatchsCardAdmin({
                 >
                   {status === 'DONE' ? 'Editar Resultado' : 'Definir resultado'}
                 </Button>
+
+                {status === 'DONE' && (
+                  <Button
+                    variant="bordered"
+                    className={`text-[14px] text-white font-bold border-white rounded-full`}
+                    onPress={() => {
+                      setVisibleModalMatches('winner')
+                      setSelectedMatchWinner({ roundName: round.name, match })
+                    }}
+                  >
+                    <p className="flex gap-3 items-center">
+                      <MdEdit /> Ver vencedor
+                    </p>
+                  </Button>
+                )}
               </div>
             </div>
           ))}
         </div>
       )}
-      <SetResultModal
-        isOpen={isOpenSetResultModal}
-        onClose={onOpenChangeSetResultModal}
-      />
+      <SetResultModal />
 
-      <EditMatchModal
-        isOpen={isOpenEditMatchModal}
-        onClose={onOpenChangeEditMatchModal}
-      />
+      <EditMatchModal />
+      <WinnerModal />
     </>
   )
 }

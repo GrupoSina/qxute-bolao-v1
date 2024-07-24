@@ -45,3 +45,15 @@ export function formatDateToDayAndHour(date: Date): string {
 
   return formattedDate
 }
+
+export const formatDateHourPrediction = (dateString?: string): string => {
+  if (dateString) {
+    const date = new Date(dateString)
+    const formattedDate = format(date, "dd 'de' MMMM 'às' HH'h' mm'm' ss's'", {
+      locale: ptBR,
+    })
+    return formattedDate
+  }
+
+  return ''
+}
