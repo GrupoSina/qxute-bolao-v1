@@ -18,3 +18,11 @@ declare interface IPayloadSetResutMatch {
   lastPlayerId?: string
   matchId: string
 }
+
+declare interface IWinner {
+  id: string
+  name: string
+  phone: string
+  predictionDate: string
+  smsSentToWinner: boolean
+}

@@ -35,14 +35,14 @@ export interface IFormInput {
   players: { name: string }[]
 }
 
-interface ModalProps {
-  isOpen: boolean
-  onClose: () => void
-}
-
-export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
-  const { editSelectedMatch, setEditSelectedMatch, setRefreshRounds } =
-    useEventsContext()
+export default function EditMatchModal() {
+  const {
+    editSelectedMatch,
+    setEditSelectedMatch,
+    setRefreshRounds,
+    setVisibleModalMatches,
+    visibleModalMatches,
+  } = useEventsContext()
   const [teams, setTeams] = useState<{ id: string; name: string }[]>([])
   const [players, setPlayers] = useState<IPlayer[]>([])
   const [shouldSelectTeamLastPlayer, setShouldSelectTeamLastPlayer] =
@@ -256,13 +256,13 @@ export default function EditMatchModal({ isOpen, onClose }: ModalProps) {
     setEditSelectedMatch(undefined)
     setSelectedPlayers([])
     setTeamChange(false)
-    onClose()
+    setVisibleModalMatches(undefined)
   }
 
   return (
     <Modal
       scrollBehavior="outside"
-      isOpen={isOpen}
+      isOpen={visibleModalMatches == 'edit'}
       onOpenChange={handleOnClose}
       size="xl"
       closeButton={<img src="/closeicon.png" alt="close" />}

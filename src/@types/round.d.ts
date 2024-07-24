@@ -36,6 +36,11 @@ declare interface IRoundWithMatchAndChampionship {
   }
 }
 
+declare interface IRoundWithMatch {
+  roundName: string
+  match: IMatchRound
+}
+
 declare interface IMatchRound {
   id: string
   creator: {

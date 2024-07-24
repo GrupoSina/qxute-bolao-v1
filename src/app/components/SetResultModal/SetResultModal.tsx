@@ -25,16 +25,13 @@ import { MdHistory } from 'react-icons/md'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
-interface CustomModalProps {
-  isOpen: boolean
-  onClose: () => void
-}
-
-export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
+export default function SetResultModal() {
   const {
     selectedMatchSetResult,
     setSelectedMatchSetResult,
     setRefreshRounds,
+    visibleModalMatches,
+    setVisibleModalMatches,
   } = useEventsContext()
   const [loading, setLoading] = useState<boolean>(false)
   // const [players, setPlayers] = useState<IPlayer[]>([]);
@@ -79,7 +76,7 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
     reset()
     setPayload(undefined)
     setShouldShowConfirmationCard(false)
-    onClose()
+    setVisibleModalMatches(undefined)
   }
 
   function handleSave(data: ISetResultMatch) {
@@ -131,7 +128,7 @@ export default function SetResultModal({ isOpen, onClose }: CustomModalProps) {
   return (
     <Modal
       scrollBehavior="outside"
-      isOpen={isOpen}
+      isOpen={visibleModalMatches === 'set-result'}
       onOpenChange={handleOnClose}
       size="xl"
       closeButton={<img src="/closeicon.png" alt="close" />}
