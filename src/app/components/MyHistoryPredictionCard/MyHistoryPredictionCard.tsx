@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { formatDateToDayAndHour } from '@/utils/formatDate'
 import { Image } from '@nextui-org/react'

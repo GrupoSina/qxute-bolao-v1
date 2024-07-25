@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import MyHistoryModal from '@/app/components/MyHistoryModal/MyHistoryModal'
 import useWindowWidth from '@/utils/window-width-hook'
 import {
   Button,
@@ -10,7 +9,6 @@ import {
   Spinner,
   Tab,
   Tabs,
-  useDisclosure,
 } from '@nextui-org/react'
 import { fetchChampionshipsWithRounds, getPredictions } from './actions'
 import { parseCookies } from 'nookies'
@@ -22,7 +20,6 @@ import FinishedMatches from '@/app/components/FinishedMatches/FinishedMatches'
 import WaitingResultModal from '@/app/components/WaitingResultModal/WaitingResultModal'
 
 export default function HomeUser() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [championships, setChampionships] = useState<IChampionshipWithRounds[]>(
     [],
   )
