@@ -1,4 +1,5 @@
 import MyHistoryPredictionCard from '../MyHistoryPredictionCard/MyHistoryPredictionCard'
+import React from 'react'
 
 interface FinishedMatchesProps {
   matches: IPredictionsGetResponse[]

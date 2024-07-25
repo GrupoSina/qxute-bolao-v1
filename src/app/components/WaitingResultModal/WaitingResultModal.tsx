@@ -8,6 +8,7 @@ import {
   Image,
 } from '@nextui-org/react'
 import { Open_Sans } from 'next/font/google'
+import React from 'react'
 
 interface CustomWaitingResultModal {
   isOpen: boolean
