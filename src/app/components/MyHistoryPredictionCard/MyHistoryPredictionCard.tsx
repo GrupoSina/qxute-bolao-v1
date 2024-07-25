@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { formatDateToDayAndHour } from '@/utils/formatDate'
 import { Image } from '@nextui-org/react'
@@ -11,8 +11,20 @@ type MyHistoryPredictionCardProps = {
 export default function MyHistoryPredictionCard({
   prediction,
 }: MyHistoryPredictionCardProps) {
+  const isPredictionCorrect = () => {
+    return (
+      prediction.predictionPlayer.status === 'HIT' &&
+      prediction.predictionScore.status === 'HIT'
+    )
+  }
+
+  const cardColor = isPredictionCorrect() ? '#00764B' : '#E40000'
+
   return (
-    <div className="flex flex-col p-4 bg-[#00409F] rounded-lg w-[90%]  mx-auto justify-center items-center">
+    <div
+      className={`flex flex-col p-4 rounded-lg w-[90%]  mx-auto justify-center items-center text-white`}
+      style={{ backgroundColor: cardColor }}
+    >
       <div className="flex w-full justify-between">
         <div className="flex space-x-2">
           <Image src="/sportsicon.png" alt="sports icon" />
@@ -70,7 +82,7 @@ export default function MyHistoryPredictionCard({
 
       {prediction.predictionPlayer.player && (
         <div key={prediction.match.id} className="w-full">
-          <hr className="w-full h-[1px] border-t-[1px] border-t-[#1F67CE] mt-4" />
+          <hr className="w-full h-[1px] border-t-[1px] border-t-[#fff] mt-4" />
           <h1 className="text-[12px] font-semibold text-white text-center mt-4">
             Marcador do último gol do {prediction.match.teamHome}:
           </h1>
@@ -100,7 +112,6 @@ export default function MyHistoryPredictionCard({
           )}
         </div>
       )}
-      {/* <hr className="w-full h-[1px] border-t-[1px] border-t-[#1F67CE] mt-4" /> */}
     </div>
   )
 }
