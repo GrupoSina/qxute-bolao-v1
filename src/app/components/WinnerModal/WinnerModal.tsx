@@ -7,6 +7,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Spinner,
 } from '@nextui-org/react'
 import { Open_Sans as OpenSans } from 'next/font/google'
 import { useState } from 'react'
@@ -15,10 +16,14 @@ import MatchService from '@/services/api/models/match'
 import { handleAxiosError } from '@/services/api/error'
 import toast from 'react-hot-toast'
 import { formatDateHourPrediction } from '@/utils/formatDate'
+import { decodeToken } from '@/utils/jwt'
+import { parseCookies } from 'nookies'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
 export default function WinnerModal() {
+  const { 'qxute-bolao:x-token': sessionKey } = parseCookies()
+  const decoded = decodeToken(sessionKey)
   const {
     visibleModalMatches,
     setVisibleModalMatches,
@@ -27,6 +32,13 @@ export default function WinnerModal() {
   } = useEventsContext()
   const [loading, setLoading] = useState(false)
   const [winner, setWinner] = useState<IWinner | undefined>()
+  const [role, setRole] = useState<'ADMIN' | 'USER' | undefined>()
+
+  useEffect(() => {
+    if (sessionKey) {
+      setRole(decoded?.role)
+    }
+  }, [sessionKey])
 
   useEffect(() => {
     if (selectedMatchWinner) {
@@ -100,27 +112,44 @@ export default function WinnerModal() {
                 </b>{' '}
                 pela <b>{selectedMatchWinner?.roundName}.</b>
               </p>
-              <div className="flex flex-col gap-2">
-                <p className="md:text-[11px] text-[8px] font-bold">NOME</p>
-                <hr />
-                <div className="mt-1">
-                  <p className="md:text-[14px] text-[12px]">{winner?.name}</p>
-                  <p className="md:text-[12px] text-[9px]">
-                    {winner?.phone} /{' '}
-                    {formatDateHourPrediction(winner?.predictionDate)}
-                  </p>
-                </div>
-              </div>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <>
+                  {winner ? (
+                    <div className="flex flex-col gap-2">
+                      <p className="md:text-[11px] text-[8px] font-bold">
+                        NOME
+                      </p>
+                      <hr />
+                      <div className="mt-1">
+                        <p className="md:text-[14px] text-[12px]">
+                          {winner?.name}
+                        </p>
+                        <p className="md:text-[12px] text-[9px]">
+                          {winner?.phone} /{' '}
+                          {formatDateHourPrediction(winner?.predictionDate)}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <p>Não houve vencedor nessa partida.</p>
+                  )}
+                </>
+              )}
             </ModalBody>
             <ModalFooter className="flex flex-col space-y-4">
-              <Button
-                isDisabled={!!loading || winner?.smsSentToWinner}
-                type="submit"
-                onPress={() => sendSmsWinner()}
-                className={`${fontOpenSans.className} text-[14px] text-white font-bold bg-[#00764B] rounded-full`}
-              >
-                Enviar SMS
-              </Button>
+              {winner && role === 'ADMIN' && (
+                <Button
+                  isDisabled={!!loading || winner?.smsSentToWinner}
+                  type="submit"
+                  onPress={() => sendSmsWinner()}
+                  className={`${fontOpenSans.className} text-[14px] text-white font-bold bg-[#00764B] rounded-full`}
+                >
+                  Enviar SMS
+                </Button>
+              )}
+
               <Button
                 onPress={onClose}
                 className={`${fontOpenSans.className} text-[14px] text-white font-bold bg-[#E40000] rounded-full`}

@@ -171,9 +171,7 @@ export default function RoundMatchsCardAdmin({
                       setSelectedMatchWinner({ roundName: round.name, match })
                     }}
                   >
-                    <p className="flex gap-3 items-center">
-                      <MdEdit /> Ver vencedor
-                    </p>
+                    <p className="flex gap-3 items-center">Ver vencedor</p>
                   </Button>
                 )}
               </div>
