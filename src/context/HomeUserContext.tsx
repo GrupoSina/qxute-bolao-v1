@@ -22,7 +22,7 @@ export const HomeUserProvider = ({ children }: ProviderProps) => {
     [key: string]: boolean
   }>({})
 
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   return (
     <HomeUserContext.Provider

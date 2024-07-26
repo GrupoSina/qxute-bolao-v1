@@ -238,12 +238,14 @@ export default function HomeUser() {
     )
   }
 
+  console.log(areAllMatchesDisabled)
+
   return (
     <form
       className={`flex flex-col mx-auto w-[100%] items-center h-full bg-white-texture`}
       // onSubmit={handleSubmit}
     >
-      <div className="max-w-[1140px] w-full flex flex-col items-center">
+      <div className="max-w-[1140px]   w-full flex flex-col items-center">
         <h1
           className={`text-center text-[#00409F] text-[18px] font-bold  mt-10`}
         >
@@ -253,9 +255,11 @@ export default function HomeUser() {
           Acompanhe os resultados das partidas aqui.
         </p>
         {loading ? (
-          <Spinner />
+          <div className="min-h-[50vh]">
+            <Spinner />
+          </div>
         ) : (
-          <div className="flex flex-col w-[100%] space-y-6 mx-auto items-center">
+          <div className="flex flex-col w-[100%] min-h-[50vh] space-y-6 mx-auto items-center">
             <Tabs
               radius="full"
               variant="solid"
@@ -264,7 +268,11 @@ export default function HomeUser() {
                 cursor: 'bg-[#01409f] text-white',
               }}
             >
-              <Tab key="waiting" title="Aguardando" className="w-full">
+              <Tab
+                key="waiting"
+                title="Aguardando"
+                className="w-full flex flex-col items-center justify-center"
+              >
                 {fetchCompleted && !existMatches ? (
                   <h1 className="text-center text-[#00409F] text-[18px] font-bold mb-10">
                     Nenhuma partida encontrada!
@@ -279,7 +287,7 @@ export default function HomeUser() {
                         >
                           <div
                             key={`match-container-${matchIndex}`}
-                            className="flex flex-col w-[90%] mx-auto border-1px border-[#00409F]"
+                            className="flex flex-col w-[90%] mx-auto border-1px border-[#00409F] "
                           >
                             <div
                               className={`flex flex-col bg-[#1F67CE] p-4 rounded-lg ${match?.predictions?.length !== 0 || disabledMatches[match.id] ? 'opacity-50 pointer-events-none' : ''}`}
@@ -489,30 +497,34 @@ export default function HomeUser() {
                     ),
                   )
                 )}
-                {!existMatches || areAllMatchesDisabled() ? (
-                  <Button
-                    startContent={
-                      <Image
-                        src="/accesstime.svg"
-                        alt="aguardando resultados"
-                      />
-                    }
-                    variant="bordered"
-                    className={` rounded-full bg-transparent text-[#00409F] text-[14px] font-bold flex justify-center items-center px-4 py-3 w-[90%] mx-auto mb-8 border-[#00409F] border-[2px] border-solid`}
-                    onClick={() => {
-                      setIsWaitingResultsModal(true)
-                    }}
-                  >
-                    Aguardando resultados
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    onClick={() => handleOpenConfirmPredictionModal()}
-                    className={` rounded-full bg-[#00764B] text-white text-[14px] font-bold flex justify-center items-center px-4 py-3 w-[90%] mx-auto mb-8`}
-                  >
-                    Aposte já!
-                  </Button>
+                {existMatches && (
+                  <>
+                    {areAllMatchesDisabled() ? (
+                      <Button
+                        startContent={
+                          <Image
+                            src="/accesstime.svg"
+                            alt="aguardando resultados"
+                          />
+                        }
+                        variant="bordered"
+                        className={` rounded-full bg-transparent text-[#00409F] text-[14px] font-bold flex justify-center items-center px-4 py-3 w-[90%] mx-auto mb-8 border-[#00409F] border-[2px] border-solid`}
+                        onClick={() => {
+                          setIsWaitingResultsModal(true)
+                        }}
+                      >
+                        Aguardando resultados
+                      </Button>
+                    ) : (
+                      <Button
+                        type="button"
+                        onClick={() => handleOpenConfirmPredictionModal()}
+                        className={` rounded-full bg-[#00764B] text-white text-[14px] font-bold flex justify-center items-center px-4 py-3 w-[90%] mx-auto mb-8`}
+                      >
+                        Aposte já!
+                      </Button>
+                    )}
+                  </>
                 )}
               </Tab>
               <Tab key="done" title="Finalizadas" className="w-full">

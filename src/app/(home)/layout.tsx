@@ -19,10 +19,10 @@ export default function HomeLayout({
 }>) {
   return (
     <div
-      className={`${openSans.className} flex flex-col justify-start items-start min-h-screen `}
+      className={`${openSans.className} flex flex-col justify-start items-start  `}
     >
       <Header />
-      <div className="min-h-screen w-full">{children}</div>
+      <div className="h-auto w-full">{children}</div>
       <div className="flex w-full">
         <Footer />
       </div>
