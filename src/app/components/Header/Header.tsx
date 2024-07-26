@@ -90,7 +90,14 @@ export default function Header() {
         push('/home-user')
         setIsMenuOpen(false)
       },
-      onlyAdmin: true,
+      route: '/home-user',
+    },
+    {
+      menuItem: 'Vencedores',
+      function: () => {
+        push('/winners')
+        setIsMenuOpen(false)
+      },
       route: '/home-user',
     },
     {
