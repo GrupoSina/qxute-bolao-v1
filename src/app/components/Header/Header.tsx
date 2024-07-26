@@ -104,7 +104,7 @@ export default function Header() {
     {
       menuItem: 'Vencedores',
       function: handleWinnersNavigation,
-      route: '/home-user',
+      route: '/winners',
     },
     {
       menuItem: 'Redefinir senha',
@@ -126,20 +126,20 @@ export default function Header() {
       maxWidth="full"
       className="bg-[#184076] text-white"
       classNames={{
-        wrapper: ['flex justify-around'],
+        wrapper: ['flex justify-between'],
         menu: ['bg-black bg-opacity-60 backdrop-blur-none'],
       }}
     >
-      <NavbarContent className="relative flex justify-between items-center w-full sm:hidden">
+      <NavbarContent className="relative flex justify-between items-center w-full md:hidden">
         <NavbarMenuToggle />
-        <NavbarBrand className="absolute left-1/2 transform -translate-x-1/2 sm:hidden">
+        <NavbarBrand className="absolute left-1/2 transform -translate-x-1/2 md:hidden">
           <Link className="cursor-pointer" href="/">
             <Image src="/qxutelogo.png" alt="qxute logo" />
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <Link className="cursor-pointer hidden sm:flex" href="/">
+      <Link className="cursor-pointer hidden md:flex" href="/">
         <Image src="/qxutelogo.png" alt="qxute logo" />
       </Link>
 
@@ -175,7 +175,7 @@ export default function Header() {
 
       <NavbarContent
         justify="center"
-        className="hidden sm:flex gap-4 max-w-[190px] sm:justify-center sm:items-center"
+        className="hidden md:flex gap-4 max-w-[100px] md:justify-center md:items-center"
       >
         <NavbarItem>
           <Button
@@ -242,7 +242,7 @@ export default function Header() {
         )}
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex max-w-[80px]">
+      <NavbarContent className="hidden md:flex max-w-[80px]">
         {isAuthenticated ? (
           <Button
             className="rounded-full bg-white py-3 px-8 font-headingExtraBold text-[#00409F] text-[16px]"
