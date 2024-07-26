@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   Navbar,
   NavbarBrand,
@@ -14,8 +14,6 @@ import {
   Button,
 } from '@nextui-org/react'
 import { useAuthContext } from '@/context/AuthContext'
-import { parseCookies } from 'nookies'
-import { decodeToken } from '@/utils/jwt'
 import { usePathname, useRouter } from 'next/navigation'
 import { Roboto } from 'next/font/google'
 
@@ -27,103 +25,49 @@ const roboto = Roboto({
   weight: ['400', '700'],
 })
 
+interface MenuItem {
+  menuItem: string
+  function?: () => void
+  route: string | null
+  onlyAdmin?: boolean
+}
+
 export default function Header() {
-  const { handleSignOut } = useAuthContext()
-  const [isAuthenticated, setIsAuthenticaded] = useState(false)
-  const [role, setRole] = useState<'ADMIN' | 'USER' | undefined>()
-  const { 'qxute-bolao:x-token': sessionKey } = parseCookies()
-  const decoded = decodeToken(sessionKey)
-  const { push } = useRouter()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { handleSignOut, role, isAuthenticated } = useAuthContext()
+
   const pathname = usePathname()
   const router = useRouter()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  useEffect(() => {
-    if (sessionKey) {
-      setRole(decoded?.role)
-      setIsAuthenticaded(true)
-    } else {
-      setIsAuthenticaded(false)
-    }
-  }, [sessionKey])
+  const handleHomeNavigation = useCallback(() => {
+    role === 'ADMIN' ? router.push('/home-admin') : router.push('/home-user')
+  }, [role, router])
 
-  const menuItemsDefault = [
-    {
-      menuItem: 'Home',
-      route: '/',
-    },
-    {
-      menuItem: 'Registro',
-      route: '/register',
-    },
-    {
-      menuItem: 'Login',
-      route: '/login',
-    },
-    {
-      menuItem: 'Redefinir senha',
-      route: '/recover-password',
-    },
-  ]
+  const handleMatchesNavigation = useCallback(() => {
+    router.push('/home-admin/matches')
+  }, [router])
 
-  const menuItemsAuth = [
-    {
-      menuItem: 'Home',
-      function: () => {
-        decoded?.role === 'ADMIN' ? push('/home-admin') : push('/home-user')
-        setIsMenuOpen(false)
-      },
-      route: decoded?.role === 'ADMIN' ? '/home-admin' : '/home-user',
-    },
-    {
-      menuItem: 'Partidas',
-      function: () => {
-        push('/home-admin/matches')
-        setIsMenuOpen(false)
-      },
-      onlyAdmin: true,
-      route: '/home-admin/matches',
-    },
-    {
-      menuItem: 'Aposte',
-      function: () => {
-        push('/home-user')
-        setIsMenuOpen(false)
-      },
-      route: '/home-user',
-    },
-    {
-      menuItem: 'Vencedores',
-      function: () => {
-        push('/winners')
-        setIsMenuOpen(false)
-      },
-      route: '/home-user',
-    },
-    {
-      menuItem: 'Redefinir senha',
-      function: () => {
-        push('/recover-password')
-        setIsMenuOpen(false)
-      },
-      route: '/recover-password',
-    },
+  const handleBetNavigation = useCallback(() => {
+    router.push('/home-user')
+  }, [router])
 
-    {
-      menuItem: 'Sair',
-      function: () => {
-        handleSignOut()
-        setIsMenuOpen(false)
-      },
-      route: null,
-    },
-  ]
+  const handleWinnersNavigation = useCallback(() => {
+    router.push('/winners')
+  }, [router])
+
+  const handleRecoverPasswordNavigation = useCallback(() => {
+    router.push('/recover-password')
+  }, [router])
+
+  const handleSignOutNavigation = useCallback(() => {
+    handleSignOut()
+  }, [handleSignOut])
 
   useEffect(() => {
     AOS.init()
   }, [])
 
-  const handleScrollToSection = () => {
+  const handleScrollToSection = useCallback(() => {
     const section =
       document.querySelector('#how-it-works-desktop') ||
       document.querySelector('#how-it-works-mobile')
@@ -131,9 +75,48 @@ export default function Header() {
       AOS.refresh()
       section.scrollIntoView({ behavior: 'smooth' })
     }
-  }
+  }, [])
 
-  console.log(role)
+  const menuItemsDefault: MenuItem[] = [
+    { menuItem: 'Home', route: '/' },
+    { menuItem: 'Registro', route: '/register' },
+    { menuItem: 'Login', route: '/login' },
+    { menuItem: 'Redefinir senha', route: '/recover-password' },
+  ]
+
+  const menuItemsAuth: MenuItem[] = [
+    {
+      menuItem: 'Home',
+      function: handleHomeNavigation,
+      route: role === 'ADMIN' ? '/home-admin' : '/home-user',
+    },
+    {
+      menuItem: 'Partidas',
+      function: handleMatchesNavigation,
+      onlyAdmin: true,
+      route: '/home-admin/matches',
+    },
+    {
+      menuItem: 'Aposte',
+      function: handleBetNavigation,
+      route: '/home-user',
+    },
+    {
+      menuItem: 'Vencedores',
+      function: handleWinnersNavigation,
+      route: '/home-user',
+    },
+    {
+      menuItem: 'Redefinir senha',
+      function: handleRecoverPasswordNavigation,
+      route: '/recover-password',
+    },
+    {
+      menuItem: 'Sair',
+      function: handleSignOutNavigation,
+      route: null,
+    },
+  ]
 
   return (
     <Navbar
@@ -162,46 +145,30 @@ export default function Header() {
 
       <NavbarMenu className="px-0 py-0">
         <div className="bg-white py-4 h-full w-[50%]">
-          {!sessionKey ? (
-            <>
-              {menuItemsDefault.map((item, index) => (
-                <NavbarMenuItem key={`${item}-${index}`}>
+          {(!isAuthenticated ? menuItemsDefault : menuItemsAuth).map(
+            (item, index) =>
+              !(item.onlyAdmin && role !== 'ADMIN') && (
+                <NavbarMenuItem key={`${item.menuItem}-${index}`}>
                   <Link
                     className={`px-4 py-1 cursor-pointer w-full text-[#00409F] ${pathname === item.route ? 'font-bold' : ''}`}
+                    onPress={item.function}
+                    size="lg"
                     color={
                       index === 2
                         ? 'warning'
-                        : index === menuItemsDefault.length - 1
+                        : index ===
+                            (isAuthenticated
+                              ? menuItemsAuth.length - 1
+                              : menuItemsDefault.length - 1)
                           ? 'danger'
                           : 'foreground'
                     }
-                    href={item.route.toLowerCase()}
-                    size="lg"
+                    href={item.route?.toLowerCase()}
                   >
                     {item.menuItem}
                   </Link>
                 </NavbarMenuItem>
-              ))}
-            </>
-          ) : (
-            <>
-              {menuItemsAuth.map((item, index) => (
-                <div key={index}>
-                  {!(item.onlyAdmin && decoded?.role !== 'ADMIN') && (
-                    <NavbarMenuItem key={`${item}-${index}`}>
-                      <Link
-                        className={`px-4 py-1 cursor-pointer w-full text-[#00409F] ${pathname === item.route ? 'font-bold' : ''}`}
-                        onPress={item.function}
-                        size="lg"
-                        color={'warning'}
-                      >
-                        {item.menuItem}
-                      </Link>
-                    </NavbarMenuItem>
-                  )}
-                </div>
-              ))}
-            </>
+              ),
           )}
         </div>
       </NavbarMenu>
@@ -211,50 +178,54 @@ export default function Header() {
         className="hidden sm:flex gap-4 max-w-[190px] sm:justify-center sm:items-center"
       >
         <NavbarItem>
-          <Link
-            className={`${roboto.className} text-white font-bold text-[18px]`}
-            href={'/'}
+          <Button
+            className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
+            onPress={() =>
+              role === 'ADMIN'
+                ? router.push('/home-admin')
+                : role === 'USER' && router.push('/')
+            }
           >
-            Início
-          </Link>
+            Inicio
+          </Button>
         </NavbarItem>
 
         {isAuthenticated && role === 'ADMIN' && (
           <NavbarItem>
-            <Link
-              className={`${roboto.className} text-white font-bold text-[18px]`}
-              href={'/home-admin/matches'}
+            <Button
+              className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
+              onPress={() => router.push('/home-admin/matches')}
             >
               Partidas
-            </Link>
+            </Button>
           </NavbarItem>
         )}
 
         {isAuthenticated && (
           <>
             <NavbarItem>
-              <Link
-                className={`${roboto.className} text-white font-bold text-[18px]`}
-                href={'/home-user'}
+              <Button
+                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
+                onPress={() => router.push('/home-user')}
               >
                 Aposte
-              </Link>
+              </Button>
             </NavbarItem>
             <NavbarItem>
-              <Link
-                className={`${roboto.className} text-white font-bold text-[18px]`}
-                href={'/winners'}
+              <Button
+                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
+                onPress={() => router.push('/winners')}
               >
                 Vencedores
-              </Link>
+              </Button>
             </NavbarItem>
             <NavbarItem>
-              <Link
-                className={`${roboto.className} text-white font-bold text-[18px]`}
-                href={'/recover-password'}
+              <Button
+                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
+                onPress={() => router.push('/recover-password')}
               >
                 Redefinir senha
-              </Link>
+              </Button>
             </NavbarItem>
           </>
         )}
@@ -275,7 +246,7 @@ export default function Header() {
         {isAuthenticated ? (
           <Button
             className="rounded-full bg-white py-3 px-8 font-headingExtraBold text-[#00409F] text-[16px]"
-            onClick={() => handleSignOut()}
+            onClick={handleSignOut}
           >
             SAIR
           </Button>

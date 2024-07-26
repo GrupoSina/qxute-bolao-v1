@@ -1,8 +1,14 @@
 'use client'
 import { api } from '@/services/api/api'
 import { decodeToken } from '@/utils/jwt'
-import { destroyCookie, setCookie } from 'nookies'
-import React, { createContext, useContext, ReactNode, useState } from 'react'
+import { destroyCookie, parseCookies, setCookie } from 'nookies'
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from 'react'
 import { useRouter } from 'next/navigation'
 
 type SendCodeProps = {
@@ -17,6 +23,10 @@ type AuthContextType = {
   handleSetSendCodeProps: (value: SendCodeProps) => void
   resendCodeAvailable: boolean
   handleResendCodeAvailable: (value: boolean) => void
+  isAuthenticated?: boolean
+  setIsAuthenticaded: React.Dispatch<React.SetStateAction<boolean>>
+  role?: 'ADMIN' | 'USER'
+  setRole: React.Dispatch<React.SetStateAction<'ADMIN' | 'USER' | undefined>>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -28,6 +38,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const { push } = useRouter()
   const [sendCodeProps, setSendCodeProps] = useState<SendCodeProps>()
   const [resendCodeAvailable, setResendCodeAvailable] = useState(false)
+
+  const [isAuthenticated, setIsAuthenticaded] = useState(false)
+  const [role, setRole] = useState<'ADMIN' | 'USER' | undefined>()
+  const { 'qxute-bolao:x-token': sessionKey } = parseCookies()
+  const decoded = decodeToken(sessionKey)
+
+  useEffect(() => {
+    if (sessionKey) {
+      setRole(decoded?.role)
+      setIsAuthenticaded(true)
+    } else {
+      setIsAuthenticaded(false)
+    }
+  }, [sessionKey, decoded])
 
   function handleAuthWithToken(acessToken: string) {
     setCookie(undefined, 'qxute-bolao:x-token', acessToken, {
@@ -67,6 +91,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     sendCodeProps,
     handleResendCodeAvailable,
     resendCodeAvailable,
+    isAuthenticated,
+    setIsAuthenticaded,
+    role,
+    setRole,
   }
 
   return (
