@@ -29,12 +29,23 @@ const roboto = Roboto({
 
 export default function Header() {
   const { handleSignOut } = useAuthContext()
+  const [isAuthenticated, setIsAuthenticaded] = useState(false)
+  const [role, setRole] = useState<'ADMIN' | 'USER' | undefined>()
   const { 'qxute-bolao:x-token': sessionKey } = parseCookies()
   const decoded = decodeToken(sessionKey)
   const { push } = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+
+  useEffect(() => {
+    if (sessionKey) {
+      setRole(decoded?.role)
+      setIsAuthenticaded(true)
+    } else {
+      setIsAuthenticaded(false)
+    }
+  }, [sessionKey])
 
   const menuItemsDefault = [
     {
@@ -114,6 +125,8 @@ export default function Header() {
       section.scrollIntoView({ behavior: 'smooth' })
     }
   }
+
+  console.log(role)
 
   return (
     <Navbar
@@ -198,6 +211,47 @@ export default function Header() {
             Início
           </Link>
         </NavbarItem>
+
+        {isAuthenticated && role === 'ADMIN' && (
+          <NavbarItem>
+            <Link
+              className={`${roboto.className} text-white font-bold text-[18px]`}
+              href={'/home-admin/matches'}
+            >
+              Partidas
+            </Link>
+          </NavbarItem>
+        )}
+
+        {isAuthenticated && (
+          <>
+            <NavbarItem>
+              <Link
+                className={`${roboto.className} text-white font-bold text-[18px]`}
+                href={'/home-user'}
+              >
+                Aposte
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                className={`${roboto.className} text-white font-bold text-[18px]`}
+                href={'/winners'}
+              >
+                Vencedores
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                className={`${roboto.className} text-white font-bold text-[18px]`}
+                href={'/recover-password'}
+              >
+                Redefinir senha
+              </Link>
+            </NavbarItem>
+          </>
+        )}
+
         {pathname === '/' && (
           <NavbarItem>
             <button
@@ -211,12 +265,21 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex max-w-[80px]">
-        <Button
-          className="rounded-full bg-white py-3 px-8 font-headingExtraBold text-[#00409F] text-[16px]"
-          onClick={() => router.push('/login')}
-        >
-          LOGIN
-        </Button>
+        {isAuthenticated ? (
+          <Button
+            className="rounded-full bg-white py-3 px-8 font-headingExtraBold text-[#00409F] text-[16px]"
+            onClick={() => handleSignOut()}
+          >
+            SAIR
+          </Button>
+        ) : (
+          <Button
+            className="rounded-full bg-white py-3 px-8 font-headingExtraBold text-[#00409F] text-[16px]"
+            onClick={() => router.push('/login')}
+          >
+            LOGIN
+          </Button>
+        )}
       </NavbarContent>
     </Navbar>
   )

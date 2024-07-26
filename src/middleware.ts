@@ -17,7 +17,8 @@ export function middleware(request: NextRequest) {
   if (
     !currentUser &&
     (request.nextUrl.pathname.startsWith('/home-admin') ||
-      request.nextUrl.pathname.startsWith('/home-user'))
+      request.nextUrl.pathname.startsWith('/home-user') ||
+      request.nextUrl.pathname.startsWith('/winners'))
   ) {
     return Response.redirect(new URL('/login', request.url))
   }
