@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Button } from '@nextui-org/react'
 import { Open_Sans as OpenSans } from 'next/font/google'
+import AOS from 'aos'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
 export default function CarrosselBetVip() {
+  const handleScrollToSection = useCallback(() => {
+    const section = document.querySelector('#how-it-works-mobile')
+    if (section) {
+      AOS.refresh()
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
+
   return (
     <div className="flex flex-col bg-[#1F67CE] p-10">
       <h1
@@ -20,6 +29,7 @@ export default function CarrosselBetVip() {
       <Button
         variant="bordered"
         className={`mt-6 border-solid border-white text-white text-[14px] font-bold rounded-full ${fontOpenSans.className}`}
+        onClick={handleScrollToSection}
       >
         COMO FUNCIONA
       </Button>

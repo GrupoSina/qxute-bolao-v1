@@ -16,17 +16,9 @@ export default function HomeAdmin() {
 
   return (
     <div
-      className={`w-full h-full flex flex-col items-center ${fontOpenSans.className}`}
+      className={`w-full min-[376px]:h-[calc(100vh-205px)] h-[calc(100vh-100px)] flex flex-col items-center ${fontOpenSans.className} justify-between`}
     >
-      <div className="max-w-[1140px] w-full flex flex-col items-center">
-        {/* <h1
-          className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
-        >
-          Lorem Ipsum
-        </h1>
-        <p className="text-[#00409F] mt-2 mb-4 text-center">
-          Lorem ipsum dolor sit amet consectetur. Laoreet.
-        </p> */}
+      <div className="max-w-[1140px] w-full h-full flex flex-col items-center justify-center">
         <div className="mt-6 w-[90%] h-[201px] bg-white border-solid border-[1px] border-[#00764B] rounded-xl mx-auto">
           <img
             src={
@@ -46,19 +38,20 @@ export default function HomeAdmin() {
         >
           Criar evento
         </Button>
-        <div className="bg-[#00409F] w-screen h-[250px] flex justify-center items-center">
-          <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-            <img
-              src={
-                windowWidth && windowWidth > 640
-                  ? '/qxutebanner.png'
-                  : '/qxutebannermobile.png'
-              }
-              alt="bet vip banner"
-              className="w-full h-full object-fill rounded-lg"
-            />
-          </div>
+      </div>
+      <div className="bg-[#00409F] w-screen min-h-[250px] flex justify-center items-center">
+        <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
+          <img
+            src={
+              windowWidth && windowWidth > 640
+                ? '/qxutebanner.png'
+                : '/qxutebannermobile.png'
+            }
+            alt="bet vip banner"
+            className="w-full h-full object-fill rounded-lg"
+          />
         </div>
+
         <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
       </div>
     </div>

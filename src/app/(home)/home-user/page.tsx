@@ -242,7 +242,7 @@ export default function HomeUser() {
 
   return (
     <form
-      className={`flex flex-col mx-auto w-[100%] items-center h-full bg-white-texture`}
+      className={`flex flex-col mx-auto w-[100%] items-center sm:h-[calc(100vh-205px)] bg-white-texture`}
       // onSubmit={handleSubmit}
     >
       <div className="max-w-[1140px]   w-full flex flex-col items-center">

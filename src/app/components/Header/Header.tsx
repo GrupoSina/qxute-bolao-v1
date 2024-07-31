@@ -59,6 +59,10 @@ export default function Header() {
     router.push('/recover-password')
   }, [router])
 
+  const handleRulesNavigation = useCallback(() => {
+    router.push('/rules')
+  }, [router])
+
   const handleSignOutNavigation = useCallback(() => {
     handleSignOut()
   }, [handleSignOut])
@@ -82,6 +86,7 @@ export default function Header() {
     { menuItem: 'Registro', route: '/register' },
     { menuItem: 'Login', route: '/login' },
     { menuItem: 'Redefinir senha', route: '/recover-password' },
+    { menuItem: 'Regras', route: '/rules' },
   ]
 
   const menuItemsAuth: MenuItem[] = [
@@ -110,6 +115,11 @@ export default function Header() {
       menuItem: 'Redefinir senha',
       function: handleRecoverPasswordNavigation,
       route: '/recover-password',
+    },
+    {
+      menuItem: 'Regras',
+      function: handleRulesNavigation,
+      route: '/rules',
     },
     {
       menuItem: 'Sair',
@@ -219,6 +229,15 @@ export default function Header() {
                 Vencedores
               </Button>
             </NavbarItem>
+            <NavbarItem>
+              <Button
+                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
+                onPress={() => router.push('/rules')}
+              >
+                Regras
+              </Button>
+            </NavbarItem>
+
             <NavbarItem>
               <Button
                 className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
