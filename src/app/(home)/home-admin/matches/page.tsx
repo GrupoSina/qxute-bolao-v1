@@ -15,6 +15,7 @@ import toast from 'react-hot-toast'
 import { handleAxiosError } from '@/services/api/error'
 import RoundService from '@/services/api/models/round'
 import RoundMatchsCardAdmin from '@/app/components/RoundMatchsCardAdmin/RoundMatchsCardAdmin'
+import useWindowWidth from '@/utils/window-width-hook'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
@@ -32,6 +33,8 @@ export default function HomeAdmin() {
   >([])
   const { setCurrentModalIndex, refreshRounds, setRefreshRounds } =
     useEventsContext()
+
+  const windowWidth = useWindowWidth()
 
   useEffect(() => {
     if (!refreshRounds) {
@@ -81,121 +84,129 @@ export default function HomeAdmin() {
 
   return (
     <div
-      className={`w-full h-full flex flex-col items-center ${fontOpenSans.className}`}
+      className={`w-full sm:h-[calc(100vh-205px)] flex flex-col items-center ${fontOpenSans.className}`}
     >
-      <div className="max-w-[1140px] w-full flex flex-col items-center">
-        <h1
-          className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
-        >
-          Partidas
-        </h1>
-        <p className="text-[#00409F] mt-2 mb-4 text-center">
-          Defina o resultado das partidas abaixo.
-        </p>
-        <div className="flex flex-col items-center w-[90%]">
-          {loading ? (
-            <div className="h-[200px] w-full flex items-center justify-center">
-              <Spinner />
-            </div>
-          ) : (
-            <Tabs radius="full" variant="solid" color="secondary">
-              <Tab
-                key="waiting"
-                title="Aguardando"
-                className="w-full flex flex-col items-center"
-              >
-                <div className="max-w-[450px] w-full">
-                  <>
-                    {roundsWaiting.findIndex((round) =>
-                      round.matchs.find((match) => match.id),
-                    ) !== -1 && (
-                      <>
-                        {roundsWaiting.map((round) => (
-                          <RoundMatchsCardAdmin
-                            round={round}
-                            key={round.id}
-                            status="WAITING"
-                          />
-                        ))}
-                      </>
-                    )}
-                    {roundsInProgress.findIndex((round) =>
-                      round.matchs.find((match) => match.id),
-                    ) !== -1 && (
-                      <>
-                        {roundsInProgress.map((round) => (
-                          <RoundMatchsCardAdmin
-                            round={round}
-                            key={round.id}
-                            status="IN_PROGRESS"
-                          />
-                        ))}
-                      </>
-                    )}
-
-                    {roundsInProgress.findIndex((round) =>
-                      round.matchs.find((match) => match.id),
-                    ) === -1 &&
-                      roundsWaiting.findIndex((round) =>
-                        round.matchs.find((match) => match.id),
-                      ) === -1 && (
-                        <div className="w-full flex justify-center my-10">
-                          <p className="text-[16px] text-[#00409F]">
-                            Sem partidas.
-                          </p>
-                        </div>
-                      )}
-                  </>
-                </div>
-              </Tab>
-              <Tab
-                key="done"
-                title="Finalizadas"
-                className="w-full flex flex-col items-center"
-              >
-                <div className="max-w-[450px] w-full">
-                  {roundsDone.findIndex((round) =>
-                    round.matchs.find((match) => match.id),
-                  ) !== -1 ? (
+      <div className="max-w-[1140px] w-full h-full flex flex-col items-center justify-between">
+        <div className="w-full flex flex-col items-center">
+          <h1
+            className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
+          >
+            Partidas
+          </h1>
+          <p className="text-[#00409F] mt-2 mb-4 text-center">
+            Defina o resultado das partidas abaixo.
+          </p>
+          <div className="flex flex-col items-center w-[90%]">
+            {loading ? (
+              <div className="h-[200px] w-full flex items-center justify-center">
+                <Spinner />
+              </div>
+            ) : (
+              <Tabs radius="full" variant="solid" color="secondary">
+                <Tab
+                  key="waiting"
+                  title="Aguardando"
+                  className="w-full flex flex-col items-center"
+                >
+                  <div className="max-w-[450px] w-full">
                     <>
-                      {roundsDone.map((round) => (
-                        <RoundMatchsCardAdmin
-                          round={round}
-                          key={round.id}
-                          status="DONE"
-                        />
-                      ))}
+                      {roundsWaiting.findIndex((round) =>
+                        round.matchs.find((match) => match.id),
+                      ) !== -1 && (
+                        <>
+                          {roundsWaiting.map((round) => (
+                            <RoundMatchsCardAdmin
+                              round={round}
+                              key={round.id}
+                              status="WAITING"
+                            />
+                          ))}
+                        </>
+                      )}
+                      {roundsInProgress.findIndex((round) =>
+                        round.matchs.find((match) => match.id),
+                      ) !== -1 && (
+                        <>
+                          {roundsInProgress.map((round) => (
+                            <RoundMatchsCardAdmin
+                              round={round}
+                              key={round.id}
+                              status="IN_PROGRESS"
+                            />
+                          ))}
+                        </>
+                      )}
+
+                      {roundsInProgress.findIndex((round) =>
+                        round.matchs.find((match) => match.id),
+                      ) === -1 &&
+                        roundsWaiting.findIndex((round) =>
+                          round.matchs.find((match) => match.id),
+                        ) === -1 && (
+                          <div className="w-full flex justify-center my-10">
+                            <p className="text-[16px] text-[#00409F]">
+                              Sem partidas.
+                            </p>
+                          </div>
+                        )}
                     </>
-                  ) : (
-                    <div className="w-full flex justify-center my-10">
-                      <p className="text-[16px] text-[#00409F]">
-                        Sem partidas.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </Tab>
-            </Tabs>
-          )}
-        </div>
-        <Button
-          onClick={() => setCurrentModalIndex(0)}
-          onPress={onOpen}
-          startContent={<Image src="/addcircle.svg" alt="add circle" />}
-          className="max-w-[450px] w-full mx-auto mt-4 mb-6 bg-[#00409F] text-white font-bold text-[14px] py-[10px] px-[14px]"
-        >
-          Criar evento
-        </Button>
-        <div className="bg-[#00409F] w-screen h-[250px] flex justify-center items-center">
-          <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-            <h1>betvip banner</h1>
+                  </div>
+                </Tab>
+                <Tab
+                  key="done"
+                  title="Finalizadas"
+                  className="w-full flex flex-col items-center"
+                >
+                  <div className="max-w-[450px] w-full">
+                    {roundsDone.findIndex((round) =>
+                      round.matchs.find((match) => match.id),
+                    ) !== -1 ? (
+                      <>
+                        {roundsDone.map((round) => (
+                          <RoundMatchsCardAdmin
+                            round={round}
+                            key={round.id}
+                            status="DONE"
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <div className="w-full flex justify-center my-10">
+                        <p className="text-[16px] text-[#00409F]">
+                          Sem partidas.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </Tab>
+              </Tabs>
+            )}
           </div>
+          <Button
+            onClick={() => setCurrentModalIndex(0)}
+            onPress={onOpen}
+            startContent={<Image src="/addcircle.svg" alt="add circle" />}
+            className="max-w-[450px] w-full mx-auto mt-4 mb-6 bg-[#00409F] text-white font-bold text-[14px] py-[10px] px-[14px]"
+          >
+            Criar evento
+          </Button>
         </div>
-        <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
-        {/* <SetResultModal
-        isOpen={isOpenSetResultModal}
-        onClose={onOpenChangeSetResultModal}
-      /> */}
+
+        <div className="bg-[#00409F] w-screen min-h-[250px] flex justify-center items-center">
+          <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
+            <img
+              src={
+                windowWidth && windowWidth > 640
+                  ? '/qxutebanner.png'
+                  : '/qxutebannermobile.png'
+              }
+              alt="bet vip banner"
+              className="w-full h-full object-fill rounded-lg"
+            />
+          </div>
+
+          <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
+        </div>
       </div>
     </div>
   )

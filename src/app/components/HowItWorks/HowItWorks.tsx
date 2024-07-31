@@ -15,6 +15,7 @@ export default function HowItWorks({ id }: HowItWorksProps) {
     <div className="bg-white-texture flex flex-col" ref={howItWorksRef} id={id}>
       <h1
         className={`${fontOpenSans.className} my-6 text-center text-[#00409F] text-[18px] font-extrabold`}
+        // onClick={handleScrollToSection}
       >
         COMO FUNCIONA?
       </h1>

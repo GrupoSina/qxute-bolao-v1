@@ -18,12 +18,10 @@ export default function HomeLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div
-      className={`${openSans.className} flex flex-col justify-start items-start  `}
-    >
+    <div className={`${openSans.className} flex flex-col min-h-screen`}>
       <Header />
-      <div className="h-auto w-full">{children}</div>
-      <div className="flex w-full">
+      <div className="flex-grow w-full">{children}</div>
+      <div className="flex w-full z-40">
         <Footer />
       </div>
     </div>

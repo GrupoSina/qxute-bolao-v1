@@ -4,6 +4,7 @@ import WinnerModal from '@/app/components/WinnerModal/WinnerModal'
 import { useEventsContext } from '@/context/EventsContext'
 import { handleAxiosError } from '@/services/api/error'
 import RoundService from '@/services/api/models/round'
+import useWindowWidth from '@/utils/window-width-hook'
 import { Button, Spinner } from '@nextui-org/react'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -14,6 +15,8 @@ export default function Winners() {
     IRoundWithMatchsAndChampionship[]
   >([])
   const [loading, setLoading] = useState(true)
+
+  const windowWidth = useWindowWidth()
 
   useEffect(() => {
     fetchRounds()
@@ -34,13 +37,13 @@ export default function Winners() {
     }
   }
   return (
-    <div className="flex flex-col mx-auto w-[100%] items-center h-full bg-white-texture">
+    <div className="flex flex-col mx-auto w-[100%] items-center justify-between min-[376px]:h-[calc(100vh-205px)] h-[calc(100vh-100px)] bg-white-texture">
       {loading ? (
         <div className="min-h-[60vh] w-full flex items-center justify-center">
           <Spinner />
         </div>
       ) : (
-        <div className="max-w-[450px] w-full min-h-[60vh] flex flex-col items-center py-8">
+        <div className="max-w-[450px] w-full  flex flex-col items-center py-8">
           <h1 className="text-[#00409F] text-[18px] font-bold">
             Vencedores das rodadas
           </h1>
@@ -97,9 +100,17 @@ export default function Winners() {
         </div>
       )}
 
-      <div className="bg-[#00409F] w-screen h-[250px] flex justify-center items-center">
+      <div className="bg-[#00409F] w-screen min-h-[250px] flex justify-center items-center">
         <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-          <h1>betvip banner</h1>
+          <img
+            src={
+              windowWidth && windowWidth > 640
+                ? '/qxutebanner.png'
+                : '/qxutebannermobile.png'
+            }
+            alt="bet vip banner"
+            className="w-full h-full object-fill rounded-lg"
+          />
         </div>
       </div>
       <WinnerModal />
