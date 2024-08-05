@@ -265,7 +265,7 @@ export default function Header() {
         {isAuthenticated ? (
           <Button
             className="rounded-full bg-white py-3 px-8 font-headingExtraBold text-[#00409F] text-[16px]"
-            onClick={handleSignOut}
+            onClick={handleSignOutNavigation}
           >
             SAIR
           </Button>
