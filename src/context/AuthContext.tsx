@@ -9,7 +9,6 @@ import React, {
   useState,
   useEffect,
 } from 'react'
-import { useRouter } from 'next/navigation'
 
 type SendCodeProps = {
   userId: string
@@ -35,7 +34,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   // const { 'qxute-bolao:x-token': sessionKey } = parseCookies()
-  const { push } = useRouter()
+
   const [sendCodeProps, setSendCodeProps] = useState<SendCodeProps>()
   const [resendCodeAvailable, setResendCodeAvailable] = useState(false)
 
@@ -73,7 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   function handleSignOut() {
     destroyCookie(undefined, 'qxute-bolao:x-token')
     api.defaults.headers.common.Authorization = ''
-    push('/login')
+    window.location.href = '/login'
   }
 
   function handleSetSendCodeProps(value: SendCodeProps) {
