@@ -191,9 +191,11 @@ export default function Header() {
           <Button
             className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
             onPress={() =>
-              role === 'ADMIN'
-                ? router.push('/home-admin')
-                : role === 'USER' && router.push('/')
+              isAuthenticated
+                ? role === 'ADMIN'
+                  ? router.push('/home-admin')
+                  : role === 'USER' && router.push('/home-user')
+                : router.push('/')
             }
           >
             Inicio
