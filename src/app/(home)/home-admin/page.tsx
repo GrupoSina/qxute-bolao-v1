@@ -16,7 +16,7 @@ export default function HomeAdmin() {
 
   return (
     <div
-      className={`w-full min-[376px]:h-[calc(100vh-205px)] h-[calc(100vh-100px)] flex flex-col items-center ${fontOpenSans.className} justify-between`}
+      className={`w-full h-full flex flex-col items-center ${fontOpenSans.className} justify-center`}
     >
       <div className="max-w-[1140px] w-full h-full flex flex-col items-center justify-center">
         <div className="mt-6 w-[90%] h-[201px] bg-white border-solid border-[1px] border-[#00764B] rounded-xl mx-auto">
@@ -39,21 +39,8 @@ export default function HomeAdmin() {
           Criar evento
         </Button>
       </div>
-      <div className="bg-[#00409F] w-screen min-h-[250px] flex justify-center items-center">
-        <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-          <img
-            src={
-              windowWidth && windowWidth > 640
-                ? '/qxutebanner.png'
-                : '/qxutebannermobile.png'
-            }
-            alt="bet vip banner"
-            className="w-full h-full object-fill rounded-lg"
-          />
-        </div>
 
-        <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
-      </div>
+      <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
     </div>
   )
 }

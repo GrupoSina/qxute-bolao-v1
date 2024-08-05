@@ -3,18 +3,15 @@
 import React from 'react'
 import { Accordion, AccordionItem } from '@nextui-org/react'
 import { Open_Sans } from 'next/font/google'
-import useWindowWidth from '@/utils/window-width-hook'
 
 const openSans = Open_Sans({
   subsets: ['latin'],
 })
 
 export default function OverallRules() {
-  const windowWidth = useWindowWidth()
-
   return (
     <div
-      className={`bg-white-texture sm:h-[calc(100vh-205px)] ${openSans.className} flex flex-col justify-between`}
+      className={`bg-white-texture h-full ${openSans.className} flex flex-col`}
     >
       <h1 className="text-[#00409F] text-[18px] font-bold text-center py-6">
         Regras Gerais
@@ -293,19 +290,6 @@ export default function OverallRules() {
           </div>
         </AccordionItem>
       </Accordion>
-      <div className="bg-[#00409F] w-screen min-h-[250px] flex justify-center items-center">
-        <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-          <img
-            src={
-              windowWidth && windowWidth > 640
-                ? '/qxutebanner.png'
-                : '/qxutebannermobile.png'
-            }
-            alt="bet vip banner"
-            className="w-full h-full object-fill rounded-lg"
-          />
-        </div>
-      </div>
     </div>
   )
 }

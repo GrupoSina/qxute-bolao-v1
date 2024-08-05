@@ -241,11 +241,8 @@ export default function HomeUser() {
   console.log(areAllMatchesDisabled)
 
   return (
-    <form
-      className={`flex flex-col mx-auto w-[100%] items-center sm:h-[calc(100vh-205px)] bg-white-texture`}
-      // onSubmit={handleSubmit}
-    >
-      <div className="max-w-[1140px]   w-full flex flex-col items-center">
+    <form className={`flex flex-col mx-auto w-[100%] items-center h-full`}>
+      <div className="max-w-[1140px] w-full flex flex-col items-center justify-center">
         <h1
           className={`text-center text-[#00409F] text-[18px] font-bold  mt-10`}
         >
@@ -498,7 +495,7 @@ export default function HomeUser() {
                   )
                 )}
                 {existMatches && (
-                  <>
+                  <div className="max-w-[550px] w-full">
                     {areAllMatchesDisabled() ? (
                       <Button
                         startContent={
@@ -524,7 +521,7 @@ export default function HomeUser() {
                         Aposte já!
                       </Button>
                     )}
-                  </>
+                  </div>
                 )}
               </Tab>
               <Tab key="done" title="Finalizadas" className="w-full">
@@ -534,15 +531,6 @@ export default function HomeUser() {
           </div>
         )}
 
-        <div className="bg-[#00409F] w-screen h-[250px] flex justify-center items-center">
-          <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-            <img
-              src={isMobile ? '/qxutebannermobile1.png' : '/qxutebanner.png'}
-              alt="qxute banner mobile"
-              className="w-full h-full object-fill rounded-lg"
-            />
-          </div>
-        </div>
         <WaitingResultModal
           isOpen={isWaitingResultsModal}
           onClose={() => setIsWaitingResultsModal(false)}

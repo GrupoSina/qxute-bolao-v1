@@ -15,7 +15,6 @@ import toast from 'react-hot-toast'
 import { handleAxiosError } from '@/services/api/error'
 import RoundService from '@/services/api/models/round'
 import RoundMatchsCardAdmin from '@/app/components/RoundMatchsCardAdmin/RoundMatchsCardAdmin'
-import useWindowWidth from '@/utils/window-width-hook'
 
 const fontOpenSans = OpenSans({ subsets: ['latin'] })
 
@@ -33,8 +32,6 @@ export default function HomeAdmin() {
   >([])
   const { setCurrentModalIndex, refreshRounds, setRefreshRounds } =
     useEventsContext()
-
-  const windowWidth = useWindowWidth()
 
   useEffect(() => {
     if (!refreshRounds) {
@@ -84,9 +81,9 @@ export default function HomeAdmin() {
 
   return (
     <div
-      className={`w-full sm:h-[calc(100vh-205px)] flex flex-col items-center ${fontOpenSans.className}`}
+      className={`w-full h-full flex flex-col items-center ${fontOpenSans.className}`}
     >
-      <div className="max-w-[1140px] w-full h-full flex flex-col items-center justify-between">
+      <div className="max-w-[1140px] w-full h-full flex flex-col items-center">
         <div className="w-full flex flex-col items-center">
           <h1
             className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
@@ -192,21 +189,7 @@ export default function HomeAdmin() {
           </Button>
         </div>
 
-        <div className="bg-[#00409F] w-screen min-h-[250px] flex justify-center items-center">
-          <div className="w-[90%] bg-black h-[160px] rounded-xl flex justify-center items-center">
-            <img
-              src={
-                windowWidth && windowWidth > 640
-                  ? '/qxutebanner.png'
-                  : '/qxutebannermobile.png'
-              }
-              alt="bet vip banner"
-              className="w-full h-full object-fill rounded-lg"
-            />
-          </div>
-
-          <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
-        </div>
+        <CreateEventModal isOpen={isOpen} onClose={onOpenChange} />
       </div>
     </div>
   )
