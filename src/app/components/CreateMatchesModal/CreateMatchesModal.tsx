@@ -307,10 +307,10 @@ export default function CreateMatchesModal({ onClose }: CloseButtonProps) {
         <h1 className="text-white">4. Partidas </h1>
       </ModalHeader>
       <ModalBody className="space-y-2">
-        <p className="text-white">
+        {/* <p className="text-white">
           Lorem ipsum dolor sit amet consectetur. Nulla ac nisl pellentesque
           netus diam. Vel urna mattis.
-        </p>
+        </p> */}
         <div className="space-y-10">
           {fields.map((field, index) => {
             const watchCheckbox = watch(`matches.${index}.lastPlayerCheckbox`)
