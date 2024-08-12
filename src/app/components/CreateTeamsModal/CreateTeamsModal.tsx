@@ -149,10 +149,10 @@ export default function CreateTeamsModal({ onClose }: CloseButtonprops) {
       </ModalHeader>
       <form onSubmit={handleSubmit(handleCreateTeams)}>
         <ModalBody className="space-y-2">
-          <p className="text-white">
+          {/* <p className="text-white">
             Lorem ipsum dolor sit amet consectetur. Nulla ac nisl pellentesque
             netus diam. Vel urna mattis.
-          </p>
+          </p> */}
           {teams?.length > 0 && (
             <Select
               classNames={{

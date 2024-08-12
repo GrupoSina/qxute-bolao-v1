@@ -70,10 +70,10 @@ export default function CreateRoundsModal({ onClose }: CloseButtonprops) {
       </ModalHeader>
       <form onSubmit={handleSubmit(handleCreateRound)}>
         <ModalBody className="space-y-2">
-          <p className="text-white">
+          {/* <p className="text-white">
             Lorem ipsum dolor sit amet consectetur. Nulla ac nisl pellentesque
             netus diam. Vel urna mattis.
-          </p>
+          </p> */}
 
           <Input
             type="text"

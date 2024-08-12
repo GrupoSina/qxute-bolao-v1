@@ -98,10 +98,10 @@ export default function CreateChampionshipModal({ onClose }: CloseButtonprops) {
       </ModalHeader>
       <form onSubmit={handleSubmit(handleCreateChampionship)}>
         <ModalBody className="space-y-2">
-          <p className="text-white">
+          {/* <p className="text-white">
             Lorem ipsum dolor sit amet consectetur. Nulla ac nisl pellentesque
             netus diam. Vel urna mattis.
-          </p>
+          </p> */}
           {championships.length > 0 && (
             <Select
               defaultSelectedKeys={[selectedChampionship || '']}
