@@ -166,6 +166,20 @@ export default function Register() {
             placeholder="Digite sua senha novamente"
             className="mt-4"
           />
+
+          <Input
+            size="md"
+            type="text"
+            label="Insira seu Instagram"
+            labelPlacement="inside"
+            placeholder="ex: @_qxute"
+            className="mt-4"
+            errorMessage={errors.instagram?.message}
+            isInvalid={!!errors.instagram?.message}
+            color={errors.instagram?.message ? 'danger' : undefined}
+            variant={errors.instagram?.message ? 'bordered' : undefined}
+            {...register('instagram')}
+          />
           <Checkbox
             {...register('askTerms')}
             isInvalid={!!errors.askTerms?.message}

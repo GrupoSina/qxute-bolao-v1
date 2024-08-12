@@ -31,6 +31,7 @@ export const schemaRegisterUser = yup
       .boolean()
       .oneOf([true], 'Você precisa aceitar os termos de uso.')
       .required('Campo Termos de Uso é obrigatório.'),
+    instagram: yup.string().required('Campo Instagram é obrigatório.'),
   })
   .required()
 
