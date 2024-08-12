@@ -4,6 +4,7 @@ declare interface INewUser {
   phone: string
   password: string
   confirmPassword: string
+  instagram: string
   askTerms: boolean
 }
 
@@ -12,6 +13,7 @@ declare interface IRequestNewUser {
   birthdate: Date
   phone: string
   password: string
+  instagram: string
 }
 declare interface IResponseNewUser {
   userId?: string
