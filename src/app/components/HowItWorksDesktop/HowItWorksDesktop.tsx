@@ -17,12 +17,12 @@ const HowItWorksDesktop = forwardRef<HTMLDivElement, HowItWorksDesktopProps>(
       <div
         id={id}
         ref={ref}
-        className="flex flex-col items-center justify-center gap-12 w-full min-h-[600px] bg-[url('/whitetexture.png')] bg-no-repeat bg-cover bg-center"
+        className="flex flex-col items-center justify-center gap-12 w-full min-h-[600px] bg-[url('/whitetexture.png')] bg-no-repeat bg-cover bg-center overflow-x-hidden"
       >
         <h1 className="text-[48px] font-extrabold text-[#00409F] ">
           COMO FUNCIONA
         </h1>
-        <div className="flex">
+        <div className="flex w-full justify-center space-x-64">
           <div className="flex flex-col items-center gap-4 w-[220px]">
             <p className="bg-[#1F67CE] text-white py-2 px-8 rounded-full text-[16px]">
               PASSO 1
@@ -44,15 +44,15 @@ const HowItWorksDesktop = forwardRef<HTMLDivElement, HowItWorksDesktopProps>(
               PASSO 3
             </p>
             <p className="text-[#1F67CE] text-[14px] text-center">
-              Agora é só acompanhar no Instagram do{' '}
+              Acompanhe o resultado no Instagram{' '}
               <Link
                 href="https://instagram.com/_qxute"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                @qxute
+                @_QXUTE
               </Link>{' '}
-              o resultado e receber seu prêmio!
+              .
             </p>
           </div>
         </div>

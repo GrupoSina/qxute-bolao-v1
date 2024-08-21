@@ -38,15 +38,15 @@ export default function HowItWorks({ id }: HowItWorksProps) {
           PASSO 3
         </Button>
         <h1 className="text-[#1F67CE]">
-          Agora é só acompanhar no Instagram do{' '}
+          Acompanhe o resultado no Instagram{' '}
           <Link
             href="https://instagram.com/_qxute"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @qxute
+            @_QXUTE
           </Link>{' '}
-          o resultado e receber seu prêmio!
+          .
         </h1>
       </div>
 

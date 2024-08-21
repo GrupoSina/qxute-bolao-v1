@@ -29,7 +29,7 @@ export default function HeroSectionDesktop({
     }
   }
   return (
-    <div className="lg:flex hidden items-center max-w-[1140px] h-[400px] mt-12">
+    <div className="lg:flex hidden items-center w-full h-[400px] mt-12 justify-center space-x-7">
       <div className="flex flex-col bg-[#1F67CE] p-10 items-start max-w-[550px]">
         <h1
           className={`text-center ${fontOpenSans.className} text-[48px] font-extrabold mb-6 text-white`}
@@ -44,9 +44,9 @@ export default function HeroSectionDesktop({
           data-aos-duration="1000"
         >
           <p className="text-white">
-            Tá se achando bom nos palpites e tá afim de ganhar uma óia do Qxute
-            sem gastar nada? Então aqui é teu lugar. Dale no teu palpite e
-            garante teus prêmios!
+            Acha que manda bem nos palpites e quer ganhar uns prêmios do Qxute
+            sem gastar nada? Então chegou sua hora! Dá o teu chute, crava teu
+            palpite e fatura os prêmios!
           </p>
           <Button
             onClick={handleScroll}
