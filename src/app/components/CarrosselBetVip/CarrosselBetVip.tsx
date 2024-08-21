@@ -22,9 +22,9 @@ export default function CarrosselBetVip() {
         BOLÃO DO QXUTE
       </h1>
       <p className="text-white">
-        Tá se achando bom nos palpites e tá afim de ganhar uma óia do Qxute sem
-        gastar nada? Então aqui é teu lugar. Dale no teu palpite e garante teus
-        prêmios!
+        Acha que manda bem nos palpites e quer ganhar uns prêmios do Qxute sem
+        gastar nada? Então chegou sua hora! Dá o teu chute, crava teu palpite e
+        fatura os prêmios!
       </p>
       <Button
         variant="bordered"

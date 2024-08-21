@@ -16,7 +16,12 @@ export default function OverallRules() {
       <h1 className="text-[#00409F] text-[18px] font-bold text-center py-6">
         Regras Gerais
       </h1>
-      <Accordion variant="splitted" fullWidth defaultExpandedKeys={['1']}>
+      <Accordion
+        className="px-8"
+        variant="splitted"
+        fullWidth
+        defaultExpandedKeys={['1']}
+      >
         <AccordionItem
           classNames={{
             base: 'bg-black',

@@ -53,13 +53,8 @@ export default function Register() {
   return (
     <div className="h-[calc(100vh+75px)] -mb-[148px] w-screen bg-[#1F67CE] flex flex-col items-center pb-20">
       <div className="flex flex-col max-w-[540px] w-full">
-        <h1
-          className={`${fontOpenSans.className} mt-10 text-center text-[18px] font-bold text-white`}
-        >
-          Registrar
-        </h1>
         <p
-          className={`${fontOpenSans.className} text-center text-[12px] font-normal text-white my-2`}
+          className={`${fontOpenSans.className} text-center text-[18px] font-normal text-white my-2 mt-10`}
         >
           Registre-se agora e participe!
         </p>
