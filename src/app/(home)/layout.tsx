@@ -25,7 +25,7 @@ export default function HomeLayout({
       <div className="flex-grow w-full h-full overflow-auto bg-white-texture">
         {children}
       </div>
-      <div className="flex flex-col w-full z-40">
+      <div className="flex flex-col w-full z-10">
         <QxuteBanner />
         <Footer />
       </div>

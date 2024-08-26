@@ -19,35 +19,39 @@ export default function HowItWorks({ id }: HowItWorksProps) {
       >
         COMO FUNCIONA?
       </h1>
-      <div className="mx-auto w-[85%] flex flex-col justify-center items-center space-y-4">
-        <Button
-          className={`bg-[#1F67CE] text-[12px] font-bold text-white py-3 px-6 ${fontOpenSans.className}`}
+      <div className="mx-auto w-[85%] flex flex-col justify-center items-center space-y-4 ">
+        <p
+          className={`bg-[#1F67CE] text-[12px] font-bold text-white py-3 px-6 mb-[-35px] rounded-full z-10 ${fontOpenSans.className}`}
         >
           PASSO 1
-        </Button>
-        <h1 className="text-[#1F67CE]">
+        </p>
+        <h1 className="w-full text-center text-[#1F67CE] border-1 border-[#1F67CE] rounded-lg pt-7 pb-4 px-3">
           Crie sua conta ou faça o login de um acesso já existente.{' '}
         </h1>
-        <Button className="bg-[#1F67CE] text-[12px] font-bold text-white py-3 px-6">
-          PASSO 2
-        </Button>
-        <h1 className="text-[#1F67CE]">
-          Avalie os jogos disponíveis e faça o seu palpite.
-        </h1>
-        <Button className="bg-[#1F67CE] text-[12px] font-bold text-white py-3 px-6">
-          PASSO 3
-        </Button>
-        <h1 className="text-[#1F67CE]">
-          Acompanhe o resultado no Instagram{' '}
-          <Link
-            href="https://instagram.com/_qxute"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @_QXUTE
-          </Link>{' '}
-          .
-        </h1>
+        <div className="w-full">
+          <p className="mx-auto bg-[#1F67CE] w-[100px] text-[12px] text-center font-bold text-white py-3 px-6 mb-[-20px] rounded-full z-10">
+            PASSO 2
+          </p>
+          <h1 className="w-full text-center text-[#1F67CE] border-1 border-[#1F67CE] rounded-lg pt-7 pb-4 px-3">
+            Avalie os jogos disponíveis e faça o seu palpite.
+          </h1>
+        </div>
+        <div className="w-full">
+          <p className="mx-auto bg-[#1F67CE] w-[100px] text-[12px] text-center font-bold text-white py-3 px-6 mb-[-20px] rounded-full z-10">
+            PASSO 3
+          </p>
+          <h1 className="w-full text-center text-[#1F67CE] border-1 border-[#1F67CE] rounded-lg pt-7 pb-4 px-3">
+            Acompanhe o resultado no Instagram{' '}
+            <Link
+              href="https://instagram.com/_qxute"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @_QXUTE
+            </Link>{' '}
+            .
+          </h1>
+        </div>
       </div>
 
       <Button

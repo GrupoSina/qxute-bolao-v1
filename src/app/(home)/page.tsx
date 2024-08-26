@@ -39,8 +39,6 @@ export default function Home() {
         <div className="max-[1140px]:block hidden">
           <HowItWorks id="how-it-works-mobile" />
         </div>
-
-        {/* <BetVipBanner /> */}
       </div>
     </main>
   )
