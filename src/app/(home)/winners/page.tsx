@@ -35,13 +35,13 @@ export default function Winners() {
     }
   }
   return (
-    <div className="flex flex-col mx-auto w-[100%] items-center justify-between">
+    <div className="flex flex-col mx-auto w-[100%] items-center justify-between ">
       {loading ? (
         <div className="min-h-[60vh] w-full flex items-center justify-center">
           <Spinner />
         </div>
       ) : (
-        <div className="max-w-[450px] w-full  flex flex-col items-center py-8">
+        <div className="w-full flex flex-col items-center py-8">
           <h1 className="text-[#00409F] text-[18px] font-bold">
             Vencedores das rodadas
           </h1>
@@ -57,7 +57,7 @@ export default function Winners() {
                   round.matchs?.map((match, indexMatch) => (
                     <div
                       key={match.id + indexMatch}
-                      className="flex flex-wrap p-4 sm:justify-between justify-center gap-3 items-center border-b-[1px] last:border-b-0"
+                      className="flex sm:flex-row flex-col flex-wrap p-4 sm:justify-between justify-center gap-3 items-center border-b-[1px] last:border-b-0"
                     >
                       <div className="flex items-center gap-1">
                         <p className="text-white text-[12px] font-bold">
