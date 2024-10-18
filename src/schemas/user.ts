@@ -23,13 +23,13 @@ export const schemaRegisterUser = yup
         return originalValue === '' ? null : value
       })
       .required('Campo Data de Nascimento é obrigatório.')
-      .test(
-        'is-14-or-older',
-        'Usuário deve ter no mínimo 14 anos.',
-        (value) => {
-          return value && differenceInYears(new Date(), value) >= 14
-        },
-      )
+      // .test(
+      //   'is-14-or-older',
+      //   'Usuário deve ter no mínimo 14 anos.',
+      //   (value) => {
+      //     return value && differenceInYears(new Date(), value) >= 14
+      //   },
+      // )
       .optional(),
     askTerms: yup
       .boolean()
