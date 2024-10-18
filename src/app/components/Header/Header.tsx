@@ -15,15 +15,9 @@ import {
 } from '@nextui-org/react'
 import { useAuthContext } from '@/context/AuthContext'
 import { usePathname, useRouter } from 'next/navigation'
-import { Roboto } from 'next/font/google'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-
-const roboto = Roboto({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-})
 
 interface MenuItem {
   menuItem: string
@@ -82,16 +76,40 @@ export default function Header() {
   }, [])
 
   const menuItemsDefault: MenuItem[] = [
-    { menuItem: 'Home', route: '/' },
-    { menuItem: 'Registro', route: '/register' },
-    { menuItem: 'Login', route: '/login' },
-    { menuItem: 'Redefinir senha', route: '/recover-password' },
-    { menuItem: 'Regras', route: '/rules' },
+    {
+      menuItem: 'Início',
+      route: '/',
+      function: () => {
+        router.push('/')
+      },
+    },
+    {
+      menuItem: 'Registro',
+      route: '/register',
+      function: () => {
+        router.push('/register')
+      },
+    },
+    {
+      menuItem: 'Login',
+      route: '/login',
+      function: () => {
+        router.push('/login')
+      },
+    },
+    // { menuItem: 'Redefinir senha', route: '/recover-password' },
+    {
+      menuItem: 'Regras',
+      route: '/rules',
+      function: () => {
+        router.push('/rules')
+      },
+    },
   ]
 
   const menuItemsAuth: MenuItem[] = [
     {
-      menuItem: 'Home',
+      menuItem: 'Início',
       function: handleHomeNavigation,
       route: role === 'ADMIN' ? '/home-admin' : '/home-user',
     },
@@ -111,20 +129,56 @@ export default function Header() {
       function: handleWinnersNavigation,
       route: '/winners',
     },
-    {
-      menuItem: 'Redefinir senha',
-      function: handleRecoverPasswordNavigation,
-      route: '/recover-password',
-    },
+
     {
       menuItem: 'Regras',
       function: handleRulesNavigation,
       route: '/rules',
     },
     {
+      menuItem: 'Redefinir senha',
+      function: handleRecoverPasswordNavigation,
+      route: '/recover-password',
+    },
+    {
       menuItem: 'Sair',
       function: handleSignOutNavigation,
       route: null,
+    },
+  ]
+
+  const menuItemsAuthDesktop: MenuItem[] = [
+    {
+      menuItem: 'Início',
+      function: handleHomeNavigation,
+      route: role === 'ADMIN' ? '/home-admin' : '/home-user',
+    },
+    {
+      menuItem: 'Partidas',
+      function: handleMatchesNavigation,
+      onlyAdmin: true,
+      route: '/home-admin/matches',
+    },
+    {
+      menuItem: 'Aposte',
+      function: handleBetNavigation,
+      route: '/home-user',
+    },
+    {
+      menuItem: 'Vencedores',
+      function: handleWinnersNavigation,
+      route: '/winners',
+    },
+
+    {
+      menuItem: 'Regras',
+      function: handleRulesNavigation,
+      route: '/rules',
+    },
+    {
+      menuItem: 'Redefinir senha',
+      function: handleRecoverPasswordNavigation,
+      route: '/recover-password',
     },
   ]
 
@@ -160,7 +214,7 @@ export default function Header() {
               !(item.onlyAdmin && role !== 'ADMIN') && (
                 <NavbarMenuItem key={`${item.menuItem}-${index}`}>
                   <Link
-                    className={`px-4 py-1 cursor-pointer w-full text-[#00409F] ${pathname === item.route ? 'font-bold' : ''}`}
+                    className={`px-4 py-1 cursor-pointer text-[16px]  w-full text-[#00409F] ${pathname === item.route ? 'font-monumentExtendedUltraBold' : 'font-monumentExtendedRegular'}`}
                     onPress={item.function}
                     size="lg"
                     color={
@@ -185,80 +239,30 @@ export default function Header() {
 
       <NavbarContent
         justify="center"
-        className="hidden md:flex gap-4 max-w-[100px] md:justify-center md:items-center"
+        className="hidden md:flex max-w-[100px] md:justify-center md:items-center"
       >
-        <NavbarItem>
-          <Button
-            className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
-            onPress={() =>
-              isAuthenticated
-                ? role === 'ADMIN'
-                  ? router.push('/home-admin')
-                  : role === 'USER' && router.push('/home-user')
-                : router.push('/')
-            }
-          >
-            Inicio
-          </Button>
-        </NavbarItem>
-
-        {isAuthenticated && role === 'ADMIN' && (
-          <NavbarItem>
-            <Button
-              className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
-              onPress={() => router.push('/home-admin/matches')}
-            >
-              Partidas
-            </Button>
-          </NavbarItem>
-        )}
-
-        {isAuthenticated && (
-          <>
-            <NavbarItem>
-              <Button
-                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
-                onPress={() => router.push('/home-user')}
-              >
-                Aposte
-              </Button>
-            </NavbarItem>
-            <NavbarItem>
-              <Button
-                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
-                onPress={() => router.push('/winners')}
-              >
-                Vencedores
-              </Button>
-            </NavbarItem>
-            <NavbarItem>
-              <Button
-                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
-                onPress={() => router.push('/rules')}
-              >
-                Regras
-              </Button>
-            </NavbarItem>
-
-            <NavbarItem>
-              <Button
-                className={`${roboto.className} text-white font-bold text-[18px] bg-transparent`}
-                onPress={() => router.push('/recover-password')}
-              >
-                Redefinir senha
-              </Button>
-            </NavbarItem>
-          </>
+        {(!isAuthenticated ? menuItemsDefault : menuItemsAuthDesktop).map(
+          (item, index) =>
+            !(item.onlyAdmin && role !== 'ADMIN') && (
+              <NavbarItem key={`${item.menuItem}-${index}`}>
+                <Button
+                  className={`${pathname === item.route ? 'font-monumentExtendedUltraBold' : 'font-monumentExtendedRegular'} text-white text-[16px] bg-transparent`}
+                  onPress={item.function}
+                >
+                  {item.menuItem}
+                </Button>
+              </NavbarItem>
+            ),
         )}
 
         {pathname === '/' && (
           <NavbarItem>
-            <button
-              className={`${roboto.className} text-white font-normal text-[18px]`}
-              onClick={handleScrollToSection}
+            <Button
+              className={`font-monumentExtendedRegular text-white text-[16px] bg-transparent`}
+              onPress={handleScrollToSection}
             >
               Como funciona
-            </button>
+            </Button>
           </NavbarItem>
         )}
       </NavbarContent>

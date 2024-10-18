@@ -135,7 +135,7 @@ export default function RoundMatchsCardAdmin({
               <div className="flex items-center gap-3 text-white">
                 <MdPerson />
                 <p className="text-white text-[12px] font-normal">
-                  {match.creator?.fullName}
+                  {match.creator?.instagram}
                 </p>
               </div>
               <div className="flex flex-col gap-4">

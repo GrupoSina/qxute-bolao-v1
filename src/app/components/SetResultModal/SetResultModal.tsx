@@ -138,7 +138,9 @@ export default function SetResultModal() {
           <>
             <ModalHeader className="flex space-x-2 items-center text-white">
               <MdHistory />
-              <h1>Definir resultado</h1>
+              <h1 className="font-chineseRocksRegular text-[24px] font-normal">
+                Definir resultado
+              </h1>
             </ModalHeader>
 
             {shouldShowConfirmationCard ? (
@@ -181,7 +183,7 @@ export default function SetResultModal() {
             ) : (
               <form onSubmit={handleSubmit(handleSave)}>
                 <ModalBody className="space-y-2">
-                  <p className="text-white">
+                  <p className="text-white font-monumentExtendedRegular font-normal text-[12px]">
                     Defina abaixo o resultado da partida:
                   </p>
                   <div className="flex flex-col p-4 bg-[#00409F] rounded-lg w-[90%] mx-auto">
@@ -332,11 +334,11 @@ export default function SetResultModal() {
                       )}
                   </div>
                 </ModalBody>
-                <ModalFooter className="flex flex-col space-y-4">
+                <ModalFooter className="flex flex-col">
                   <Button
                     isDisabled={!!loading}
                     type="submit"
-                    className={`${fontOpenSans.className} text-[14px] text-white font-bold bg-[#E40000] rounded-full`}
+                    className={`${fontOpenSans.className} text-[14px] text-white font-bold bg-[#00764B] rounded-full`}
                   >
                     Salvar resultado
                   </Button>

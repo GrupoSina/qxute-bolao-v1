@@ -304,7 +304,9 @@ export default function CreateMatchesModal({ onClose }: CloseButtonProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <ModalHeader className="flex space-x-2 items-center">
         <Image src="/sportsicon.png" alt="stadium icon" />
-        <h1 className="text-white">4. Partidas </h1>
+        <h1 className="text-white font-chineseRocksRegular text-[24px] font-normal">
+          4. Partidas{' '}
+        </h1>
       </ModalHeader>
       <ModalBody className="space-y-2">
         {/* <p className="text-white">

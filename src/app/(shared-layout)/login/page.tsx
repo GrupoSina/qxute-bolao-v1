@@ -59,12 +59,12 @@ export default function Login() {
     <div className="h-[calc(100vh-150px)] -mb-[148px] w-full bg-[#1F67CE] flex flex-col items-center">
       <div className="flex flex-col max-w-[540px] w-full">
         <h1
-          className={`${fontOpenSans.className} mt-10 text-center text-[18px] font-bold text-white`}
+          className={`font-chineseRocksRegular text-[32px] mt-10 text-center  text-white`}
         >
           Bem-vindo de volta!
         </h1>
         <p
-          className={`${fontOpenSans.className} text-center text-[12px] font-normal text-white my-2`}
+          className={`font-monumentExtendedRegular text-center text-[12px] font-normal text-white my-2`}
         >
           Estamos felizes em te ver novamente! Conecte-se e aproveite!
         </p>

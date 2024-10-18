@@ -12,6 +12,14 @@ export function middleware(request: NextRequest) {
     ) {
       return Response.redirect(new URL('/home-user', request.url))
     }
+
+    if (request.nextUrl.pathname.startsWith('/login')) {
+      if (decoded?.role !== 'ADMIN') {
+        return Response.redirect(new URL('/home-admin', request.url))
+      } else {
+        return Response.redirect(new URL('/home-user', request.url))
+      }
+    }
   }
 
   if (

@@ -151,7 +151,9 @@ export default function RecoverPasswordModal({
           <>
             <ModalHeader className="flex space-x-2 items-center">
               <Image src="/mailicon.png" alt="mail icon" />
-              <h1 className="text-white">Confirmação do código</h1>
+              <h1 className="text-white font-chineseRocksRegular text-[24px]">
+                Confirmação do código
+              </h1>
             </ModalHeader>
             <form onSubmit={handleSubmit(handleSendCode)}>
               <ModalBody>
@@ -169,7 +171,7 @@ export default function RecoverPasswordModal({
                   value={watchedCodeValue}
                 />
                 <p
-                  className={`${fontOpenSans.className} text-[12px] text-white font-normal`}
+                  className={`font-monumentExtendedRegular text-[12px] text-white font-normal`}
                 >
                   Insira o código SMS enviado para o telefone{' '}
                   {formatPhoneNumber(phone)} informado no cadastro. Não recebeu

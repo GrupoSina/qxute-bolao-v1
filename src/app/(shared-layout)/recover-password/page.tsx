@@ -56,10 +56,14 @@ export default function RecoverPassword() {
   return (
     <div className="h-[calc(100vh-150px)] -mb-[148px] w-full bg-[#1F67CE] flex flex-col items-center">
       <div className="flex flex-col max-w-[540px] w-full">
-        <h1 className={` mt-10 text-center text-[18px] font-bold text-white`}>
+        <h1
+          className={` font-chineseRocksRegular text-[32px] mt-10 text-center text-white`}
+        >
           Esqueceu a senha?
         </h1>
-        <p className={` text-center text-[12px] font-normal text-white my-2`}>
+        <p
+          className={` text-center font-monumentExtendedRegular text-[12px] font-normal text-white my-2`}
+        >
           Insira o número do celular cadastrado na sua conta, que te enviaremos
           um código SMS para redefinição da senha.
         </p>

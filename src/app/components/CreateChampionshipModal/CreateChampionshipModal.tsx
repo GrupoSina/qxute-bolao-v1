@@ -94,7 +94,9 @@ export default function CreateChampionshipModal({ onClose }: CloseButtonprops) {
     <>
       <ModalHeader className="flex space-x-2 items-center">
         <Image src="/trophyicon.svg" alt="trophy icon" />
-        <h1 className="text-white">1. Campeonato </h1>
+        <h1 className="text-white font-chineseRocksRegular text-[24px] font-normal">
+          1. Campeonato{' '}
+        </h1>
       </ModalHeader>
       <form onSubmit={handleSubmit(handleCreateChampionship)}>
         <ModalBody className="space-y-2">

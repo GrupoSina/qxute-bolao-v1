@@ -41,11 +41,11 @@ export default function Winners() {
           <Spinner />
         </div>
       ) : (
-        <div className="w-full flex flex-col items-center py-8">
-          <h1 className="text-[#00409F] text-[18px] font-bold">
+        <div className="w-full flex flex-col items-center py-8 max-w-[450px] w-full">
+          <h1 className="text-[#00409F] text-[32px] font-chineseRocksRegular">
             Vencedores das rodadas
           </h1>
-          <h4 className="text-[#00409F] text-[12px] mt-2">
+          <h4 className="text-[#00409F] text-[12px] text-center font-monumentExtendedRegular mt-2">
             Acompanhe quem venceu em cada rodada.
           </h4>
           <>

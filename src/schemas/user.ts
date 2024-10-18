@@ -4,7 +4,10 @@ import { phoneRegExp } from '../utils/phoneRegex'
 
 export const schemaRegisterUser = yup
   .object({
-    fullName: yup.string().required('Campo Nome Completo é obrigatório.'),
+    fullName: yup
+      .string()
+      .required('Campo Nome Completo é obrigatório.')
+      .optional(),
     phone: yup
       .string()
       .required('Campo Celular é obrigatório.')
@@ -26,7 +29,8 @@ export const schemaRegisterUser = yup
         (value) => {
           return value && differenceInYears(new Date(), value) >= 14
         },
-      ),
+      )
+      .optional(),
     askTerms: yup
       .boolean()
       .oneOf([true], 'Você precisa aceitar os termos de uso.')
