@@ -1,5 +1,4 @@
 import * as yup from 'yup'
-import { differenceInYears } from 'date-fns'
 import { phoneRegExp } from '../utils/phoneRegex'
 
 export const schemaRegisterUser = yup
