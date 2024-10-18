@@ -22,6 +22,13 @@
   }
 }
 
+.label-card-prediction {
+  font-size: 14px;
+  @media (max-width: 769px) {
+    font-size: 12px;
+  }
+}
+
 .custom-radio-order {
   display: flex;
   flex-direction: row-reverse;
@@ -44,6 +51,20 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+@font-face {
+  font-family: "ChineseRocks Regular";
+  src: url("./fonts/Chinese-Rocks-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "MonumentExtended Regular";
+  src: url("./fonts/MonumentExtended-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "MonumentExtended Ultrabold";
+  src: url("./fonts/MonumentExtended-Ultrabold.ttf") format("truetype");
 }
 
 @font-face {

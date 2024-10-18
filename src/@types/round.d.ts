@@ -44,7 +44,7 @@ declare interface IRoundWithMatch {
 declare interface IMatchRound {
   id: string
   creator: {
-    fullName: string
+    instagram: string
   } | null
   lastPlayerTeam: {
     id: string

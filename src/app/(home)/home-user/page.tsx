@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import useWindowWidth from '@/utils/window-width-hook'
 import {
   Button,
   Image,
@@ -18,14 +17,22 @@ import { useHomeUserContext } from '@/context/HomeUserContext'
 import { formatDateToDayAndHour } from '@/utils/formatDate'
 import FinishedMatches from '@/app/components/FinishedMatches/FinishedMatches'
 import WaitingResultModal from '@/app/components/WaitingResultModal/WaitingResultModal'
+import { Open_Sans } from 'next/font/google'
+
+type SelectPredictionProps = {
+  matchId: string
+  isDraw?: boolean
+  winnerTeamId?: string
+  match?: IRoundMatch
+}
+
+const fontOpenSans = Open_Sans({ subsets: ['latin'] })
 
 export default function HomeUser() {
   const [championships, setChampionships] = useState<IChampionshipWithRounds[]>(
     [],
   )
-  const [matchPredictionScores, setMatchPredictionScores] = useState<
-    IPrediction[]
-  >([])
+  const [matchPredictions, setMatchPredictions] = useState<IPrediction[]>([])
   const [fetchCompleted, setFetchCompleted] = useState<boolean>(false)
   const [existMatches, setExistMatches] = useState<boolean>(false)
 
@@ -43,8 +50,10 @@ export default function HomeUser() {
       roundName: string
       teamHome: string
       teamAway: string
-      predictionHome: number
-      predictionAway: number
+      predictionHome?: number
+      predictionAway?: number
+      winnerTeamId?: string
+      isDraw?: boolean
       lastPlayerToScore?: {
         name?: string
         id?: string
@@ -56,9 +65,6 @@ export default function HomeUser() {
   const [userPredictions, setUserPredictions] = useState<
     IPredictionsGetResponse[]
   >([])
-
-  const windowWidth = useWindowWidth()
-  const isMobile = windowWidth && windowWidth < 640
 
   const { 'qxute-bolao:x-token': token } = parseCookies()
 
@@ -78,6 +84,7 @@ export default function HomeUser() {
 
   useEffect(() => {
     getUserPredictions(token).then((finishedMatches) => {
+      console.log(finishedMatches)
       setUserPredictions(finishedMatches || [])
     })
   }, [])
@@ -99,19 +106,19 @@ export default function HomeUser() {
   }, [token])
 
   useEffect(() => {
-    const initialScores = championships.flatMap((championship) =>
-      championship.rounds.flatMap((round) =>
-        round.matchs.map((match) => ({
-          predictionHome: 0,
-          predictionAway: 0,
-          playerId: null,
-          matchId: match.id,
-          disabled: match?.predictions?.length !== 0,
-        })),
-      ),
-    )
+    // const initialScores = championships.flatMap((championship) =>
+    //   championship.rounds.flatMap((round) =>
+    //     round.matchs.map((match) => ({
+    //       predictionHome: 0,
+    //       predictionAway: 0,
+    //       playerId: null,
+    //       matchId: match.id,
+    //       disabled: match?.predictions?.length !== 0,
+    //     })),
+    //   ),
+    // )
 
-    setMatchPredictionScores(initialScores)
+    // setMatchPredictionScores(initialScores)
 
     const matchs = championships.flatMap((championship) =>
       championship.rounds.flatMap((round) => round.matchs),
@@ -122,48 +129,40 @@ export default function HomeUser() {
     }
   }, [championships])
 
-  const increaseScore = (matchId: string, type: 'home' | 'away') => {
-    setMatchPredictionScores((prevScores) =>
-      prevScores.map((score) =>
-        score.matchId === matchId
-          ? {
-              ...score,
-              predictionHome:
-                type === 'home'
-                  ? score.predictionHome + 1
-                  : score.predictionHome,
-              predictionAway:
-                type === 'away'
-                  ? score.predictionAway + 1
-                  : score.predictionAway,
-            }
-          : score,
-      ),
-    )
-  }
+  console.log(matchPredictions)
 
-  const decreaseScore = (matchId: string, type: 'home' | 'away') => {
-    setMatchPredictionScores((prevScores) =>
-      prevScores.map((score) =>
-        score.matchId === matchId
-          ? {
-              ...score,
-              predictionHome:
-                type === 'home' && score.predictionHome > 0
-                  ? score.predictionHome - 1
-                  : score.predictionHome,
-              predictionAway:
-                type === 'away' && score.predictionAway > 0
-                  ? score.predictionAway - 1
-                  : score.predictionAway,
-            }
-          : score,
-      ),
-    )
+  const handleSelectPrediction = ({
+    matchId,
+    isDraw,
+    winnerTeamId,
+  }: SelectPredictionProps) => {
+    setMatchPredictions((prevState) => {
+      const matchExists = prevState.find(
+        (prediction) => prediction.matchId === matchId,
+      )
+
+      if (
+        matchExists &&
+        matchExists.isDraw === isDraw &&
+        matchExists.winnerTeamId === winnerTeamId
+      ) {
+        return prevState.filter((prediction) => prediction.matchId !== matchId)
+      }
+
+      if (matchExists) {
+        return prevState.map((prediction) =>
+          prediction.matchId === matchId
+            ? { ...prediction, isDraw, winnerTeamId }
+            : prediction,
+        )
+      }
+
+      return [...prevState, { matchId, isDraw, winnerTeamId }]
+    })
   }
 
   const handlePlayerSelection = (matchId: string, playerId: string) => {
-    setMatchPredictionScores((prevScores) =>
+    setMatchPredictions((prevScores) =>
       prevScores.map((score) =>
         score.matchId === matchId ? { ...score, playerId } : score,
       ),
@@ -182,31 +181,53 @@ export default function HomeUser() {
       ),
     )
 
-    const predictions = enabledMatches.map(({ match, round }) => {
-      const prediction = matchPredictionScores.find(
-        (pred) => pred.matchId === match.id,
+    const predictions = enabledMatches
+      .map(({ match, round }) => {
+        const prediction = matchPredictions.find(
+          (pred) => pred.matchId === match.id,
+        )
+
+        return {
+          matchDate: match.date,
+          matchId: match.id,
+          roundName: round.name,
+          teamHome: match.teamHome.name,
+          teamAway: match.teamAway.name,
+          predictionHome: prediction?.predictionHome,
+          predictionAway: prediction?.predictionAway,
+          isDraw: prediction?.isDraw,
+          winnerTeamId: prediction?.winnerTeamId,
+          winnerTeamName:
+            prediction?.winnerTeamId &&
+            match.teamHome.id === prediction.winnerTeamId
+              ? match.teamHome.name
+              : prediction?.winnerTeamId &&
+                  match.teamAway.id === prediction.winnerTeamId
+                ? match.teamAway.name
+                : prediction?.isDraw
+                  ? 'Empate'
+                  : undefined,
+          lastPlayerToScore: match.lastPlayerTeam
+            ? {
+                name: prediction?.playerId
+                  ? match.players.find(
+                      (player) => player.id === prediction.playerId,
+                    )?.name
+                  : undefined,
+                id: prediction?.playerId,
+                team: match.lastPlayerTeam.name,
+              }
+            : undefined,
+        }
+      })
+      .filter(
+        (prediction) =>
+          (prediction.predictionHome !== undefined &&
+            prediction.predictionAway !== undefined) ||
+          prediction.isDraw !== undefined ||
+          prediction.winnerTeamId !== undefined ||
+          prediction.lastPlayerToScore !== undefined,
       )
-      return {
-        matchDate: match.date,
-        matchId: match.id,
-        roundName: round.name,
-        teamHome: match.teamHome.name,
-        teamAway: match.teamAway.name,
-        predictionHome: prediction?.predictionHome || 0,
-        predictionAway: prediction?.predictionAway || 0,
-        lastPlayerToScore: match.lastPlayerTeam
-          ? {
-              name: prediction?.playerId
-                ? match.players.find(
-                    (player) => player.id === prediction.playerId,
-                  )?.name
-                : undefined,
-              id: prediction?.playerId,
-              team: match.lastPlayerTeam.name,
-            }
-          : undefined,
-      }
-    })
 
     if (predictions.length === 0) {
       return toast.error(`Não há partidas para enviar palpites.`)
@@ -238,17 +259,53 @@ export default function HomeUser() {
     )
   }
 
-  console.log(areAllMatchesDisabled)
+  // console.log(areAllMatchesDisabled)
+
+  const isSelect = ({
+    matchId,
+    isDraw,
+    winnerTeamId,
+    match,
+  }: SelectPredictionProps) => {
+    // const predictions = match.predictions.filter(
+    //   (prediction) => prediction.winnerTeamId === match.teamHome.id,
+    // )
+    // console.log(match)
+    const predictions = matchPredictions.filter(
+      (prediction) =>
+        prediction.matchId === matchId &&
+        (prediction.winnerTeamId === winnerTeamId ||
+          (prediction.isDraw && isDraw)),
+    )
+
+    if (predictions.length > 0) return true
+
+    if (match && match?.predictions?.length > 0) {
+      const prediction = match?.predictions.filter(
+        (prediction) =>
+          prediction.winnerTeamId === winnerTeamId ||
+          prediction.isDraw === isDraw,
+      )
+      console.log(prediction)
+      if (prediction.length > 0) return true
+    }
+
+    // if (prediciton?.winnerTeamId === winnerTeamId) {
+    //   return true
+    // }
+
+    return false
+  }
 
   return (
     <form className={`flex flex-col mx-auto w-[100%] items-center h-full`}>
       <div className="max-w-[1140px] w-full flex flex-col items-center justify-center">
         <h1
-          className={`text-center text-[#00409F] text-[18px] font-bold  mt-10`}
+          className={`text-center text-[#00409F] text-[32px] font-chineseRocksRegular  mt-10`}
         >
           Resultado correto
         </h1>
-        <p className="text-[#00409F] mt-2 mb-4 text-center">
+        <p className="text-[#00409F] mt-2 mb-4 text-center font-monumentExtendedRegular text-[12px]">
           Acompanhe os resultados das partidas aqui.
         </p>
         {loading ? (
@@ -262,13 +319,14 @@ export default function HomeUser() {
               variant="solid"
               color="secondary"
               classNames={{
-                cursor: 'bg-[#01409f] text-white',
+                cursor: 'bg-[#01409f] text-white font-bold text-[12px]',
+                tabContent: 'text-[#01409f] font-bold text-[12px]',
               }}
             >
               <Tab
                 key="waiting"
                 title="Aguardando"
-                className="w-full flex flex-col items-center justify-center"
+                className={`w-full flex flex-col items-center justify-center ${fontOpenSans.className}`}
               >
                 {fetchCompleted && !existMatches ? (
                   <h1 className="text-center text-[#00409F] text-[18px] font-bold mb-10">
@@ -295,105 +353,76 @@ export default function HomeUser() {
                                     src="/sportsicon.png"
                                     alt="sports icon"
                                   />
-                                  <h1 className="text-white text-[12px] font-normal">
+                                  <h1 className="text-white label-card-prediction font-normal">
                                     {round.name} do {championship.name}
                                   </h1>
                                 </div>
-                                <h1 className="text-white text-[12px] font-normal">
+                                <h1 className="text-white label-card-prediction font-normal">
                                   {formatDateToDayAndHour(new Date(match.date))}
                                 </h1>
                               </div>
-                              <div className="flex justify-center items-center mt-4">
-                                <div className="flex flex-col justify-center items-center">
-                                  <h1 className="text-center text-white mb-4">
+                              <div className="flex justify-center items-center gap-1 mt-4">
+                                <div className="flex flex-col justify-center items-center w-full">
+                                  <h1 className="text-center text-white mb-4 label-card-prediction">
                                     {match.teamHome.name}
                                   </h1>
-                                  <div className="flex justify-center items-center">
-                                    <div className="flex justify-center items-center">
-                                      <Button
-                                        size={isMobile ? 'sm' : 'md'}
-                                        variant="bordered"
-                                        className="min-w-1 text-white border-solid border-[1px] border-white bg-[#00409F]"
+                                  <div className="flex justify-center items-center w-full">
+                                    <div className="flex justify-center items-center w-full">
+                                      <div
                                         onClick={() =>
-                                          decreaseScore(match.id, 'home')
+                                          handleSelectPrediction({
+                                            matchId: match.id,
+                                            winnerTeamId: match.teamHome.id,
+                                          })
                                         }
+                                        className={`${isSelect({ matchId: match.id, winnerTeamId: match.teamHome.id, match }) && 'bg-[#00764B]'} cursor-pointer md:max-w-[120px]  w-full max-w-[87px] md:h-[35px] h-[26px] border-[1px] border-white bg-[#00409F] rounded-[4px] flex items-center justify-center transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50`}
                                       >
-                                        -
-                                      </Button>
-                                      <div className="mx-3 text-[16px] text-white">
-                                        {match.predictions.length !== 0
-                                          ? match.predictions.map(
-                                              (predict, predictIndex) => (
-                                                <h1
-                                                  key={predictIndex}
-                                                  className="mx-3 text-[16px]  text-white"
-                                                >
-                                                  {predict.predictionHome}
-                                                </h1>
-                                              ),
-                                            )
-                                          : matchPredictionScores.find(
-                                              (scorePrediction) =>
-                                                scorePrediction.matchId ===
-                                                match.id,
-                                            )?.predictionHome}
+                                        <p className="text-white label-card-prediction">
+                                          Casa
+                                        </p>
                                       </div>
-                                      <Button
-                                        size={isMobile ? 'sm' : 'md'}
-                                        variant="bordered"
-                                        className="text-white border-solid border-[1px] min-w-1 border-white bg-[#00409F]"
-                                        onClick={() =>
-                                          increaseScore(match.id, 'home')
-                                        }
-                                      >
-                                        +
-                                      </Button>
                                     </div>
                                   </div>
                                 </div>
-                                <h1 className="mx-4 text-white">X</h1>
-                                <div className="flex flex-col justify-center items-center">
-                                  <h1 className="text-center text-white mb-4">
+                                <div className="flex flex-col justify-center items-center w-full">
+                                  <h1 className="text-white label-card-prediction mb-4">
+                                    x
+                                  </h1>
+                                  <div className="flex justify-center items-center w-full">
+                                    <div
+                                      onClick={() =>
+                                        handleSelectPrediction({
+                                          matchId: match.id,
+                                          isDraw: true,
+                                        })
+                                      }
+                                      className={`${isSelect({ matchId: match.id, isDraw: true, match }) && 'bg-[#00764B]'}  cursor-pointer md:max-w-[120px] w-full max-w-[87px] md:h-[35px] h-[26px] border-[1px] border-white bg-[#00409F] rounded-[4px] flex items-center justify-center transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50`}
+                                    >
+                                      <p className="text-white label-card-prediction">
+                                        Empate
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="flex flex-col justify-center items-center w-full">
+                                  <h1 className="text-center text-white mb-4 label-card-prediction">
                                     {match.teamAway.name}
                                   </h1>
-                                  <div className="flex justify-center items-center">
-                                    <Button
-                                      size={isMobile ? 'sm' : 'md'}
-                                      variant="bordered"
-                                      className="text-white border-solid border-[1px] min-w-1 border-white bg-[#00409F]"
+                                  <div className="flex justify-center items-center w-full">
+                                    <div
                                       onClick={() =>
-                                        decreaseScore(match.id, 'away')
+                                        handleSelectPrediction({
+                                          matchId: match.id,
+                                          winnerTeamId: match.teamAway.id,
+                                        })
                                       }
+                                      className={`${isSelect({ matchId: match.id, winnerTeamId: match.teamAway.id, match }) && 'bg-[#00764B]'}  cursor-pointer md:max-w-[120px] w-full max-w-[87px] md:h-[35px] h-[26px] border-[1px] border-white bg-[#00409F] rounded-[4px] flex items-center justify-center transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50`}
                                     >
-                                      -
-                                    </Button>
-                                    <div className="mx-3 text-[16p] text-white">
-                                      {match.predictions.length !== 0
-                                        ? match.predictions.map(
-                                            (predict, predictIndex) => (
-                                              <h1
-                                                key={predictIndex}
-                                                className="mx-3 text-[16px]  text-white"
-                                              >
-                                                {predict.predictionAway}
-                                              </h1>
-                                            ),
-                                          )
-                                        : matchPredictionScores.find(
-                                            (score) =>
-                                              score.matchId === match.id,
-                                          )?.predictionAway}
+                                      <p className="text-white label-card-prediction">
+                                        Fora
+                                      </p>
                                     </div>
-                                    <Button
-                                      size={isMobile ? 'sm' : 'md'}
-                                      variant="bordered"
-                                      className="text-white border-solid border-[1px] min-w-1 border-white bg-[#00409F]"
-                                      onClick={() =>
-                                        increaseScore(match.id, 'away')
-                                      }
-                                    >
-                                      +
-                                    </Button>
                                   </div>
                                 </div>
                               </div>
@@ -402,12 +431,12 @@ export default function HomeUser() {
                           {match.lastPlayerTeam && (
                             <div key={matchIndex} className="my-8">
                               <h1
-                                className={`text-center text-[#00409F] text-[18px] font-bold  mt-10`}
+                                className={`text-center text-[#00409F] text-[32px] font-chineseRocksRegular font-bold  mt-10`}
                               >
                                 Quem fará o último gol do{' '}
                                 {match.lastPlayerTeam.name}?
                               </h1>
-                              <p className="text-[#00409F] mt-2 mb-4 text-center">
+                              <p className="text-[#00409F] text-[12px] font-monumentExtendedRegular mt-2 mb-4 text-center">
                                 Palpite o jogador que irá marcar o último gol na
                                 partida.
                               </p>
@@ -448,7 +477,7 @@ export default function HomeUser() {
                                       (prediction) =>
                                         prediction.predictionType === 'PLAYER',
                                     )?.lastPlayerToScoreId ||
-                                    matchPredictionScores.find(
+                                    matchPredictions.find(
                                       (score) => score.matchId === match.id,
                                     )?.playerId ||
                                     undefined
@@ -524,7 +553,11 @@ export default function HomeUser() {
                   </div>
                 )}
               </Tab>
-              <Tab key="done" title="Finalizadas" className="w-full">
+              <Tab
+                key="done"
+                title="Finalizadas"
+                className={`w-full text-[#00409F] ${fontOpenSans.className} `}
+              >
                 <FinishedMatches matches={userPredictions} />
               </Tab>
             </Tabs>

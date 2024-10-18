@@ -32,7 +32,7 @@ export function ButtonMovingBorder({
   return (
     <Component
       className={cn(
-        'bg-transparent relative text-xl  h-16 w-40 p-[1px] overflow-hidden ',
+        'bg-transparent relative text-xl  h-12 w-40 p-[1px] overflow-hidden ',
         containerClassName,
       )}
       style={{
@@ -47,7 +47,7 @@ export function ButtonMovingBorder({
         <MovingBorder duration={duration} rx="30%" ry="30%">
           <div
             className={cn(
-              'h-20 w-20 opacity-[0.8] bg-[radial-gradient(var(--fuchsia-900)_40%,transparent_60%)]',
+              'h-16 w-20 opacity-[0.8] bg-[radial-gradient(var(--fuchsia-900)_40%,transparent_60%)]',
               borderClassName,
             )}
           />

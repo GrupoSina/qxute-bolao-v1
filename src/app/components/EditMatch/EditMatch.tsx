@@ -272,7 +272,9 @@ export default function EditMatchModal() {
           <form onSubmit={handleSubmit(handleEdit)}>
             <ModalHeader className="flex space-x-2 items-center text-white">
               <MdEdit />
-              <h1>Editar </h1>
+              <h1 className="font-chineseRocksRegular text-[24px] font-normal">
+                Editar{' '}
+              </h1>
             </ModalHeader>
             <ModalBody className="space-y-2">
               <Controller

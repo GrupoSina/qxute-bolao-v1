@@ -1,7 +1,9 @@
 declare interface IPrediction {
   matchId: string
-  predictionHome: number
-  predictionAway: number
+  predictionHome?: number
+  predictionAway?: number
+  winnerTeamId?: string
+  isDraw?: boolean
   playerId?: string | null
   disabled?: boolean | null
 }
@@ -36,6 +38,12 @@ declare interface IPredictionsGetResponse {
     team: string | null
     status: 'HIT' | 'MISS'
   }
+  predictionWinner: {
+    isDraw?: boolean | null
+    winnerTeamId: string | null
+    status: 'HIT' | 'MISS'
+    winnerTeamName?: string | null
+  }
 }
 
 declare interface IUserPredictions {
@@ -60,6 +68,11 @@ declare interface IUserPredictions {
     predictionHome: number
     predictionAway: number
     status: string
+  }
+  predictionWinner: {
+    isDraw?: boolean | null
+    winnerTeamId: string | null
+    status: 'HIT' | 'MISS'
   }
 }
 

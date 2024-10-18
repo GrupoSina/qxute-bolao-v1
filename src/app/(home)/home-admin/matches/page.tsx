@@ -83,29 +83,37 @@ export default function HomeAdmin() {
     <div
       className={`w-full h-full flex flex-col items-center ${fontOpenSans.className}`}
     >
-      <div className="max-w-[1140px] w-full h-full flex flex-col items-center">
+      <div className="max-w-[1140px] w-full h-full flex flex-col items-center px-2">
         <div className="w-full flex flex-col items-center">
           <h1
-            className={`text-center text-[#00409F] text-[18px] font-bold mt-10`}
+            className={`text-center text-[#00409F] text-[32px] font-chineseRocksRegular mt-10`}
           >
             Partidas
           </h1>
-          <p className="text-[#00409F] mt-2 mb-4 text-center">
+          <p className="text-[#00409F] mt-2 mb-4 font-normal text-center font-monumentExtendedRegular text-[12px]">
             Defina o resultado das partidas abaixo.
           </p>
-          <div className="flex flex-col items-center w-[90%]">
+          <div className="flex flex-col items-center w-full max-w-[450px]">
             {loading ? (
               <div className="h-[200px] w-full flex items-center justify-center">
                 <Spinner />
               </div>
             ) : (
-              <Tabs radius="full" variant="solid" color="secondary">
+              <Tabs
+                radius="full"
+                variant="solid"
+                color="secondary"
+                classNames={{
+                  cursor: 'bg-[#01409f] text-white font-bold text-[12px]',
+                  tabContent: 'text-[#01409f] font-bold text-[12px]',
+                }}
+              >
                 <Tab
                   key="waiting"
                   title="Aguardando"
                   className="w-full flex flex-col items-center"
                 >
-                  <div className="max-w-[450px] w-full">
+                  <div className="w-full">
                     <>
                       {roundsWaiting.findIndex((round) =>
                         round.matchs.find((match) => match.id),
@@ -183,7 +191,7 @@ export default function HomeAdmin() {
             onClick={() => setCurrentModalIndex(0)}
             onPress={onOpen}
             startContent={<Image src="/addcircle.svg" alt="add circle" />}
-            className="max-w-[450px] w-full mx-auto mt-4 mb-6 bg-[#00409F] text-white font-bold text-[14px] py-[10px] px-[14px]"
+            className="max-w-[410px] w-full mx-auto mt-4 mb-6 bg-[#00409F] text-white font-bold text-[14px] py-[10px] px-[14px]"
           >
             Criar evento
           </Button>

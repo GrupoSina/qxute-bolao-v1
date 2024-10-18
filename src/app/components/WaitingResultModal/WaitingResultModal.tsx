@@ -7,17 +7,12 @@ import {
   ModalHeader,
   Image,
 } from '@nextui-org/react'
-import { Open_Sans } from 'next/font/google'
 import React from 'react'
 
 interface CustomWaitingResultModal {
   isOpen: boolean
   onClose: () => void
 }
-
-const openSans = Open_Sans({
-  subsets: ['latin'],
-})
 
 export default function WaitingResultModal({
   isOpen,
@@ -36,12 +31,16 @@ export default function WaitingResultModal({
           <>
             <ModalHeader className="flex justify-start items-center space-x-2">
               <Image src="/whiteaccesstime.svg" alt="aguardando resultados" />
-              <h1 className={`${openSans.className} text-[18px] font-bold`}>
+              <h1
+                className={`font-chineseRocksRegular text-[24px] font-normal`}
+              >
                 Aguardando resultados
               </h1>
             </ModalHeader>
             <ModalBody>
-              <h1 className={`${openSans.className} text-[12px] font-normal`}>
+              <h1
+                className={`font-monumentExtendedRegular text-[12px] font-normal`}
+              >
                 O placar da partida será atualizado ao final da mesma, aguarde o
                 resultado.
               </h1>

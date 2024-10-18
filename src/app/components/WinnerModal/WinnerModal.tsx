@@ -101,16 +101,16 @@ export default function WinnerModal() {
           <>
             <ModalHeader className="flex space-x-2 items-center text-white">
               <MdOutlineCheckCircleOutline size={24} />
-              <h1>Vencedor</h1>
+              <h1 className="font-chineseRocksRegular text-[24px] font-normal">
+                Vencedor(a)
+              </h1>
             </ModalHeader>
             <ModalBody className="space-y-2 text-white">
-              <p className="md:text-[14px] text-[12px]">
+              <p className="text-[12px] font-monumentExtendedRegular">
                 Confira abaixo o resultado do evento{' '}
-                <b>
-                  {selectedMatchWinner?.match.teamHome.name} X{' '}
-                  {selectedMatchWinner?.match.teamAway.name}
-                </b>{' '}
-                pela <b>{selectedMatchWinner?.roundName}.</b>
+                {selectedMatchWinner?.match.teamHome.name} X{' '}
+                {selectedMatchWinner?.match.teamAway.name + ' '}
+                pela {' ' + selectedMatchWinner?.roundName}.
               </p>
               {loading ? (
                 <Spinner />

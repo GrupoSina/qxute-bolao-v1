@@ -145,7 +145,9 @@ export default function CreateTeamsModal({ onClose }: CloseButtonprops) {
     <>
       <ModalHeader className="flex space-x-2 items-center">
         <Image src="/sportsicon.png" alt="stadium icon" />
-        <h1 className="text-white">3. Times </h1>
+        <h1 className="text-white font-chineseRocksRegular text-[24px] font-normal">
+          3. Times{' '}
+        </h1>
       </ModalHeader>
       <form onSubmit={handleSubmit(handleCreateTeams)}>
         <ModalBody className="space-y-2">

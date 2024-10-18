@@ -54,7 +54,7 @@ export default function Register() {
     <div className="h-[calc(100vh+75px)] -mb-[148px] w-screen bg-[#1F67CE] flex flex-col items-center pb-20">
       <div className="flex flex-col max-w-[540px] w-full">
         <p
-          className={`${fontOpenSans.className} text-center text-[18px] font-normal text-white my-2 mt-10`}
+          className={`font-chineseRocksRegular text-[32px] text-center font-normal text-white my-2 mt-10`}
         >
           Registre-se agora e participe!
         </p>
@@ -62,7 +62,7 @@ export default function Register() {
           onSubmit={handleSubmit(handleRegister)}
           className="flex flex-col w-[90%] mx-auto"
         >
-          <Input
+          {/* <Input
             size="md"
             type="text"
             label="Nome completo"
@@ -74,8 +74,8 @@ export default function Register() {
             color={errors.fullName?.message ? 'danger' : undefined}
             variant={errors.fullName?.message ? 'bordered' : undefined}
             {...register('fullName')}
-          />
-          <Input
+          /> */}
+          {/* <Input
             size="md"
             type="date"
             label="Data de nascimento"
@@ -87,7 +87,7 @@ export default function Register() {
             color={errors.birthdate?.message ? 'danger' : undefined}
             variant={errors.birthdate?.message ? 'bordered' : undefined}
             {...register('birthdate')}
-          />
+          /> */}
           <Controller
             control={control}
             name={'phone'}
@@ -107,6 +107,20 @@ export default function Register() {
                 />
               </InputMask>
             )}
+          />
+
+          <Input
+            size="md"
+            type="text"
+            label="Insira seu Instagram"
+            labelPlacement="inside"
+            placeholder="ex: @_qxute"
+            className="mt-4"
+            errorMessage={errors.instagram?.message}
+            isInvalid={!!errors.instagram?.message}
+            color={errors.instagram?.message ? 'danger' : undefined}
+            variant={errors.instagram?.message ? 'bordered' : undefined}
+            {...register('instagram')}
           />
 
           <Input
@@ -162,19 +176,6 @@ export default function Register() {
             className="mt-4"
           />
 
-          <Input
-            size="md"
-            type="text"
-            label="Insira seu Instagram"
-            labelPlacement="inside"
-            placeholder="ex: @_qxute"
-            className="mt-4"
-            errorMessage={errors.instagram?.message}
-            isInvalid={!!errors.instagram?.message}
-            color={errors.instagram?.message ? 'danger' : undefined}
-            variant={errors.instagram?.message ? 'bordered' : undefined}
-            {...register('instagram')}
-          />
           <Checkbox
             {...register('askTerms')}
             isInvalid={!!errors.askTerms?.message}
