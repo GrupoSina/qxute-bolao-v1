@@ -3,6 +3,7 @@ import { Button } from '@nextui-org/react'
 import { TypewriterEffectSmooth } from '../TypewitterEffect/TypeWritterEffect'
 import { Open_Sans } from 'next/font/google'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const fontOpenSans = Open_Sans({ subsets: ['latin'] })
 
@@ -63,12 +64,17 @@ export default function HeroSectionDesktop({
         </div>
       </div>
       <div className="w-[558px] h-[350px] relative">
-        <Image
-          src={'/banner-hero-large.png'}
-          alt="bet vip banner"
-          className="object-fill rounded-2xl max-w-[1140px] w-full h-[180px]"
-          fill
-        />
+        <Link
+          href="https://www.youtube.com/watch?v=Ncw9iEi-krs"
+          target="_blank"
+        >
+          <Image
+            src={'/banner-qxute-video-large.png'}
+            alt="bet vip banner"
+            className="cursor-pointer object-fill rounded-2xl max-w-[1140px] w-full h-[180px]"
+            fill
+          />
+        </Link>
       </div>
     </div>
   )
