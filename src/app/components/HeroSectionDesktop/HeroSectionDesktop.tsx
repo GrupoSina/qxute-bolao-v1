@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button } from '@nextui-org/react'
-import { TypewriterEffectSmooth } from '../TypewitterEffect/TypeWritterEffect'
 import { Open_Sans } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,18 +13,7 @@ interface HeroSectionDesktopProps {
 export default function HeroSectionDesktop({
   howItWorksRef,
 }: HeroSectionDesktopProps) {
-  const words = [
-    {
-      text: 'BOLÃO',
-    },
-
-    {
-      text: 'DO QXUTE',
-    },
-  ]
-
   const handleScroll = () => {
-    console.log('s')
     if (howItWorksRef && howItWorksRef.current) {
       howItWorksRef.current.scrollIntoView({ behavior: 'smooth' })
     }
@@ -36,25 +24,15 @@ export default function HeroSectionDesktop({
         <h1
           className={`text-center font-chineseRocksRegular md:text-[56px] text-[32px] font-extrabold text-white`}
         >
-          <TypewriterEffectSmooth words={words} />
+          BOLÃO DO QXUTE
         </h1>
         <div className="flex flex-col">
-          <p
-            className="text-white font-monumentExtendedRegular md:text-[16px]"
-            data-aos="zoom-in"
-            data-aos-once="true"
-            data-aos-delay="2000"
-            data-aos-duration="1000"
-          >
+          <p className="text-white font-monumentExtendedRegular md:text-[16px]">
             Acha que manda bem nos palpites e quer ganhar uns prêmios do Qxute
             sem gastar nada? Então chegou sua hora! Dá o teu chute, crava teu
             palpite e fatura os prêmios!
           </p>
           <Button
-            data-aos="zoom-in"
-            data-aos-once="true"
-            data-aos-delay="2300"
-            data-aos-duration="1000"
             onClick={handleScroll}
             variant="bordered"
             className={`mt-6 max-w-[170px] w-full border-solid border-white text-white text-[14px] font-bold rounded-full ${fontOpenSans.className}`}
