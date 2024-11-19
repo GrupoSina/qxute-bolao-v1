@@ -11,7 +11,7 @@ type MyHistoryPredictionCardProps = {
 export default function MyHistoryPredictionCard({
   prediction,
 }: MyHistoryPredictionCardProps) {
-  console.log(prediction)
+  //console.log(prediction)
   const isPredictionCorrect = (value: 'player' | 'score' | 'winner') => {
     switch (value) {
       case 'player':

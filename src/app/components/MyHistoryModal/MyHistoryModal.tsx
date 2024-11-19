@@ -37,14 +37,14 @@ export default function MyHistoryModal({ isOpen, onClose }: CustomModalProps) {
 
   const getUserPredictions = async (token: string) => {
     const { predictions } = await getPredictions(token)
-    console.log(predictions)
+    //console.log(predictions)
     return predictions
   }
 
   useEffect(() => {
     if (isOpen) {
       getUserPredictions(token).then((listOfPredictions) => {
-        console.log(listOfPredictions)
+        //console.log(listOfPredictions)
         let correctPredictions = 0
         let incorrectPredictions = 0
 

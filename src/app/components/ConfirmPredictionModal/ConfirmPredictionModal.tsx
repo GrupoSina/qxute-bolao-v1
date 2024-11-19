@@ -100,7 +100,7 @@ const ConfirmPredictionModal: React.FC<ConfirmPredictionModalProps> = ({
       toast.error(`Erro ao enviar palpite: ${error}`)
     }
   }
-  console.log(matchPredictions)
+  //console.log(matchPredictions)
   return (
     <Modal
       scrollBehavior="outside"

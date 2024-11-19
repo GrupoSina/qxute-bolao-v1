@@ -52,7 +52,7 @@ export default function WinnerModal() {
       try {
         const { fetchWinner } = await MatchService()
         const response = await fetchWinner(selectedMatchWinner.match.id)
-        console.log(response)
+        //console.log(response)
         setWinner(response)
         return response
       } catch (error) {

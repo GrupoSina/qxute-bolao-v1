@@ -84,7 +84,7 @@ export default function HomeUser() {
 
   useEffect(() => {
     getUserPredictions(token).then((finishedMatches) => {
-      console.log(finishedMatches)
+      //console.log(finishedMatches)
       setUserPredictions(finishedMatches || [])
     })
   }, [])
@@ -129,7 +129,7 @@ export default function HomeUser() {
     }
   }, [championships])
 
-  console.log(matchPredictions)
+  //console.log(matchPredictions)
 
   const handleSelectPrediction = ({
     matchId,
