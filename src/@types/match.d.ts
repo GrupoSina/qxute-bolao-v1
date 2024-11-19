@@ -21,8 +21,9 @@ declare interface IPayloadSetResutMatch {
 
 declare interface IWinner {
   id: string
-  name: string
+  name?: string
   phone: string
   predictionDate: string
   smsSentToWinner: boolean
+  instagram?: string
 }

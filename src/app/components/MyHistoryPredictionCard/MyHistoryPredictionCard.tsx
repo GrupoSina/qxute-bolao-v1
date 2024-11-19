@@ -145,14 +145,15 @@ export default function MyHistoryPredictionCard({
             <hr className="w-full h-[1px] bg-white mt-1" />
             <h1 className="mx-3 label-card-prediction  text-white font-semibold">
               <>
-                {prediction.match.scoreHome !== prediction.match.scoreAway && (
-                  <>
-                    {prediction.match.teamHome ===
-                    prediction.predictionWinner.winnerTeamName
-                      ? 'Casa - '
-                      : 'Fora - '}
-                  </>
-                )}
+                {!prediction.predictionWinner.isDraw &&
+                  prediction.match.scoreHome !== prediction.match.scoreAway && (
+                    <>
+                      {prediction.match.teamHome ===
+                      prediction.predictionWinner.winnerTeamName
+                        ? 'Casa - '
+                        : 'Fora - '}
+                    </>
+                  )}
                 {prediction.predictionWinner.winnerTeamName}
               </>
             </h1>

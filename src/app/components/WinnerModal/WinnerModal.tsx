@@ -124,7 +124,7 @@ export default function WinnerModal() {
                       <hr />
                       <div className="mt-1">
                         <p className="md:text-[14px] text-[12px]">
-                          {winner?.name}
+                          {winner?.instagram}
                         </p>
                         <p className="md:text-[12px] text-[9px]">
                           {winner?.phone} /{' '}
